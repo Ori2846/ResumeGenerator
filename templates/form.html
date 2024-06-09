@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Generator</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 20px;
+            background-color: #1b1b1b;
+            color: #ffffff;
+        }
+        .form-section {
+            margin-bottom: 15px;
+        }
+        .form-section button {
+            width: 100%;
+            text-align: left;
+            background-color: #004d40;
+            border: none;
+            color: #ffffff;
+        }
+        .skill-detail {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .skill-detail input {
+            flex: 1;
+            background-color: #2c2c2c;
+            color: #ffffff;
+            border: 1px solid #004d40;
+            height: 38px;
+        }
+        .skill-detail button {
+            margin-left: 5px;
+            background-color: #004d40;
+            border: none;
+            color: #ffffff;
+            padding: 0px 5px;
+            font-size: 0.7em;
+            height: 24px;
+            line-height: 1;
+            width: 24px;
+        }
+        .skill-entry {
+            margin-bottom: 20px;
+        }
+        .skill-entry > .form-group:first-child {
+            margin-top: 20px;
+        }
+        .form-control {
+            background-color: #2c2c2c;
+            color: #ffffff;
+            border: 1px solid #004d40;
+        }
+        .btn-secondary {
+            background-color: #004d40;
+            border: none;
+            padding: 2px 5px;
+            font-size: 0.7em;
+        }
+        .btn-danger {
+            background-color: #c62828;
+            border: none;
+            padding: 2px 5px;
+            font-size: 0.7em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="mb-4">Resume Generator</h1>
+        <form action="/generate" method="post">
+            <!-- Personal Information Section -->
+            <div class="form-section">
+                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#personal-info" aria-expanded="true" aria-controls="personal-info">
+                    Personal Information
+                </button>
+                <div id="personal-info" class="collapse show">
+                    <div class="card card-body" style="background-color: #2c2c2c;">
+                        <div class="form-group">
+                            <label for="name">Name:</label>
+                            <input type="text" class="form-control" id="name" name="name">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="email" class="form-control" id="email" name="email">
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone:</label>
+                            <input type="text" class="form-control" id="phone" name="phone">
+                        </div>
+                        <div class="form-group">
+                            <label for="address">Address:</label>
+                            <input type="text" class="form-control" id="address" name="address">
+                        </div>
+                        <div class="form-group">
+                            <label for="location">Location:</label>
+                            <input type="text" class="form-control" id="location" name="location">
+                        </div>
+                        <div class="form-group">
+                            <label for="website">Personal Website:</label>
+                            <input type="text" class="form-control" id="website" name="website">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Summary Section -->
+            <div class="form-section">
+                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#summary-section" aria-expanded="false" aria-controls="summary-section">
+                    Summary
+                </button>
+                <div id="summary-section" class="collapse">
+                    <div class="card card-body" style="background-color: #2c2c2c;">
+                        <div class="form-group">
+                            <label for="summary">Summary:</label>
+                            <textarea class="form-control" id="summary" name="summary"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Experience Section -->
+            <div class="form-section">
+                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#experience-section" aria-expanded="false" aria-controls="experience-section">
+                    Experience
+                </button>
+                <div id="experience-section" class="collapse">
+                    <div class="card card-body" style="background-color: #2c2c2c;">
+                        <div class="form-group">
+                            <label for="experience">Experience:</label>
+                            <textarea class="form-control" id="experience" name="experience"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="experience_dates">Experience Dates (e.g., 2020-2023):</label>
+                            <textarea class="form-control" id="experience_dates" name="experience_dates"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Education Section -->
+            <div class="form-section">
+                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#education-section" aria-expanded="false" aria-controls="education-section">
+                    Education
+                </button>
+                <div id="education-section" class="collapse">
+                    <div class="card card-body" style="background-color: #2c2c2c;">
+                        <div class="form-group">
+                            <label for="education">Education:</label>
+                            <textarea class="form-control" id="education" name="education"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="education_dates">Education Dates (e.g., 2016-2020):</label>
+                            <textarea class="form-control" id="education_dates" name="education_dates"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Skills Section -->
+            <div class="form-section">
+                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#skills-section" aria-expanded="false" aria-controls="skills-section">
+                    Skills
+                </button>
+                <div id="skills-section" class="collapse">
+                    <div class="card card-body" style="background-color: #2c2c2c;">
+                        <div class="form-group">
+                            <label for="skills_header">Skills Header:</label>
+                            <input type="text" class="form-control" id="skills_header" name="skills_header" value="Skills">
+                        </div>
+                        <div id="skills_container"></div>
+                        <button type="button" class="btn btn-secondary" onclick="addSkill()">Add Skill</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Projects Section -->
+            <div class="form-section">
+                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#projects-section" aria-expanded="false" aria-controls="projects-section">
+                    Projects
+                </button>
+                <div id="projects-section" class="collapse">
+                    <div class="card card-body" style="background-color: #2c2c2c;">
+                        <div class="form-group">
+                            <label for="projects">Projects:</label>
+                            <textarea class="form-control" id="projects" name="projects"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Template Selection Section -->
+            <div class="form-section">
+                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#template-section" aria-expanded="false" aria-controls="template-section">
+                    Choose Template
+                </button>
+                <div id="template-section" class="collapse">
+                    <div class="card card-body" style="background-color: #2c2c2c;">
+                        <div class="form-group">
+                            <label for="template">Choose Template:</label>
+                            <select class="form-control" id="template" name="template">
+                                <option value="template1">Template 1</option>
+                                <option value="template2">Template 2</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-success">Generate Resume</button>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        let skillIndex = 0;
+
+        function addSkill() {
+            const skillContainer = document.getElementById('skills_container');
+            const skillDiv = document.createElement('div');
+            skillDiv.classList.add('skill-entry');
+            skillDiv.innerHTML = `
+                <div class="form-group">
+                    <label for="skill_name_${skillIndex}">Skill Name:</label>
+                    <input type="text" class="form-control" id="skill_name_${skillIndex}" name="skill_name_${skillIndex}">
+                </div>
+                <div id="skill_details_container_${skillIndex}">
+                    <div class="skill-detail form-group">
+                        <input type="text" class="form-control" id="skill_${skillIndex}_detail_0" name="skill_${skillIndex}_detail_0">
+                        <button type="button" class="btn btn-secondary" onclick="addSkillDetail(${skillIndex})">+</button>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-danger" onclick="removeSkill(this)">Remove Skill</button>
+            `;
+            skillContainer.appendChild(skillDiv);
+            skillIndex++;
+        }
+
+        function addSkillDetail(skillIndex) {
+            const detailContainer = document.getElementById(`skill_details_container_${skillIndex}`);
+            const currentDetailsCount = detailContainer.getElementsByClassName('skill-detail').length;
+            const newDetailIndex = currentDetailsCount;
+
+            const detailDiv = document.createElement('div');
+            detailDiv.classList.add('skill-detail', 'form-group');
+            detailDiv.innerHTML = `
+                <input type="text" class="form-control" id="skill_${skillIndex}_detail_${newDetailIndex}" name="skill_${skillIndex}_detail_${newDetailIndex}">
+                <button type="button" class="btn btn-danger" onclick="removeSkillDetail(this)">-</button>
+            `;
+            detailContainer.appendChild(detailDiv);
+
+            // Move the add button to the new detail row
+            const addButton = detailContainer.querySelector('.btn.btn-secondary');
+            detailContainer.removeChild(addButton);
+            detailDiv.appendChild(addButton);
+        }
+
+        function removeSkill(button) {
+            button.parentElement.remove();
+        }
+
+        function removeSkillDetail(button) {
+            const detailContainer = button.parentElement.parentElement;
+            button.parentElement.remove();
+
+            // If there are no more details left, remove the entire skill entry
+            if (detailContainer.children.length === 0) {
+                detailContainer.parentElement.parentElement.remove();
+            }
+        }
+    </script>
+</body>
+</html>
