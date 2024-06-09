@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, send_file
+from flask import Flask, render_template, request, send_file, redirect, url_for
 from jinja2 import Template
 import os
 import subprocess
@@ -54,7 +54,7 @@ def generate():
     )
 
     tex_file = 'resume_output.tex'
-    pdf_file = 'resume_output.pdf'
+    pdf_file = 'static/resume_output.pdf'
 
     # Clear previous files if they exist
     if os.path.exists(tex_file):
@@ -66,9 +66,17 @@ def generate():
         f.write(rendered_latex)
 
     # Run XeLaTeX to generate the PDF
-    subprocess.run(['xelatex', tex_file])
+    subprocess.run(['xelatex', '-output-directory=static', tex_file])
 
-    return send_file(pdf_file, as_attachment=True)
+    return redirect(url_for('show_pdf'))
+
+@app.route('/show_pdf')
+def show_pdf():
+    return render_template('show_pdf.html')
+
+@app.route('/download_pdf')
+def download_pdf():
+    return send_file('static/resume_output.pdf', as_attachment=True)
 
 if __name__ == '__main__':
     app.run(debug=True)
