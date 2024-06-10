@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return render_template('form.html')
+    return render_template('form.html', pdf_url=None)
 
 @app.route('/generate', methods=['POST'])
 def generate():
@@ -68,11 +68,7 @@ def generate():
     # Run XeLaTeX to generate the PDF
     subprocess.run(['xelatex', '-output-directory=static', tex_file])
 
-    return redirect(url_for('show_pdf'))
-
-@app.route('/show_pdf')
-def show_pdf():
-    return render_template('show_pdf.html')
+    return render_template('form.html', pdf_url=url_for('static', filename='resume_output.pdf'))
 
 @app.route('/download_pdf')
 def download_pdf():
