@@ -1,0 +1,74 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage{geometry}
+\geometry{a4paper, margin=1in}
+\usepackage{enumitem}
+\usepackage{parskip}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    urlcolor=blue,
+}
+\usepackage{titlesec}
+\usepackage{fontspec}
+\setmainfont{Times New Roman}
+\newfontface\namefont{Arial}
+\usepackage{fancyhdr}
+\usepackage{longtable}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rfoot{\thepage}
+
+\titleformat{\section}{\large\bfseries}{}{0em}{}
+\titleformat{\subsection}{\normalsize\bfseries}{}{0em}{}
+
+\begin{document}
+
+\begin{center}
+    {\Huge \namefont{\textbf{ {{name}} }}} \\
+    {\small {{email}} · {{phone}} · {{address}}}
+\end{center}
+
+\section*{Summary}
+{{summary}}
+
+\section*{Education}
+{{#education}}
+\textbf{ {{institution}}, {{city}} } \\
+\textit{ {{degree}}, {{dates}} } \\
+{{/education}}
+
+\section*{Experience}
+{{#experience}}
+\textbf{ {{title}}, {{company}}, {{location}} } \\
+\textit{ {{dates}} }
+{{#responsibilities}}
+\begin{itemize}[noitemsep]
+    {{#responsibilities}}
+    \item {{.}}
+    {{/responsibilities}}
+\end{itemize}
+{{/responsibilities}}
+{{/experience}}
+
+\section*{Skills}
+{{#skills}}
+\begin{itemize}[noitemsep]
+    \item \textbf{ {{name}} }: {{details}}
+{{/skills}}
+\end{itemize}
+
+\section*{Projects}
+{{#projects}}
+\textbf{ {{title}} } \\
+\textit{ Tech Stack: {{tech_stack}}, {{dates}} }
+{{#details}}
+\begin{itemize}[noitemsep]
+    {{#details}}
+    \item {{.}}
+    {{/details}}
+\end{itemize}
+{{/details}}
+{{/projects}}
+
+\end{document}

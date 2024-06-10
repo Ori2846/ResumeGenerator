@@ -1,0 +1,64 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\geometry{a4paper, margin=1in}
+\usepackage{enumitem}
+\usepackage{parskip}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    urlcolor=blue,
+}
+\usepackage{titlesec}
+\usepackage{fontspec}
+\setmainfont{Times New Roman}
+\newfontface\namefont{Arial}
+\usepackage{fancyhdr}
+\usepackage{longtable}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rfoot{\thepage}
+
+\titleformat{\section}{\large\bfseries}{}{0em}{}
+\titleformat{\subsection}{\normalsize\bfseries}{}{0em}{}
+
+\begin{document}
+
+\begin{center}
+    {\Huge \namefont{\textbf{ {{name}} }}} \\
+    {\small {{location}} · \href{mailto:{{email}}}{ {{email}} } · {{phone}} · {{address}}
+    {{#website}} · \href{ {{website}} }{ {{website}} } {{/website}}}
+    \\\vspace{0.5cm}
+    \hrule
+\end{center}
+
+{{#education}}
+\section*{Education}
+\begin{longtable}{p{0.7\textwidth} p{0.3\textwidth}}
+    \textbf{Institution} & \textbf{Dates} \\
+    {{education}} & {{education_dates}} \\
+\end{longtable}
+{{/education}}
+
+{{#experience}}
+\section*{Experience}
+\begin{longtable}{p{0.7\textwidth} p{0.3\textwidth}}
+    \textbf{Position} & \textbf{Dates} \\
+    {{experience}} & {{experience_dates}} \\
+\end{longtable}
+{{/experience}}
+
+{{#skills}}
+\section*{ {{skills_header}} }
+{{#skills_list}}
+\textbf{ {{name}}:} {{details}} \\
+{{/skills_list}}
+{{/skills}}
+
+{{#projects}}
+\section*{Projects}
+{{projects}}
+{{/projects}}
+
+\end{document}
