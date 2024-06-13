@@ -1,10 +1,9 @@
 %-------------------------
 % Resume in Latex
-% Author : Jake Gutierrez
-% Based off of: https://github.com/sb2nov/resume
+% Author : Henry Do
+% Based off of: https://www.overleaf.com/latex/templates/jakes-resume/syzfjbzwjncs
 % License : MIT
 %------------------------
-
 \documentclass[letterpaper,11pt]{article}
 
 \usepackage{latexsym}
@@ -19,17 +18,6 @@
 \usepackage[english]{babel}
 \usepackage{tabularx}
 \usepackage{fontspec}
-
-%----------FONT OPTIONS----------
-% sans-serif
-% \usepackage[sfdefault]{FiraSans}
-% \usepackage[sfdefault]{roboto}
-% \usepackage[sfdefault]{noto-sans}
-% \usepackage[default]{sourcesanspro}
-
-% serif
-% \usepackage{CormorantGaramond}
-% \usepackage{charter}
 
 \pagestyle{fancy}
 \fancyhf{} % clear all header and footer fields
@@ -55,7 +43,6 @@
   \vspace{-4pt}\scshape\raggedright\large
 }{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
 
-%-------------------------
 % Custom commands
 \newcommand{\resumeItem}[1]{
   \item\small{
@@ -92,15 +79,11 @@
 \newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.15in, label={}]}
 \newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
 \newcommand{\resumeItemListStart}{\begin{itemize}}
-\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
-
-%-------------------------------------------
-%%%%%%  RESUME STARTS HERE  %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-pt}}
 
 \begin{document}
 
-%----------HEADING----------
+% Heading
 \begin{center}
     \textbf{\Huge \scshape {{name}}} \\ \vspace{1pt}
     \small {{phone}} $|$ \href{mailto:{{email}}}{\underline{ {{email}} }} $|$ 
@@ -108,14 +91,14 @@
     \href{https://github.com/{{github}}}{\underline{github.com/{{github}}}}
 \end{center}
 
-%-----------SUMMARY-----------
+% Summary
 {{#summary}}
 \section{Summary}
 {{summary}}
 {{/summary}}
 
-%-----------EDUCATION-----------
-{{#education}}
+% Education
+{{#education.length}}
 \section{Education}
   \resumeSubHeadingListStart
   {{#education}}
@@ -124,10 +107,10 @@
       { {{degree}} }{ {{dates}} }
   {{/education}}
   \resumeSubHeadingListEnd
-{{/education}}
+{{/education.length}}
 
-%-----------EXPERIENCE-----------
-{{#experience}}
+% Experience
+{{#experience.length}}
 \section{Experience}
   \resumeSubHeadingListStart
   {{#experience}}
@@ -141,10 +124,10 @@
       {{/responsibilities}}
   {{/experience}}
   \resumeSubHeadingListEnd
-{{/experience}}
+{{/experience.length}}
 
-%-----------PROJECTS-----------
-{{#projects}}
+% Projects
+{{#projects.length}}
 \section{Projects}
   \resumeSubHeadingListStart
   {{#projects}}
@@ -157,17 +140,16 @@
       {{/details}}
   {{/projects}}
   \resumeSubHeadingListEnd
-{{/projects}}
+{{/projects.length}}
 
-%-----------SKILLS-----------
-{{#skills}}
+% Skills
+{{#skills.length}}
 \section{Technical Skills}
- \begin{itemize}[leftmargin=0.15in, label={}]
-    \small{\item{
-      \textbf{ {{name}} }{ {{details}} } \\
-    }}
- \end{itemize}
-{{/skills}}
+  \resumeSubHeadingListStart
+  {{#skills}}
+    \item \textbf{ {{name}} } : {{#details}} {{.}}{{^last}}, {{/last}}{{/details}}
+  {{/skills}}
+  \resumeSubHeadingListEnd
+{{/skills.length}}
 
-%-------------------------------------------
 \end{document}
