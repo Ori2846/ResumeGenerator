@@ -11,6 +11,10 @@ export default function Home() {
     experience: [],
     projects: [],
     skills: [],
+    name: '',
+    email: '',
+    phone: '',
+    address: ''
   });
   const [pdfUrl, setPdfUrl] = useState(null);
   const [currentSection, setCurrentSection] = useState('personal-info');
@@ -28,6 +32,10 @@ export default function Home() {
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const clearLocalStorage = () => {
+    localStorage.removeItem('formData');
   };
 
   const handleAddEducation = () => {
@@ -85,7 +93,6 @@ export default function Home() {
   };
 
   const handleAddSkill = () => {
-    const skillIndex = formData.skills.length;
     setFormData({
       ...formData,
       skills: [...formData.skills, { name: '', details: [''] }],
@@ -104,6 +111,24 @@ export default function Home() {
     setFormData({ ...formData, skills: newSkills });
   };
 
+  const handleRemoveSkillDetail = (skillIndex, detailIndex) => {
+    const newSkills = [...formData.skills];
+    newSkills[skillIndex].details.splice(detailIndex, 1);
+    setFormData({ ...formData, skills: newSkills });
+  };
+
+  const handleRemoveSkill = (index) => {
+    const newSkills = [...formData.skills];
+    newSkills.splice(index, 1);
+    setFormData({ ...formData, skills: newSkills });
+  };
+
+  const handleRemoveProjectDetail = (projIndex, detailIndex) => {
+    const newProjects = [...formData.projects];
+    newProjects[projIndex].details.splice(detailIndex, 1);
+    setFormData({ ...formData, projects: newProjects });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -115,6 +140,10 @@ export default function Home() {
       console.error('Error generating PDF:', error);
     }
   };
+
+  useEffect(() => {
+    console.log('Current formData:', formData);
+  }, [formData]);
 
   return (
     <div className="flex flex-col md:flex-row h-screen bg-gray-100">
@@ -170,14 +199,6 @@ export default function Home() {
                   <label htmlFor="address" className="block text-gray-700 font-medium">Address:</label>
                   <input type="text" className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" id="address" name="address" onChange={handleChange} value={formData.address || ''} placeholder="123 Main St, City, Country" />
                 </div>
-                <div className="mb-4">
-                  <label htmlFor="location" className="block text-gray-700 font-medium">Location:</label>
-                  <input type="text" className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" id="location" name="location" onChange={handleChange} value={formData.location || ''} placeholder="City, Country" />
-                </div>
-                <div className="mb-4">
-                  <label htmlFor="website" className="block text-gray-700 font-medium">Personal Website:</label>
-                  <input type="text" className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" id="website" name="website" onChange={handleChange} value={formData.website || ''} placeholder="https://www.johndoe.com" />
-                </div>
               </div>
             )}
 
@@ -192,6 +213,9 @@ export default function Home() {
 
             {currentSection === 'experience' && (
               <div className="col-span-1 md:col-span-2">
+                {formData.experience.length > 0 && (
+                  <h2 className="text-xl font-bold mb-4">Experiences</h2>
+                )}
                 {formData.experience.map((exp, index) => (
                   <div key={index} className="mb-6">
                     <div className="mb-4">
@@ -229,6 +253,9 @@ export default function Home() {
 
             {currentSection === 'education' && (
               <div className="col-span-1 md:col-span-2">
+                {formData.education.length > 0 && (
+                  <h2 className="text-xl font-bold mb-4">Education</h2>
+                )}
                 {formData.education.map((edu, index) => (
                   <div key={index} className="mb-6">
                     <div className="mb-4">
