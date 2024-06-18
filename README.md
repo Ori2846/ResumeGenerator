@@ -68,8 +68,8 @@ Follow these instructions to get a copy of the project up and running on your lo
 
 1. **Clone the repository:**
     ```sh
-    git clone https://github.com/Ori2846/resume-generator.git
-    cd resume-generator
+    git clone https://github.com/Ori2846/resumegenerator.git
+    cd resumegenerator
     ```
 
 2. **Install dependencies:**
