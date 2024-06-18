@@ -30,55 +30,8 @@ export async function POST(req) {
   try {
     const latexTemplate = await readFile(latexTemplatePath, 'utf8');
 
-    const skills = [];
-    let skillIndex = 0;
-    while (true) {
-      const skillName = data[`skill_name_${skillIndex}`];
-      if (!skillName) break;
-
-      const skillDetails = [];
-      let detailIndex = 0;
-      while (true) {
-        const detail = data[`skill_${skillIndex}_detail_${detailIndex}`];
-        if (!detail) break;
-        skillDetails.push(detail);
-        detailIndex += 1;
-      }
-
-      if (skillName && skillDetails.length > 0) {
-        skills.push({ name: skillName, details: skillDetails.join(', ') });
-      }
-      skillIndex += 1;
-    }
-
-    const education = (data.education || []).map((edu) => ({
-      institution: edu.institution || '',
-      city: edu.city || '',
-      degree: edu.degree || '',
-      dates: edu.dates || '',
-    }));
-
-    const experience = (data.experience || []).map((exp) => ({
-      title: exp.title || '',
-      company: exp.company || '',
-      location: exp.location || '',
-      dates: exp.dates || '',
-      responsibilities: (exp.responsibilities || []).map((resp) => resp || ''),
-    }));
-
-    const projects = (data.projects || []).map((proj) => ({
-      title: proj.title || '',
-      tech_stack: proj.tech_stack || '',
-      dates: proj.dates || '',
-      details: (proj.details || []).map((detail) => detail || ''),
-    }));
-
     const renderedLatex = Mustache.render(latexTemplate, {
       ...data,
-      skills: data.skills.map(skill => ({
-        ...skill,
-        details: skill.details.filter(detail => detail).join(', '),
-      })),
       education: data.education || [],
       experience: data.experience.map(exp => ({
         ...exp,
@@ -88,15 +41,18 @@ export async function POST(req) {
         ...proj,
         details: proj.details.filter(detail => detail),
       })) || [],
+      skills: data.skills.map(skill => ({
+        ...skill,
+        details: skill.details.filter(detail => detail),
+      })) || [],
     });
-    
 
     console.log('Rendered LaTeX:', renderedLatex);
 
     await writeFile(texFilePath, renderedLatex);
 
     await new Promise((resolve, reject) => {
-      const process = spawn('xelatex', ['-output-directory=public', texFilePath]);
+      const process = spawn('xelatex', ['-interaction=nonstopmode', '-output-directory=public', texFilePath]);
 
       let output = '';
       process.stdout.on('data', (data) => {
@@ -113,7 +69,7 @@ export async function POST(req) {
 
       process.on('close', (code) => {
         console.log('XeLaTeX process finished with code', code);
-        if (code !== 0) {
+        if (code !== 0 && !fs.existsSync(pdfFilePath)) {
           console.error('XeLaTeX process output:', output);
           reject(new Error(`XeLaTeX process exited with code ${code}. Output: ${output}`));
           return;
