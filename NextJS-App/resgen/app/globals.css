@@ -4,8 +4,8 @@
 
 /* Additional global styles */
 body {
-  @apply bg-gray-100 text-gray-800;
-  font-family: 'Arial', sans-serif;
+  @apply bg-gray-50 text-gray-900;
+  font-family: 'Inter', sans-serif;
   margin: 0;
   padding: 0;
   line-height: 1.5;
@@ -26,7 +26,7 @@ button {
 }
 
 .sidebar {
-  @apply w-full md:w-1/4 bg-gray-800 text-white p-4 flex flex-col;
+  @apply w-full md:w-1/4 bg-gray-900 text-white p-6 flex flex-col shadow-lg;
 }
 
 .sidebar-header {
@@ -34,7 +34,7 @@ button {
 }
 
 .sidebar-nav button {
-  @apply bg-gray-700 hover:bg-gray-600 py-2 px-4 rounded mb-2 text-left;
+  @apply py-3 px-6 rounded-lg transition-colors duration-300;
 }
 
 .main-content {
@@ -42,11 +42,11 @@ button {
 }
 
 .form {
-  @apply bg-white p-6 rounded shadow-md;
+  @apply bg-white p-8 rounded-lg shadow-lg;
 }
 
 .form-header {
-  @apply mb-6 text-center text-3xl font-bold text-gray-800;
+  @apply mb-6 text-center text-3xl font-extrabold text-gray-900;
 }
 
 .form-body {
@@ -58,11 +58,11 @@ button {
 }
 
 .form-control {
-  @apply mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50;
+  @apply mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50;
 }
 
 .btn {
-  @apply px-4 py-2 rounded;
+  @apply px-4 py-2 rounded-lg shadow transition-colors duration-300;
 }
 
 .btn-success {
@@ -82,11 +82,11 @@ button {
 }
 
 .pdf-iframe-container {
-  @apply w-full h-full bg-gray-300 rounded flex justify-center items-center;
+  @apply w-full h-full bg-gray-300 rounded-lg flex justify-center items-center shadow-inner;
 }
 
 .pdf-iframe {
-  @apply w-full h-full;
+  @apply w-full h-full rounded-lg;
 }
 
 .placeholder {

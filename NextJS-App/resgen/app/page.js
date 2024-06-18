@@ -146,58 +146,58 @@ export default function Home() {
   }, [formData]);
 
   return (
-    <div className="flex flex-col md:flex-row h-screen bg-gray-100">
-      <aside className="w-full md:w-1/4 bg-gray-800 text-white p-4 flex flex-col">
+    <div className="flex flex-col md:flex-row h-screen bg-gray-50">
+      <aside className="w-full md:w-1/4 bg-gray-900 text-white p-6 flex flex-col shadow-lg">
         <div className="text-center mb-8">
-          <h2 className="text-2xl font-bold">Resume Generator</h2>
+          <h2 className="text-3xl font-extrabold">Resume Generator</h2>
         </div>
-        <nav className="flex flex-col space-y-2">
-          <button onClick={() => setCurrentSection('personal-info')} className="bg-gray-700 hover:bg-gray-600 py-2 px-4 rounded">
+        <nav className="flex flex-col space-y-4">
+          <button onClick={() => setCurrentSection('personal-info')} className={`py-3 px-6 rounded-lg transition-colors duration-300 ${currentSection === 'personal-info' ? 'bg-gray-700' : 'bg-gray-800 hover:bg-gray-700'}`}>
             Personal Information
           </button>
-          <button onClick={() => setCurrentSection('summary')} className="bg-gray-700 hover:bg-gray-600 py-2 px-4 rounded">
+          <button onClick={() => setCurrentSection('summary')} className={`py-3 px-6 rounded-lg transition-colors duration-300 ${currentSection === 'summary' ? 'bg-gray-700' : 'bg-gray-800 hover:bg-gray-700'}`}>
             Summary
           </button>
-          <button onClick={() => setCurrentSection('experience')} className="bg-gray-700 hover:bg-gray-600 py-2 px-4 rounded">
+          <button onClick={() => setCurrentSection('experience')} className={`py-3 px-6 rounded-lg transition-colors duration-300 ${currentSection === 'experience' ? 'bg-gray-700' : 'bg-gray-800 hover:bg-gray-700'}`}>
             Experience
           </button>
-          <button onClick={() => setCurrentSection('education')} className="bg-gray-700 hover:bg-gray-600 py-2 px-4 rounded">
+          <button onClick={() => setCurrentSection('education')} className={`py-3 px-6 rounded-lg transition-colors duration-300 ${currentSection === 'education' ? 'bg-gray-700' : 'bg-gray-800 hover:bg-gray-700'}`}>
             Education
           </button>
-          <button onClick={() => setCurrentSection('skills')} className="bg-gray-700 hover:bg-gray-600 py-2 px-4 rounded">
+          <button onClick={() => setCurrentSection('skills')} className={`py-3 px-6 rounded-lg transition-colors duration-300 ${currentSection === 'skills' ? 'bg-gray-700' : 'bg-gray-800 hover:bg-gray-700'}`}>
             Skills
           </button>
-          <button onClick={() => setCurrentSection('projects')} className="bg-gray-700 hover:bg-gray-600 py-2 px-4 rounded">
+          <button onClick={() => setCurrentSection('projects')} className={`py-3 px-6 rounded-lg transition-colors duration-300 ${currentSection === 'projects' ? 'bg-gray-700' : 'bg-gray-800 hover:bg-gray-700'}`}>
             Projects
           </button>
-          <button onClick={() => setCurrentSection('template')} className="bg-gray-700 hover:bg-gray-600 py-2 px-4 rounded">
+          <button onClick={() => setCurrentSection('template')} className={`py-3 px-6 rounded-lg transition-colors duration-300 ${currentSection === 'template' ? 'bg-gray-700' : 'bg-gray-800 hover:bg-gray-700'}`}>
             Template
           </button>
         </nav>
       </aside>
       <main className="flex-1 p-8 overflow-y-auto">
-        <form onSubmit={handleSubmit} className="bg-white p-6 rounded shadow-md">
+        <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg shadow-lg">
           <div className="mb-6 text-center">
-            <h1 className="text-3xl font-bold text-gray-800">{currentSection.replace('-', ' ').toUpperCase()}</h1>
+            <h1 className="text-3xl font-extrabold text-gray-900">{currentSection.replace('-', ' ').toUpperCase()}</h1>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {currentSection === 'personal-info' && (
               <div className="col-span-1 md:col-span-2">
                 <div className="mb-4">
-                  <label htmlFor="name" className="block text-gray-700 font-medium">Name:</label>
-                  <input type="text" className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" id="name" name="name" onChange={handleChange} value={formData.name || ''} placeholder="John Doe" />
+                  <label htmlFor="name" className="block text-gray-700 font-semibold">Name:</label>
+                  <input type="text" className="mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" id="name" name="name" onChange={handleChange} value={formData.name || ''} placeholder="John Doe" />
                 </div>
                 <div className="mb-4">
-                  <label htmlFor="email" className="block text-gray-700 font-medium">Email:</label>
-                  <input type="email" className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" id="email" name="email" onChange={handleChange} value={formData.email || ''} placeholder="john.doe@example.com" />
+                  <label htmlFor="email" className="block text-gray-700 font-semibold">Email:</label>
+                  <input type="email" className="mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" id="email" name="email" onChange={handleChange} value={formData.email || ''} placeholder="john.doe@example.com" />
                 </div>
                 <div className="mb-4">
-                  <label htmlFor="phone" className="block text-gray-700 font-medium">Phone:</label>
-                  <input type="text" className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" id="phone" name="phone" onChange={handleChange} value={formData.phone || ''} placeholder="+1234567890" />
+                  <label htmlFor="phone" className="block text-gray-700 font-semibold">Phone:</label>
+                  <input type="text" className="mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" id="phone" name="phone" onChange={handleChange} value={formData.phone || ''} placeholder="+1234567890" />
                 </div>
                 <div className="mb-4">
-                  <label htmlFor="address" className="block text-gray-700 font-medium">Address:</label>
-                  <input type="text" className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" id="address" name="address" onChange={handleChange} value={formData.address || ''} placeholder="123 Main St, City, Country" />
+                  <label htmlFor="address" className="block text-gray-700 font-semibold">Address:</label>
+                  <input type="text" className="mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" id="address" name="address" onChange={handleChange} value={formData.address || ''} placeholder="123 Main St, City, Country" />
                 </div>
               </div>
             )}
@@ -205,8 +205,8 @@ export default function Home() {
             {currentSection === 'summary' && (
               <div className="col-span-1 md:col-span-2">
                 <div className="mb-4">
-                  <label htmlFor="summary" className="block text-gray-700 font-medium">Summary:</label>
-                  <textarea className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" id="summary" name="summary" onChange={handleChange} value={formData.summary || ''} placeholder="Professional summary..."></textarea>
+                  <label htmlFor="summary" className="block text-gray-700 font-semibold">Summary:</label>
+                  <textarea className="mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" id="summary" name="summary" onChange={handleChange} value={formData.summary || ''} placeholder="Professional summary..."></textarea>
                 </div>
               </div>
             )}
@@ -219,33 +219,33 @@ export default function Home() {
                 {formData.experience.map((exp, index) => (
                   <div key={index} className="mb-6">
                     <div className="mb-4">
-                      <label htmlFor={`experience_title_${index}`} className="block text-gray-700 font-medium">Title:</label>
-                      <input type="text" className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" id={`experience_title_${index}`} name={`experience_title_${index}`} onChange={(e) => handleExperienceChange(index, 'title', e.target.value)} value={exp.title} placeholder="Job Title" />
+                      <label htmlFor={`experience_title_${index}`} className="block text-gray-700 font-semibold">Title:</label>
+                      <input type="text" className="mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" id={`experience_title_${index}`} name={`experience_title_${index}`} onChange={(e) => handleExperienceChange(index, 'title', e.target.value)} value={exp.title} placeholder="Job Title" />
                     </div>
                     <div className="mb-4">
-                      <label htmlFor={`experience_company_${index}`} className="block text-gray-700 font-medium">Company:</label>
-                      <input type="text" className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" id={`experience_company_${index}`} name={`experience_company_${index}`} onChange={(e) => handleExperienceChange(index, 'company', e.target.value)} value={exp.company} placeholder="Company Name" />
+                      <label htmlFor={`experience_company_${index}`} className="block text-gray-700 font-semibold">Company:</label>
+                      <input type="text" className="mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" id={`experience_company_${index}`} name={`experience_company_${index}`} onChange={(e) => handleExperienceChange(index, 'company', e.target.value)} value={exp.company} placeholder="Company Name" />
                     </div>
                     <div className="mb-4">
-                      <label htmlFor={`experience_location_${index}`} className="block text-gray-700 font-medium">Location:</label>
-                      <input type="text" className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" id={`experience_location_${index}`} name={`experience_location_${index}`} onChange={(e) => handleExperienceChange(index, 'location', e.target.value)} value={exp.location} placeholder="Location" />
+                      <label htmlFor={`experience_location_${index}`} className="block text-gray-700 font-semibold">Location:</label>
+                      <input type="text" className="mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" id={`experience_location_${index}`} name={`experience_location_${index}`} onChange={(e) => handleExperienceChange(index, 'location', e.target.value)} value={exp.location} placeholder="Location" />
                     </div>
                     <div className="mb-4">
-                      <label htmlFor={`experience_dates_${index}`} className="block text-gray-700 font-medium">Dates:</label>
-                      <input type="text" className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" id={`experience_dates_${index}`} name={`experience_dates_${index}`} onChange={(e) => handleExperienceChange(index, 'dates', e.target.value)} value={exp.dates} placeholder="MM/YYYY - MM/YYYY" />
+                      <label htmlFor={`experience_dates_${index}`} className="block text-gray-700 font-semibold">Dates:</label>
+                      <input type="text" className="mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" id={`experience_dates_${index}`} name={`experience_dates_${index}`} onChange={(e) => handleExperienceChange(index, 'dates', e.target.value)} value={exp.dates} placeholder="MM/YYYY - MM/YYYY" />
                     </div>
                     {exp.responsibilities.map((res, resIndex) => (
-                      <div key={resIndex} className="mb-4">
-                        <label htmlFor={`experience_responsibilities_${index}_${resIndex}`} className="block text-gray-700 font-medium">Responsibility:</label>
-                        <input type="text" className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" id={`experience_responsibilities_${index}_${resIndex}`} name={`experience_responsibilities_${index}_${resIndex}`} onChange={(e) => handleExperienceResponsibilityChange(index, resIndex, e.target.value)} value={res} placeholder="Responsibility" />
+                      <div key={resIndex} className="mb-4 flex items-center">
+                        <label htmlFor={`experience_responsibilities_${index}_${resIndex}`} className="block text-gray-700 font-semibold">Responsibility:</label>
+                        <input type="text" className="mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" id={`experience_responsibilities_${index}_${resIndex}`} name={`experience_responsibilities_${index}_${resIndex}`} onChange={(e) => handleExperienceResponsibilityChange(index, resIndex, e.target.value)} value={res} placeholder="Responsibility" />
                       </div>
                     ))}
-                    <button type="button" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" onClick={() => handleExperienceResponsibilityChange(index, exp.responsibilities.length, '')}>
+                    <button type="button" className="bg-blue-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-600 transition-colors duration-300" onClick={() => handleExperienceResponsibilityChange(index, exp.responsibilities.length, '')}>
                       Add Responsibility
                     </button>
                   </div>
                 ))}
-                <button type="button" className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600" onClick={handleAddExperience}>
+                <button type="button" className="bg-green-500 text-white px-4 py-2 rounded-lg shadow hover:bg-green-600 transition-colors duration-300" onClick={handleAddExperience}>
                   Add Experience
                 </button>
               </div>
@@ -259,24 +259,24 @@ export default function Home() {
                 {formData.education.map((edu, index) => (
                   <div key={index} className="mb-6">
                     <div className="mb-4">
-                      <label htmlFor={`education_institution_${index}`} className="block text-gray-700 font-medium">Institution:</label>
-                      <input type="text" className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" id={`education_institution_${index}`} name={`education_institution_${index}`} onChange={(e) => handleEducationChange(index, 'institution', e.target.value)} value={edu.institution} placeholder="Institution Name" />
+                      <label htmlFor={`education_institution_${index}`} className="block text-gray-700 font-semibold">Institution:</label>
+                      <input type="text" className="mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" id={`education_institution_${index}`} name={`education_institution_${index}`} onChange={(e) => handleEducationChange(index, 'institution', e.target.value)} value={edu.institution} placeholder="Institution Name" />
                     </div>
                     <div className="mb-4">
-                      <label htmlFor={`education_city_${index}`} className="block text-gray-700 font-medium">City:</label>
-                      <input type="text" className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" id={`education_city_${index}`} name={`education_city_${index}`} onChange={(e) => handleEducationChange(index, 'city', e.target.value)} value={edu.city} placeholder="City" />
+                      <label htmlFor={`education_city_${index}`} className="block text-gray-700 font-semibold">City:</label>
+                      <input type="text" className="mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" id={`education_city_${index}`} name={`education_city_${index}`} onChange={(e) => handleEducationChange(index, 'city', e.target.value)} value={edu.city} placeholder="City" />
                     </div>
                     <div className="mb-4">
-                      <label htmlFor={`education_degree_${index}`} className="block text-gray-700 font-medium">Degree:</label>
-                      <input type="text" className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" id={`education_degree_${index}`} name={`education_degree_${index}`} onChange={(e) => handleEducationChange(index, 'degree', e.target.value)} value={edu.degree} placeholder="Degree" />
+                      <label htmlFor={`education_degree_${index}`} className="block text-gray-700 font-semibold">Degree:</label>
+                      <input type="text" className="mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" id={`education_degree_${index}`} name={`education_degree_${index}`} onChange={(e) => handleEducationChange(index, 'degree', e.target.value)} value={edu.degree} placeholder="Degree" />
                     </div>
                     <div className="mb-4">
-                      <label htmlFor={`education_dates_${index}`} className="block text-gray-700 font-medium">Dates:</label>
-                      <input type="text" className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" id={`education_dates_${index}`} name={`education_dates_${index}`} onChange={(e) => handleEducationChange(index, 'dates', e.target.value)} value={edu.dates} placeholder="MM/YYYY - MM/YYYY" />
+                      <label htmlFor={`education_dates_${index}`} className="block text-gray-700 font-semibold">Dates:</label>
+                      <input type="text" className="mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" id={`education_dates_${index}`} name={`education_dates_${index}`} onChange={(e) => handleEducationChange(index, 'dates', e.target.value)} value={edu.dates} placeholder="MM/YYYY - MM/YYYY" />
                     </div>
                   </div>
                 ))}
-                <button type="button" className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600" onClick={handleAddEducation}>
+                <button type="button" className="bg-green-500 text-white px-4 py-2 rounded-lg shadow hover:bg-green-600 transition-colors duration-300" onClick={handleAddEducation}>
                   Add Education
                 </button>
               </div>
@@ -285,32 +285,32 @@ export default function Home() {
             {currentSection === 'skills' && (
               <div className="col-span-1 md:col-span-2">
                 <div className="mb-4">
-                  <label htmlFor="skills_header" className="block text-gray-700 font-medium">Skills Header:</label>
-                  <input type="text" className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" id="skills_header" name="skills_header" onChange={handleChange} value={formData.skills_header || 'Skills'} placeholder="Skills Header" />
+                  <label htmlFor="skills_header" className="block text-gray-700 font-semibold">Skills Header:</label>
+                  <input type="text" className="mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" id="skills_header" name="skills_header" onChange={handleChange} value={formData.skills_header || 'Skills'} placeholder="Skills Header" />
                 </div>
                 {formData.skills.map((skill, index) => (
                   <div key={index} className="mb-6">
                     <div className="mb-4">
-                      <label htmlFor={`skill_name_${index}`} className="block text-gray-700 font-medium">Skill Name:</label>
-                      <input type="text" className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" id={`skill_name_${index}`} name={`skill_name_${index}`} onChange={(e) => handleSkillChange(index, 'name', e.target.value)} value={skill.name} placeholder="Skill Name" />
+                      <label htmlFor={`skill_name_${index}`} className="block text-gray-700 font-semibold">Skill Name:</label>
+                      <input type="text" className="mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" id={`skill_name_${index}`} name={`skill_name_${index}`} onChange={(e) => handleSkillChange(index, 'name', e.target.value)} value={skill.name} placeholder="Skill Name" />
                     </div>
                     {skill.details.map((detail, detailIndex) => (
                       <div key={detailIndex} className="mb-4 flex items-center">
-                        <input type="text" className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" id={`skill_${index}_detail_${detailIndex}`} name={`skill_${index}_detail_${detailIndex}`} onChange={(e) => handleSkillDetailChange(index, detailIndex, e.target.value)} value={detail} placeholder="Detail" />
-                        <button type="button" className="bg-red-500 text-white ml-2 px-4 py-2 rounded hover:bg-red-600" onClick={() => handleRemoveSkillDetail(index, detailIndex)}>
+                        <input type="text" className="mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" id={`skill_${index}_detail_${detailIndex}`} name={`skill_${index}_detail_${detailIndex}`} onChange={(e) => handleSkillDetailChange(index, detailIndex, e.target.value)} value={detail} placeholder="Detail" />
+                        <button type="button" className="bg-red-500 text-white ml-2 px-4 py-2 rounded-lg shadow hover:bg-red-600 transition-colors duration-300" onClick={() => handleRemoveSkillDetail(index, detailIndex)}>
                           -
                         </button>
                       </div>
                     ))}
-                    <button type="button" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" onClick={() => handleSkillDetailChange(index, skill.details.length, '')}>
+                    <button type="button" className="bg-blue-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-600 transition-colors duration-300" onClick={() => handleSkillDetailChange(index, skill.details.length, '')}>
                       +
                     </button>
-                    <button type="button" className="bg-red-500 text-white ml-2 px-4 py-2 rounded hover:bg-red-600" onClick={() => handleRemoveSkill(index)}>
+                    <button type="button" className="bg-red-500 text-white ml-2 px-4 py-2 rounded-lg shadow hover:bg-red-600 transition-colors duration-300" onClick={() => handleRemoveSkill(index)}>
                       Remove Skill
                     </button>
                   </div>
                 ))}
-                <button type="button" className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600" onClick={handleAddSkill}>
+                <button type="button" className="bg-green-500 text-white px-4 py-2 rounded-lg shadow hover:bg-green-600 transition-colors duration-300" onClick={handleAddSkill}>
                   Add Skill
                 </button>
               </div>
@@ -321,32 +321,32 @@ export default function Home() {
                 {formData.projects.map((proj, index) => (
                   <div key={index} className="mb-6">
                     <div className="mb-4">
-                      <label htmlFor={`project_title_${index}`} className="block text-gray-700 font-medium">Title:</label>
-                      <input type="text" className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" id={`project_title_${index}`} name={`project_title_${index}`} onChange={(e) => handleProjectChange(index, 'title', e.target.value)} value={proj.title} placeholder="Project Title" />
+                      <label htmlFor={`project_title_${index}`} className="block text-gray-700 font-semibold">Title:</label>
+                      <input type="text" className="mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" id={`project_title_${index}`} name={`project_title_${index}`} onChange={(e) => handleProjectChange(index, 'title', e.target.value)} value={proj.title} placeholder="Project Title" />
                     </div>
                     <div className="mb-4">
-                      <label htmlFor={`project_tech_stack_${index}`} className="block text-gray-700 font-medium">Tech Stack:</label>
-                      <input type="text" className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" id={`project_tech_stack_${index}`} name={`project_tech_stack_${index}`} onChange={(e) => handleProjectChange(index, 'tech_stack', e.target.value)} value={proj.tech_stack} placeholder="Tech Stack" />
+                      <label htmlFor={`project_tech_stack_${index}`} className="block text-gray-700 font-semibold">Tech Stack:</label>
+                      <input type="text" className="mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" id={`project_tech_stack_${index}`} name={`project_tech_stack_${index}`} onChange={(e) => handleProjectChange(index, 'tech_stack', e.target.value)} value={proj.tech_stack} placeholder="Tech Stack" />
                     </div>
                     <div className="mb-4">
-                      <label htmlFor={`project_dates_${index}`} className="block text-gray-700 font-medium">Dates:</label>
-                      <input type="text" className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" id={`project_dates_${index}`} name={`project_dates_${index}`} onChange={(e) => handleProjectChange(index, 'dates', e.target.value)} value={proj.dates} placeholder="MM/YYYY - MM/YYYY" />
+                      <label htmlFor={`project_dates_${index}`} className="block text-gray-700 font-semibold">Dates:</label>
+                      <input type="text" className="mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" id={`project_dates_${index}`} name={`project_dates_${index}`} onChange={(e) => handleProjectChange(index, 'dates', e.target.value)} value={proj.dates} placeholder="MM/YYYY - MM/YYYY" />
                     </div>
                     {proj.details.map((detail, detailIndex) => (
                       <div key={detailIndex} className="mb-4 flex items-center">
-                        <label htmlFor={`project_details_${index}_${detailIndex}`} className="block text-gray-700 font-medium">Detail:</label>
-                        <input type="text" className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" id={`project_details_${index}_${detailIndex}`} name={`project_details_${index}_${detailIndex}`} onChange={(e) => handleProjectDetailChange(index, detailIndex, e.target.value)} value={detail} placeholder="Detail" />
-                        <button type="button" className="bg-red-500 text-white ml-2 px-4 py-2 rounded hover:bg-red-600" onClick={() => handleRemoveProjectDetail(index, detailIndex)}>
+                        <label htmlFor={`project_details_${index}_${detailIndex}`} className="block text-gray-700 font-semibold">Detail:</label>
+                        <input type="text" className="mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" id={`project_details_${index}_${detailIndex}`} name={`project_details_${index}_${detailIndex}`} onChange={(e) => handleProjectDetailChange(index, detailIndex, e.target.value)} value={detail} placeholder="Detail" />
+                        <button type="button" className="bg-red-500 text-white ml-2 px-4 py-2 rounded-lg shadow hover:bg-red-600 transition-colors duration-300" onClick={() => handleRemoveProjectDetail(index, detailIndex)}>
                           -
                         </button>
                       </div>
                     ))}
-                    <button type="button" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" onClick={() => handleProjectDetailChange(index, proj.details.length, '')}>
+                    <button type="button" className="bg-blue-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-600 transition-colors duration-300" onClick={() => handleProjectDetailChange(index, proj.details.length, '')}>
                       Add Detail
                     </button>
                   </div>
                 ))}
-                <button type="button" className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600" onClick={handleAddProject}>
+                <button type="button" className="bg-green-500 text-white px-4 py-2 rounded-lg shadow hover:bg-green-600 transition-colors duration-300" onClick={handleAddProject}>
                   Add Project
                 </button>
               </div>
@@ -355,8 +355,8 @@ export default function Home() {
             {currentSection === 'template' && (
               <div className="col-span-1 md:col-span-2">
                 <div className="mb-4">
-                  <label htmlFor="template" className="block text-gray-700 font-medium">Choose Template:</label>
-                  <select className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" id="template" name="template" onChange={handleChange} value={formData.template || 'template1'}>
+                  <label htmlFor="template" className="block text-gray-700 font-semibold">Choose Template:</label>
+                  <select className="mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" id="template" name="template" onChange={handleChange} value={formData.template || 'template1'}>
                     <option value="template1">Template 1</option>
                     <option value="template2">Template 2</option>
                   </select>
@@ -364,15 +364,15 @@ export default function Home() {
               </div>
             )}
           </div>
-          <button type="submit" className="bg-green-500 text-white px-6 py-3 rounded mt-6 hover:bg-green-600">
+          <button type="submit" className="bg-green-500 text-white px-6 py-3 rounded-lg mt-6 shadow hover:bg-green-600 transition-colors duration-300">
             Generate Resume
           </button>
         </form>
       </main>
       <section className="w-full md:w-1/2 p-8 bg-gray-100 flex justify-center items-center">
-        <div className="w-full h-full bg-gray-300 rounded flex justify-center items-center">
+        <div className="w-full h-full bg-gray-300 rounded-lg flex justify-center items-center shadow-inner">
           {pdfUrl ? (
-            <iframe src={pdfUrl} type="application/pdf" className="w-full h-full"></iframe>
+            <iframe src={pdfUrl} type="application/pdf" className="w-full h-full rounded-lg"></iframe>
           ) : (
             <div className="text-gray-700 text-lg">PDF will appear here</div>
           )}
