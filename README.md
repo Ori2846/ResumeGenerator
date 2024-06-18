@@ -1,16 +1,30 @@
 # Resume Generator
 
-A web application for generating resumes using customizable templates. The application allows users to input their personal information, education, experience, projects, and skills. It saves form data in the browser's local storage and generates a PDF resume using LaTeX.
+Resume Generator is a sleek web app for creating professional resumes. Input your details, education, experience, projects, and skills to generate customized PDF resumes with LaTeX templates. Built with React.js, Next.js, and Node.js, it offers a seamless, user-friendly experience.
 
 ![Screenshot 2024-06-09 235616](https://github.com/Ori2846/ResumeGenerator/assets/74078771/f6acf40b-03aa-4135-9d11-317ede74097f)
 
-## Why Create This?
+## Table of Contents
+
++ [About](#about)
++ [Features](#features)
++ [Technologies Used](#technologies-used)
++ [Getting Started](#getting-started)
+    + [Prerequisites](#prerequisites)
+    + [Installation](#installation)
++ [Deployment](#deployment)
++ [Local Development](#local-development)
++ [Usage](#usage)
++ [API](#api)
++ [File Structure](#file-structure)
++ [Contributing](#contributing)
++ [Acknowledgments](#acknowledgments)
++ [Future Plans](#future-plans)
++ [Like this package? Star it!](#like-this-package-star-it)
+
+## About
 
 Creating a resume can be a daunting task, especially when you need to tailor it for different job applications. This web application simplifies the process by providing customizable templates and a user-friendly interface to input your details. The goal is to streamline resume creation, making it efficient and accessible for everyone.
-
-## Overleaf and Its Limitations
-
-Overleaf is a popular online LaTeX editor that can be used for creating professional resumes. It offers a variety of templates and powerful typesetting capabilities. However, switching between different templates in Overleaf can be challenging because you have to manually re-enter all your information each time you switch templates. This process is time-consuming and prone to errors, making it less efficient for users who want to experiment with different resume formats quickly.
 
 ## Features
 
@@ -104,4 +118,7 @@ Contributions are welcome! Feel free to open issues or submit pull requests.
 - **Additional Templates:** Adding more customizable templates.
 - **Enhanced Features:** Incorporating new features based on user feedback to improve the resume creation process.
 - **Upload Overleaf Templates:** Enable users to upload their own Overleaf templates for use within this application. Users will be able to export their Overleaf LaTeX templates, upload them to the application, and have their resume data automatically integrated. This will make it easier to switch templates without re-entering all the information.
-    
+
+## Like this package? Star it!
+
+If you find this project helpful, please consider giving it a star on GitHub!
