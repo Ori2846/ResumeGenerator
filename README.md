@@ -1,10 +1,10 @@
 # Resume Generator
 
-Resume Generator is a sleek web app for creating professional resumes. Input your details, education, experience, projects, and skills to generate customized PDF resumes with LaTeX templates. Built with React.js, Next.js, and Node.js, it offers a seamless, user-friendly experience.
+**Resume Generator** is a sleek web app for creating professional resumes. Input your details, education, experience, projects, and skills to generate customized PDF resumes with LaTeX templates. Built with **React.js**, **Next.js**, and **Node.js**, it offers a seamless, user-friendly experience.
 
 ![image](https://github.com/Ori2846/ResumeGenerator/assets/74078771/ad2dae12-c601-4734-a3ee-10f14b6b8c41)
 
-# Example Resume
+## Example Resume
 
 <img src="https://github.com/Ori2846/ResumeGenerator/assets/74078771/52bf7adf-2ef4-4542-9622-0af12f98ae5c" alt="Screenshot" width="650" />
 
@@ -26,6 +26,8 @@ Resume Generator is a sleek web app for creating professional resumes. Input you
 + [Future Plans](#future-plans)
 + [Bugs to Fix](#bugs-to-fix)
 + [Like this package? Star it!](#like-this-package-star-it)
+
+---
 
 ## About
 
@@ -65,26 +67,51 @@ Follow these instructions to get a copy of the project up and running on your lo
 ### Installation
 
 1. **Clone the repository:**
-
-    git clone https://github.com/your-username/resume-generator.git
+    ```sh
+    git clone https://github.com/Ori2846/resume-generator.git
     cd resume-generator
+    ```
 
 2. **Install dependencies:**
+    ```sh
+    npm install mustache next react react-dom
+    ```
 
-    npm install
-
-3. **Start the development server:**
-
+4. **Start the development server:**
+    ```sh
     npm run dev
+    ```
 
-4. **Open your browser and navigate to:** http://localhost:3000 to see the application running.
+5. **Open your browser and navigate to:** [http://localhost:3000](http://localhost:3000) to see the application running.
+
+## Installing LaTeX
+
+MiKTeX is a popular LaTeX distribution for Windows that can also be used in a server environment. For a Node.js/Next.js project, MiKTeX can be used to compile LaTeX documents into PDFs. Below are the steps to set up and use MiKTeX in your project.
+
+### Setting Up MiKTeX
+
+1. **Install MiKTeX**:
+   Download and install MiKTeX from the official website: [MiKTeX Downloads](https://miktex.org/download).
+
+2. **Add MiKTeX to System PATH**:
+   Ensure that the MiKTeX binaries are added to your system's PATH environment variable so that you can run `pdflatex` from the command line or a Node.js script.
+
+### Using MiKTeX with Node.js
+
+1. **Install Dependencies**:
+   You need to install `mustache` for templating.
+
+   ```sh
+   npm install mustache
+   ```
 
 ### Deployment
 
 To build the project for production, run:
-
-    npm run build
-    npm start
+```sh
+npm run build
+npm start
+```
 
 ## Local Development
 
@@ -103,11 +130,13 @@ Use the Next.js development server and ensure a LaTeX environment with xelatex i
 
 ## File Structure
 
-- **pages/**: Contains Next.js pages.
-  - **index.js**: The main form page.
-- **public/**: Static files, including LaTeX templates.
-- **styles/**: CSS files for styling.
-- **api/**: API route for PDF generation.
+| Directory | Description |
+| --- | --- |
+| **pages/** | Contains Next.js pages. |
+| **index.js** | The main form page. |
+| **public/** | Static files, including LaTeX templates. |
+| **styles/** | CSS files for styling. |
+| **api/** | API route for PDF generation. |
 
 ## Contributing
 
