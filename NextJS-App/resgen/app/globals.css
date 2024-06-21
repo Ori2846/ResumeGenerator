@@ -26,7 +26,7 @@ button {
 }
 
 .sidebar {
-  @apply w-full md:w-1/4 bg-gray-900 text-white p-6 flex flex-col shadow-lg;
+  @apply w-full md:w-1/4 bg-gray-900 text-white p-4 md:p-6 flex flex-col shadow-lg;
 }
 
 .sidebar-header {
@@ -34,23 +34,23 @@ button {
 }
 
 .sidebar-nav button {
-  @apply py-3 px-6 rounded-lg transition-colors duration-300;
+  @apply py-2 md:py-3 px-4 md:px-6 rounded-lg transition-colors duration-300;
 }
 
 .main-content {
-  @apply flex-1 p-8 overflow-y-auto;
+  @apply flex-1 p-4 md:p-8 overflow-y-auto;
 }
 
 .form {
-  @apply bg-white p-8 rounded-lg shadow-lg;
+  @apply bg-white p-4 md:p-8 rounded-lg shadow-lg;
 }
 
 .form-header {
-  @apply mb-6 text-center text-3xl font-extrabold text-gray-900;
+  @apply mb-6 text-center text-2xl md:text-3xl font-extrabold text-gray-900;
 }
 
 .form-body {
-  @apply grid grid-cols-1 md:grid-cols-2 gap-6;
+  @apply grid grid-cols-1 gap-4 md:gap-6;
 }
 
 .form-group {
@@ -78,7 +78,7 @@ button {
 }
 
 .pdf-container {
-  @apply w-full md:w-1/2 p-8 bg-gray-100 flex justify-center items-center;
+  @apply w-full md:w-1/2 p-4 md:p-8 bg-gray-100 flex justify-center items-center;
 }
 
 .pdf-iframe-container {

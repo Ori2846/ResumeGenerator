@@ -18,6 +18,7 @@ export default function Home() {
   });
   const [pdfUrl, setPdfUrl] = useState(null);
   const [currentSection, setCurrentSection] = useState('personal-info');
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   useEffect(() => {
     const savedFormData = JSON.parse(localStorage.getItem('formData'));
@@ -147,42 +148,52 @@ export default function Home() {
 
   return (
     <div className="flex flex-col md:flex-row h-screen bg-gray-50">
-      <aside className="w-full md:w-1/4 bg-gray-900 text-white p-6 flex flex-col shadow-lg">
+      <button
+        className="md:hidden bg-gray-900 text-white p-4"
+        onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+      >
+        Menu
+      </button>
+      <aside
+        className={`fixed inset-0 z-40 transform md:relative md:transform-none transition-transform duration-300 ${
+          isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
+        } md:translate-x-0 md:w-1/4 bg-gray-900 text-white p-4 md:p-6 flex flex-col shadow-lg max-h-screen overflow-y-auto`}
+      >
         <div className="text-center mb-8">
           <h2 className="text-3xl font-extrabold">Resume Generator</h2>
         </div>
         <nav className="flex flex-col space-y-4">
-          <button onClick={() => setCurrentSection('personal-info')} className={`py-3 px-6 rounded-lg transition-colors duration-300 ${currentSection === 'personal-info' ? 'bg-gray-700' : 'bg-gray-800 hover:bg-gray-700'}`}>
+          <button onClick={() => { setCurrentSection('personal-info'); setIsSidebarOpen(false); }} className={`py-2 md:py-3 px-4 md:px-6 rounded-lg transition-colors duration-300 ${currentSection === 'personal-info' ? 'bg-gray-700' : 'bg-gray-800 hover:bg-gray-700'}`}>
             Personal Information
           </button>
-          <button onClick={() => setCurrentSection('summary')} className={`py-3 px-6 rounded-lg transition-colors duration-300 ${currentSection === 'summary' ? 'bg-gray-700' : 'bg-gray-800 hover:bg-gray-700'}`}>
+          <button onClick={() => { setCurrentSection('summary'); setIsSidebarOpen(false); }} className={`py-2 md:py-3 px-4 md:px-6 rounded-lg transition-colors duration-300 ${currentSection === 'summary' ? 'bg-gray-700' : 'bg-gray-800 hover:bg-gray-700'}`}>
             Summary
           </button>
-          <button onClick={() => setCurrentSection('experience')} className={`py-3 px-6 rounded-lg transition-colors duration-300 ${currentSection === 'experience' ? 'bg-gray-700' : 'bg-gray-800 hover:bg-gray-700'}`}>
+          <button onClick={() => { setCurrentSection('experience'); setIsSidebarOpen(false); }} className={`py-2 md:py-3 px-4 md:px-6 rounded-lg transition-colors duration-300 ${currentSection === 'experience' ? 'bg-gray-700' : 'bg-gray-800 hover:bg-gray-700'}`}>
             Experience
           </button>
-          <button onClick={() => setCurrentSection('education')} className={`py-3 px-6 rounded-lg transition-colors duration-300 ${currentSection === 'education' ? 'bg-gray-700' : 'bg-gray-800 hover:bg-gray-700'}`}>
+          <button onClick={() => { setCurrentSection('education'); setIsSidebarOpen(false); }} className={`py-2 md:py-3 px-4 md:px-6 rounded-lg transition-colors duration-300 ${currentSection === 'education' ? 'bg-gray-700' : 'bg-gray-800 hover:bg-gray-700'}`}>
             Education
           </button>
-          <button onClick={() => setCurrentSection('skills')} className={`py-3 px-6 rounded-lg transition-colors duration-300 ${currentSection === 'skills' ? 'bg-gray-700' : 'bg-gray-800 hover:bg-gray-700'}`}>
+          <button onClick={() => { setCurrentSection('skills'); setIsSidebarOpen(false); }} className={`py-2 md:py-3 px-4 md:px-6 rounded-lg transition-colors duration-300 ${currentSection === 'skills' ? 'bg-gray-700' : 'bg-gray-800 hover:bg-gray-700'}`}>
             Skills
           </button>
-          <button onClick={() => setCurrentSection('projects')} className={`py-3 px-6 rounded-lg transition-colors duration-300 ${currentSection === 'projects' ? 'bg-gray-700' : 'bg-gray-800 hover:bg-gray-700'}`}>
+          <button onClick={() => { setCurrentSection('projects'); setIsSidebarOpen(false); }} className={`py-2 md:py-3 px-4 md:px-6 rounded-lg transition-colors duration-300 ${currentSection === 'projects' ? 'bg-gray-700' : 'bg-gray-800 hover:bg-gray-700'}`}>
             Projects
           </button>
-          <button onClick={() => setCurrentSection('template')} className={`py-3 px-6 rounded-lg transition-colors duration-300 ${currentSection === 'template' ? 'bg-gray-700' : 'bg-gray-800 hover:bg-gray-700'}`}>
+          <button onClick={() => { setCurrentSection('template'); setIsSidebarOpen(false); }} className={`py-2 md:py-3 px-4 md:px-6 rounded-lg transition-colors duration-300 ${currentSection === 'template' ? 'bg-gray-700' : 'bg-gray-800 hover:bg-gray-700'}`}>
             Template
           </button>
         </nav>
       </aside>
-      <main className="flex-1 p-8 overflow-y-auto">
-        <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg shadow-lg">
+      <main className="flex-1 p-4 md:p-8 overflow-y-auto mt-16 md:mt-0">
+        <form onSubmit={handleSubmit} className="bg-white p-4 md:p-8 rounded-lg shadow-lg">
           <div className="mb-6 text-center">
-            <h1 className="text-3xl font-extrabold text-gray-900">{currentSection.replace('-', ' ').toUpperCase()}</h1>
+            <h1 className="text-2xl md:text-3xl font-extrabold text-gray-900">{currentSection.replace('-', ' ').toUpperCase()}</h1>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 gap-4 md:gap-6">
             {currentSection === 'personal-info' && (
-              <div className="col-span-1 md:col-span-2">
+              <div className="col-span-1">
                 <div className="mb-4">
                   <label htmlFor="name" className="block text-gray-700 font-semibold">Name:</label>
                   <input type="text" className="mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" id="name" name="name" onChange={handleChange} value={formData.name || ''} placeholder="John Doe" />
@@ -203,7 +214,7 @@ export default function Home() {
             )}
 
             {currentSection === 'summary' && (
-              <div className="col-span-1 md:col-span-2">
+              <div className="col-span-1">
                 <div className="mb-4">
                   <label htmlFor="summary" className="block text-gray-700 font-semibold">Summary:</label>
                   <textarea className="mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" id="summary" name="summary" onChange={handleChange} value={formData.summary || ''} placeholder="Professional summary..."></textarea>
@@ -212,7 +223,7 @@ export default function Home() {
             )}
 
             {currentSection === 'experience' && (
-              <div className="col-span-1 md:col-span-2">
+              <div className="col-span-1">
                 {formData.experience.length > 0 && (
                   <h2 className="text-xl font-bold mb-4">Experiences</h2>
                 )}
@@ -252,7 +263,7 @@ export default function Home() {
             )}
 
             {currentSection === 'education' && (
-              <div className="col-span-1 md:col-span-2">
+              <div className="col-span-1">
                 {formData.education.length > 0 && (
                   <h2 className="text-xl font-bold mb-4">Education</h2>
                 )}
@@ -283,7 +294,7 @@ export default function Home() {
             )}
 
             {currentSection === 'skills' && (
-              <div className="col-span-1 md:col-span-2">
+              <div className="col-span-1">
                 <div className="mb-4">
                   <label htmlFor="skills_header" className="block text-gray-700 font-semibold">Skills Header:</label>
                   <input type="text" className="mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" id="skills_header" name="skills_header" onChange={handleChange} value={formData.skills_header || 'Skills'} placeholder="Skills Header" />
@@ -317,7 +328,7 @@ export default function Home() {
             )}
 
             {currentSection === 'projects' && (
-              <div className="col-span-1 md:col-span-2">
+              <div className="col-span-1">
                 {formData.projects.map((proj, index) => (
                   <div key={index} className="mb-6">
                     <div className="mb-4">
@@ -353,7 +364,7 @@ export default function Home() {
             )}
 
             {currentSection === 'template' && (
-              <div className="col-span-1 md:col-span-2">
+              <div className="col-span-1">
                 <div className="mb-4">
                   <label htmlFor="template" className="block text-gray-700 font-semibold">Choose Template:</label>
                   <select className="mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" id="template" name="template" onChange={handleChange} value={formData.template || 'template1'}>
@@ -369,7 +380,7 @@ export default function Home() {
           </button>
         </form>
       </main>
-      <section className="w-full md:w-1/2 p-8 bg-gray-100 flex justify-center items-center">
+      <section className="w-full md:w-1/2 p-4 md:p-8 bg-gray-100 flex justify-center items-center">
         <div className="w-full h-full bg-gray-300 rounded-lg flex justify-center items-center shadow-inner">
           {pdfUrl ? (
             <iframe src={pdfUrl} type="application/pdf" className="w-full h-full rounded-lg"></iframe>
