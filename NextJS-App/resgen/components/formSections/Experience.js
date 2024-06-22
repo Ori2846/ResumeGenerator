@@ -2,8 +2,10 @@
 export default function Experience({ formData, handleExperienceChange, handleExperienceResponsibilityChange, handleAddExperience, handleRemoveExperience, handleRemoveResponsibility }) {
   return (
     <div className="w-full">
+      <h2 className="text-xl font-bold mb-4">Experience</h2>
       {formData.experience.map((exp, index) => (
-        <div key={index} className="form-group">
+        <div key={index} className="form-group mb-4">
+          <h3 className="text-lg font-semibold">Experience {index + 1}</h3>
           <div className="form-group">
             <label htmlFor={`experience_title_${index}`} className="form-label">Title:</label>
             <input type="text" className="form-control" id={`experience_title_${index}`} name={`experience_title_${index}`} onChange={(e) => handleExperienceChange(index, 'title', e.target.value)} value={exp.title} placeholder="Job Title" />

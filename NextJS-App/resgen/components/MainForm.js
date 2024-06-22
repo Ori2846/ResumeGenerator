@@ -1,4 +1,3 @@
-// MainForm.js
 import PersonalInfo from './formSections/PersonalInfo';
 import Summary from './formSections/Summary';
 import Experience from './formSections/Experience';

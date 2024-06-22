@@ -2,8 +2,10 @@
 export default function Education({ formData, handleEducationChange, handleAddEducation, handleRemoveEducation }) {
   return (
     <div className="w-full">
+      <h2 className="text-xl font-bold mb-4">Education</h2>
       {formData.education.map((edu, index) => (
-        <div key={index} className="form-group">
+        <div key={index} className="form-group mb-4">
+          <h3 className="text-lg font-semibold">Education {index + 1}</h3>
           <div className="form-group">
             <label htmlFor={`education_institution_${index}`} className="form-label">Institution:</label>
             <input type="text" className="form-control" id={`education_institution_${index}`} name={`education_institution_${index}`} onChange={(e) => handleEducationChange(index, 'institution', e.target.value)} value={edu.institution} placeholder="Institution Name" />

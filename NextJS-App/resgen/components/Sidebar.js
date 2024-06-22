@@ -35,18 +35,19 @@ export default function Sidebar({ currentSection, setCurrentSection, isSidebarOp
         <button onClick={() => { setCurrentSection('summary'); setIsSidebarOpen(false); }} className={`${currentSection === 'summary' ? 'bg-gray-700' : 'bg-gray-800 hover:bg-gray-700'} flex items-center text-white py-2 px-4 rounded-lg ${isCollapsed ? 'justify-center' : ''}`}>
           <BookOpenIcon className="icon" /> {!isCollapsed && <span className="text">Summary</span>}
         </button>
-        <button onClick={() => { setCurrentSection('experience'); setIsSidebarOpen(false); }} className={`${currentSection === 'experience' ? 'bg-gray-700' : 'bg-gray-800 hover:bg-gray-700'} flex items-center text-white py-2 px-4 rounded-lg ${isCollapsed ? 'justify-center' : ''}`}>
-          <BriefcaseIcon className="icon" /> {!isCollapsed && <span className="text">Experience</span>}
-        </button>
         <button onClick={() => { setCurrentSection('education'); setIsSidebarOpen(false); }} className={`${currentSection === 'education' ? 'bg-gray-700' : 'bg-gray-800 hover:bg-gray-700'} flex items-center text-white py-2 px-4 rounded-lg ${isCollapsed ? 'justify-center' : ''}`}>
           <AcademicCapIcon className="icon" /> {!isCollapsed && <span className="text">Education</span>}
         </button>
-        <button onClick={() => { setCurrentSection('skills'); setIsSidebarOpen(false); }} className={`${currentSection === 'skills' ? 'bg-gray-700' : 'bg-gray-800 hover:bg-gray-700'} flex items-center text-white py-2 px-4 rounded-lg ${isCollapsed ? 'justify-center' : ''}`}>
-          <CogIcon className="icon" /> {!isCollapsed && <span className="text">Skills</span>}
+        <button onClick={() => { setCurrentSection('experience'); setIsSidebarOpen(false); }} className={`${currentSection === 'experience' ? 'bg-gray-700' : 'bg-gray-800 hover:bg-gray-700'} flex items-center text-white py-2 px-4 rounded-lg ${isCollapsed ? 'justify-center' : ''}`}>
+          <BriefcaseIcon className="icon" /> {!isCollapsed && <span className="text">Experience</span>}
         </button>
         <button onClick={() => { setCurrentSection('projects'); setIsSidebarOpen(false); }} className={`${currentSection === 'projects' ? 'bg-gray-700' : 'bg-gray-800 hover:bg-gray-700'} flex items-center text-white py-2 px-4 rounded-lg ${isCollapsed ? 'justify-center' : ''}`}>
           <DocumentTextIcon className="icon" /> {!isCollapsed && <span className="text">Projects</span>}
         </button>
+        <button onClick={() => { setCurrentSection('skills'); setIsSidebarOpen(false); }} className={`${currentSection === 'skills' ? 'bg-gray-700' : 'bg-gray-800 hover:bg-gray-700'} flex items-center text-white py-2 px-4 rounded-lg ${isCollapsed ? 'justify-center' : ''}`}>
+          <CogIcon className="icon" /> {!isCollapsed && <span className="text">Skills</span>}
+        </button>
+        
         
         {!isCollapsed && (
           <>
