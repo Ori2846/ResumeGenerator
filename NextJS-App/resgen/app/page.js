@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import 'tailwindcss/tailwind.css';
-
+import './globals.css';
 export default function Home() {
   const [formData, setFormData] = useState({
     template: 'template1',
@@ -233,9 +233,9 @@ export default function Home() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const formattedData = {
-        ...formData,
-        personalInfo: formData.personalInfo.map((info, index) => {
+      const processedPersonalInfo = formData.personalInfo
+        .filter(info => info.value.trim() !== "")
+        .map((info, index, array) => {
           if (index === 0) {
             info.link = `mailto:${escapeLatex(info.value)}`;
           } else if (index === 1) {
@@ -245,8 +245,15 @@ export default function Home() {
             info.link = info.link; // Keep link unescaped
             info.value = escapeLatex(info.value); // Escape value
           }
-          return info;
-        }),
+          return {
+            ...info,
+            last: index === array.length - 1,
+          };
+        });
+  
+      const formattedData = {
+        ...formData,
+        personalInfo: processedPersonalInfo,
         name: escapeLatex(formData.name),
         education: formData.education.map(edu => ({
           ...edu,
@@ -276,12 +283,14 @@ export default function Home() {
           details: skill.details.map(detail => escapeLatex(detail))
         }))
       };
+  
       const response = await axios.post('/api/generate', formattedData);
       setPdfUrl(response.data.pdfUrl);
     } catch (error) {
       console.error('Error generating PDF:', error);
     }
   };
+  
 
   useEffect(() => {
     console.log('Current formData:', formData);
@@ -328,65 +337,65 @@ export default function Home() {
         </nav>
       </aside>
       <main className="main-content">
-        <form onSubmit={handleSubmit} className="form">
-          <div className="form-header">
-            <h1>{currentSection.replace('-', ' ').toUpperCase()}</h1>
-          </div>
-          <div className="form-body">
-            {currentSection === 'personal-info' && (
-              <div className="col-span-1">
-                <div className="form-group">
-                  <label htmlFor="name" className="form-label">Name</label>
-                  <input type="text" className="form-control" id="name" name="name" onChange={handleChange} value={formData.name || ''} placeholder="John Doe" />
-                </div>
-                {formData.personalInfo.map((info, index) => (
-                  <div key={index} className="form-group">
-                    <input
-                      type="text"
-                      className="form-label-input"
-                      onChange={(e) => handleFieldLabelChange(e, index)}
-                      value={info.label}
-                      placeholder="Label"
-                    />
-                    <input
-                      type="text"
-                      className="form-control"
-                      onChange={(e) => handleChange(e, index, 'personalInfo')}
-                      value={info.value}
-                      placeholder={info.placeholder}
-                    />
-                    {info.isLink && index > 1 && (
-                      <input
-                        type="text"
-                        className="form-control mt-2"
-                        onChange={(e) => handleLinkChange(e, index)}
-                        value={info.link}
-                        placeholder="Enter URL"
-                      />
-                    )}
-                    {info.removable && (
-                      <button type="button" className="btn-remove" onClick={() => handleRemoveField(index)}>
-                        ✕
-                      </button>
-                    )}
-                    {index > 1 && (
-                      <label className="form-label inline-flex items-center mt-3">
-                        <input
-                          type="checkbox"
-                          className="h-4 w-4 text-indigo-600 transition duration-150 ease-in-out"
-                          onChange={() => handleLinkToggle(index)}
-                          checked={info.isLink}
-                        />
-                        <span className="ml-2">Is Link</span>
-                      </label>
-                    )}
-                  </div>
-                ))}
-                <button type="button" className="btn btn-secondary" onClick={handleAddField}>
-                  Add Field
-                </button>
-              </div>
+      <form onSubmit={handleSubmit} className="form">
+  <div className="form-header">
+    <h1>{currentSection.replace('-', ' ').toUpperCase()}</h1>
+  </div>
+  <div className="form-body">
+    {currentSection === 'personal-info' && (
+      <div className="col-span-1">
+        <div className="form-group">
+          <label htmlFor="name" className="form-label">Name</label>
+          <input type="text" className="form-control" id="name" name="name" onChange={handleChange} value={formData.name || ''} placeholder="John Doe" />
+        </div>
+        {formData.personalInfo.map((info, index) => (
+          <div key={index} className="form-group">
+            <input
+              type="text"
+              className="form-label-input"
+              onChange={(e) => handleFieldLabelChange(e, index)}
+              value={info.label}
+              placeholder="Label"
+            />
+            <input
+              type="text"
+              className="form-control"
+              onChange={(e) => handleChange(e, index, 'personalInfo')}
+              value={info.value}
+              placeholder={info.placeholder}
+            />
+            {info.isLink && index > 1 && (
+              <input
+                type="text"
+                className="form-control mt-2"
+                onChange={(e) => handleLinkChange(e, index)}
+                value={info.link}
+                placeholder="Enter URL"
+              />
             )}
+            {info.removable && (
+              <button type="button" className="btn-remove" onClick={() => handleRemoveField(index)}>
+                ✕
+              </button>
+            )}
+            {index > 1 && (
+              <label className="form-label inline-flex items-center mt-3">
+                <input
+                  type="checkbox"
+                  className="h-4 w-4 text-indigo-600 transition duration-150 ease-in-out"
+                  onChange={() => handleLinkToggle(index)}
+                  checked={info.isLink}
+                />
+                <span className="ml-2">Is Link</span>
+              </label>
+            )}
+          </div>
+        ))}
+        <button type="button" className="btn btn-secondary" onClick={handleAddField}>
+          Add Field
+        </button>
+      </div>
+    )}
 
             {currentSection === 'summary' && (
               <div className="col-span-1">

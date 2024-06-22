@@ -82,13 +82,22 @@
 % Heading
 \begin{center}
     \textbf{\Huge \scshape {{name}}} \\ \vspace{1pt}
+    \small
     {{#personalInfo}}
-      {{#isLink}}
-        \small \href{ {{{link}}} }{ {{value}} } $|$
-      {{/isLink}}
-      {{^isLink}}
-        \small {{value}} $|$
-      {{/isLink}}
+      {{#value}}
+        {{#isLink}}
+          \href{ {{{link}}} }{ \underline{ {{value}} } }
+        {{/isLink}}
+        {{^isLink}}
+          {{#email}}
+            \underline{{{value}}}
+          {{/email}}
+          {{^email}}
+            {{value}}
+          {{/email}}
+        {{/isLink}}
+        {{^last}} \textbar\ {{/last}}
+      {{/value}}
     {{/personalInfo}}
 \end{center}
 
