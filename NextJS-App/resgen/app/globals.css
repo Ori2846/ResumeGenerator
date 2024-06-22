@@ -123,3 +123,28 @@ button {
     @apply h-60;
   }
 }
+
+.pdf-box-container {
+  @apply w-full h-full bg-white shadow-lg rounded-lg flex flex-col;
+}
+
+.pdf-box-buttons .btn {
+  @apply bg-gray-200 text-gray-700 py-2 px-4 rounded transition-colors duration-300 hover:bg-gray-300;
+  font-size: 0.875rem; /* Smaller font size for discrete appearance */
+}
+
+.pdf-box-buttons .btn-active {
+  @apply bg-blue-500 text-white;
+}
+
+.pdf-box-content {
+  @apply flex-1 bg-gray-100 rounded-lg p-4 overflow-auto;
+}
+
+.pdf-iframe {
+  @apply w-full h-full rounded-lg;
+}
+
+.json-content, .latex-content {
+  @apply p-4 font-mono text-sm bg-white rounded-lg shadow-inner;
+}
