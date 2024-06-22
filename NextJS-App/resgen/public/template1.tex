@@ -12,12 +12,14 @@
 \usepackage[english]{babel}
 \usepackage{tabularx}
 \usepackage{fontspec}
+\usepackage{xurl} % Ensures that URLs break correctly
 
 \pagestyle{fancy}
 \fancyhf{} % clear all header and footer fields
 \fancyfoot{}
 \renewcommand{\headrulewidth}{0pt}
 \renewcommand{\footrulewidth}{0pt}
+\setlength{\footskip}{4.08003pt}
 
 % Adjust margins
 \addtolength{\oddsidemargin}{-0.5in}
@@ -62,7 +64,7 @@
 \newcommand{\resumeProjectHeading}[2]{
     \item
     \begin{tabularx}{\textwidth}{Xr}
-      \small#1 & #2 \\
+      \small #1 & #2 \\
     \end{tabularx}\vspace{-7pt}
 }
 
@@ -80,9 +82,23 @@
 % Heading
 \begin{center}
     \textbf{\Huge \scshape {{name}}} \\ \vspace{1pt}
-    \small {{phone}} $|$ \href{mailto:{{email}}}{\underline{ {{email}} }} $|$ 
-    \href{https://linkedin.com/in/{{linkedin}}}{\underline{linkedin.com/in/{{linkedin}}}} $|$
-    \href{https://github.com/{{github}}}{\underline{github.com/{{github}}}}
+    \small
+    {{#personalInfo}}
+      {{#value}}
+        {{#isLink}}
+          \href{ {{{link}}} }{ \underline{ {{value}} } }
+        {{/isLink}}
+        {{^isLink}}
+          {{#email}}
+            \underline{{{value}}}
+          {{/email}}
+          {{^email}}
+            {{value}}
+          {{/email}}
+        {{/isLink}}
+        {{^last}} \textbar\ {{/last}}
+      {{/value}}
+    {{/personalInfo}}
 \end{center}
 
 % Summary
@@ -97,8 +113,8 @@
   \resumeSubHeadingListStart
   {{#education}}
     \resumeSubheading
-      { {{institution}} }{ {{city}} }
-      { {{degree}} }{ {{dates}} }
+      {{institution}} { {{city}} }
+      {{degree}} { {{dates}} }
   {{/education}}
   \resumeSubHeadingListEnd
 {{/education.length}}
@@ -109,11 +125,11 @@
   \resumeSubHeadingListStart
   {{#experience}}
     \resumeSubheading
-      { {{title}} }{ {{dates}} }
-      { {{company}} }{ {{location}} }
+      {{title}} { {{dates}} }
+      {{company}} { {{location}} }
       {{#responsibilities}}
       \resumeItemListStart
-        \resumeItem{ {{.}} }
+        \resumeItem{{.}}
       \resumeItemListEnd
       {{/responsibilities}}
   {{/experience}}
@@ -126,10 +142,10 @@
   \resumeSubHeadingListStart
   {{#projects}}
     \resumeProjectHeading
-      { {{title}} $|$ \emph{ {{tech_stack}} } }{ {{dates}} }
+      {{title}} { {{tech_stack}} } { {{dates}} }
       {{#details}}
       \resumeItemListStart
-        \resumeItem{ {{.}} }
+        \resumeItem{{.}}
       \resumeItemListEnd
       {{/details}}
   {{/projects}}
@@ -141,7 +157,7 @@
 \section{Technical Skills}
   \resumeSubHeadingListStart
   {{#skills}}
-    \item \textbf{ {{name}} } : {{#details}} {{.}}{{^last}}, {{/last}}{{/details}}
+    \item \textbf{{name}} : {{#details}}{{.}}{{^last}}, {{/last}}{{/details}}
   {{/skills}}
   \resumeSubHeadingListEnd
 {{/skills.length}}
