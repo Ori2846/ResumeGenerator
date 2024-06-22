@@ -54,11 +54,19 @@ button {
 }
 
 .form-group {
-  @apply mb-4;
+  @apply mb-4 relative;
 }
 
 .form-control {
   @apply mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50;
+}
+
+.form-label {
+  @apply block font-semibold;
+}
+
+.form-label-input {
+  @apply mt-1 block w-full bg-transparent border-none font-bold;
 }
 
 .btn {
@@ -73,8 +81,8 @@ button {
   @apply bg-gray-500 text-white hover:bg-gray-600;
 }
 
-.btn-danger {
-  @apply bg-red-500 text-white ml-2 hover:bg-red-600;
+.btn-remove {
+  @apply absolute right-0 top-1/2 transform -translate-y-1/2 bg-transparent text-red-500 hover:text-red-700;
 }
 
 .pdf-container {

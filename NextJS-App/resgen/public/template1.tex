@@ -12,12 +12,14 @@
 \usepackage[english]{babel}
 \usepackage{tabularx}
 \usepackage{fontspec}
+\usepackage{xurl}
 
 \pagestyle{fancy}
 \fancyhf{} % clear all header and footer fields
 \fancyfoot{}
 \renewcommand{\headrulewidth}{0pt}
 \renewcommand{\footrulewidth}{0pt}
+\setlength{\footskip}{4.08003pt}
 
 % Adjust margins
 \addtolength{\oddsidemargin}{-0.5in}
@@ -80,9 +82,14 @@
 % Heading
 \begin{center}
     \textbf{\Huge \scshape {{name}}} \\ \vspace{1pt}
-    \small {{phone}} $|$ \href{mailto:{{email}}}{\underline{ {{email}} }} 
-    {{#linkedin}} $|$ \href{https://linkedin.com/in/{{linkedin}}}{\underline{linkedin.com/in/{{linkedin}}}} {{/linkedin}}
-    {{#github}} $|$ \href{https://github.com/{{github}}}{\underline{github.com/{{github}}}} {{/github}}
+    {{#personalInfo}}
+      {{#isLink}}
+        \small \href{ {{link}} }{ {{value}} } $|$
+      {{/isLink}}
+      {{^isLink}}
+        \small {{value}} $|$
+      {{/isLink}}
+    {{/personalInfo}}
 \end{center}
 
 % Summary
