@@ -176,4 +176,4 @@ If you find this project helpful, please consider giving it a star on GitHub!
 
 Special thanks to the creators of the LaTeX resume templates!
 
-- [Jake Gutierrez](https://www.overleaf.com/latex/templates/jakes-resume/syzfjbzwjncs)
+- [Jake Gutierrez](https://github.com/jakegut/resume)
