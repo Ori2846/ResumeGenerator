@@ -14,7 +14,8 @@ export default function Home() {
     name: '',
     email: '',
     phone: '',
-    address: ''
+    github: '',
+    linkedin: ''
   });
   const [pdfUrl, setPdfUrl] = useState(null);
   const [currentSection, setCurrentSection] = useState('personal-info');
@@ -192,7 +193,7 @@ export default function Home() {
             <h1 className="text-2xl md:text-3xl font-extrabold text-gray-900">{currentSection.replace('-', ' ').toUpperCase()}</h1>
           </div>
           <div className="grid grid-cols-1 gap-4 md:gap-6">
-            {currentSection === 'personal-info' && (
+          {currentSection === 'personal-info' && (
               <div className="col-span-1">
                 <div className="mb-4">
                   <label htmlFor="name" className="block text-gray-700 font-semibold">Name:</label>
@@ -204,11 +205,15 @@ export default function Home() {
                 </div>
                 <div className="mb-4">
                   <label htmlFor="phone" className="block text-gray-700 font-semibold">Phone:</label>
-                  <input type="text" className="mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" id="phone" name="phone" onChange={handleChange} value={formData.phone || ''} placeholder="+1234567890" />
+                  <input type="text" className="mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" id="phone" name="phone" onChange={handleChange} value={formData.phone || ''} placeholder="+1(234)567-8901" />
                 </div>
                 <div className="mb-4">
-                  <label htmlFor="address" className="block text-gray-700 font-semibold">Address:</label>
-                  <input type="text" className="mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" id="address" name="address" onChange={handleChange} value={formData.address || ''} placeholder="123 Main St, City, Country" />
+                  <label htmlFor="github" className="block text-gray-700 font-semibold">GitHub:</label>
+                  <input type="text" className="mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" id="github" name="github" onChange={handleChange} value={formData.github || ''} placeholder="Github Username" />
+                </div>
+                <div className="mb-4">
+                  <label htmlFor="linkedin" className="block text-gray-700 font-semibold">LinkedIn:</label>
+                  <input type="text" className="mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" id="linkedin" name="linkedin" onChange={handleChange} value={formData.linkedin || ''} placeholder="Linkedin Username" />
                 </div>
               </div>
             )}
