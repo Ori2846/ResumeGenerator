@@ -12,7 +12,7 @@
 \usepackage[english]{babel}
 \usepackage{tabularx}
 \usepackage{fontspec}
-\usepackage{xurl}
+\usepackage{xurl} % Ensures that URLs break correctly
 
 \pagestyle{fancy}
 \fancyhf{} % clear all header and footer fields
@@ -64,7 +64,7 @@
 \newcommand{\resumeProjectHeading}[2]{
     \item
     \begin{tabularx}{\textwidth}{Xr}
-      \small#1 & #2 \\
+      \small #1 & #2 \\
     \end{tabularx}\vspace{-7pt}
 }
 
@@ -84,7 +84,7 @@
     \textbf{\Huge \scshape {{name}}} \\ \vspace{1pt}
     {{#personalInfo}}
       {{#isLink}}
-        \small \href{ {{link}} }{ {{value}} } $|$
+        \small \href{ {{{link}}} }{ {{value}} } $|$
       {{/isLink}}
       {{^isLink}}
         \small {{value}} $|$
@@ -104,8 +104,8 @@
   \resumeSubHeadingListStart
   {{#education}}
     \resumeSubheading
-      { {{institution}} }{ {{city}} }
-      { {{degree}} }{ {{dates}} }
+      {{institution}} { {{city}} }
+      {{degree}} { {{dates}} }
   {{/education}}
   \resumeSubHeadingListEnd
 {{/education.length}}
@@ -116,11 +116,11 @@
   \resumeSubHeadingListStart
   {{#experience}}
     \resumeSubheading
-      { {{title}} }{ {{dates}} }
-      { {{company}} }{ {{location}} }
+      {{title}} { {{dates}} }
+      {{company}} { {{location}} }
       {{#responsibilities}}
       \resumeItemListStart
-        \resumeItem{ {{.}} }
+        \resumeItem{{.}}
       \resumeItemListEnd
       {{/responsibilities}}
   {{/experience}}
@@ -133,10 +133,10 @@
   \resumeSubHeadingListStart
   {{#projects}}
     \resumeProjectHeading
-      { {{title}} $|$ \emph{ {{tech_stack}} } }{ {{dates}} }
+      {{title}} { {{tech_stack}} } { {{dates}} }
       {{#details}}
       \resumeItemListStart
-        \resumeItem{ {{.}} }
+        \resumeItem{{.}}
       \resumeItemListEnd
       {{/details}}
   {{/projects}}
@@ -148,7 +148,7 @@
 \section{Technical Skills}
   \resumeSubHeadingListStart
   {{#skills}}
-    \item \textbf{ {{name}} } : {{#details}} {{.}}{{^last}}, {{/last}}{{/details}}
+    \item \textbf{{name}} : {{#details}}{{.}}{{^last}}, {{/last}}{{/details}}
   {{/skills}}
   \resumeSubHeadingListEnd
 {{/skills.length}}

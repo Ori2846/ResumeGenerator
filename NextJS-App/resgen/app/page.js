@@ -1,5 +1,4 @@
 "use client";
-
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import 'tailwindcss/tailwind.css';
@@ -15,18 +14,59 @@ export default function Home() {
     personalInfo: [
       { label: 'Email', value: '', link: '', placeholder: 'john.doe@example.com', removable: false, isLink: false },
       { label: 'Phone', value: '', link: '', placeholder: '+1(234)567-8901', removable: false, isLink: false },
-      { label: 'GitHub', value: '', link: '', placeholder: 'Github Username', removable: false, isLink: false },
-      { label: 'LinkedIn', value: '', link: '', placeholder: 'Linkedin Username', removable: false, isLink: false }
+      { label: 'GitHub', value: '', link: '', placeholder: 'Github/username', removable: false, isLink: false },
+      { label: 'LinkedIn', value: '', link: '', placeholder: 'Linkedin/username', removable: false, isLink: false }
     ],
   });
   const [pdfUrl, setPdfUrl] = useState(null);
   const [currentSection, setCurrentSection] = useState('personal-info');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
+  const replaceLatexSlash = (str) => {
+    if (!str) return str;
+    return str.replace(/\\slash\{\}/g, '/');
+  };
+
   useEffect(() => {
     const savedFormData = JSON.parse(localStorage.getItem('formData'));
     if (savedFormData) {
-      setFormData(savedFormData);
+      const processedFormData = {
+        ...savedFormData,
+        personalInfo: savedFormData.personalInfo.map(info => ({
+          ...info,
+          value: replaceLatexSlash(info.value),
+          link: replaceLatexSlash(info.link)
+        })),
+        name: replaceLatexSlash(savedFormData.name),
+        education: savedFormData.education.map(edu => ({
+          ...edu,
+          institution: replaceLatexSlash(edu.institution),
+          city: replaceLatexSlash(edu.city),
+          degree: replaceLatexSlash(edu.degree),
+          dates: replaceLatexSlash(edu.dates)
+        })),
+        experience: savedFormData.experience.map(exp => ({
+          ...exp,
+          title: replaceLatexSlash(exp.title),
+          company: replaceLatexSlash(exp.company),
+          location: replaceLatexSlash(exp.location),
+          dates: replaceLatexSlash(exp.dates),
+          responsibilities: exp.responsibilities.map(res => replaceLatexSlash(res))
+        })),
+        projects: savedFormData.projects.map(proj => ({
+          ...proj,
+          title: replaceLatexSlash(proj.title),
+          tech_stack: replaceLatexSlash(proj.tech_stack),
+          dates: replaceLatexSlash(proj.dates),
+          details: proj.details.map(detail => replaceLatexSlash(detail))
+        })),
+        skills: savedFormData.skills.map(skill => ({
+          ...skill,
+          name: replaceLatexSlash(skill.name),
+          details: skill.details.map(detail => replaceLatexSlash(detail))
+        }))
+      };
+      setFormData(processedFormData);
     }
   }, []);
 
@@ -44,17 +84,30 @@ export default function Home() {
     }
   };
 
+  const escapeLatex = (str) => {
+    if (!str) return str;
+    return str.replace(/&/g, '\\&')
+              .replace(/%/g, '\\%')
+              .replace(/_/g, '\\_')
+              .replace(/#/g, '\\#')
+              .replace(/{/g, '\\{')
+              .replace(/}/g, '\\}')
+              .replace(/~/g, '\\textasciitilde{}')
+              .replace(/\^/g, '\\^{}')
+              .replace(/\\/g, '\\textbackslash{}')
+              .replace(/\$/g, '\\$');
+    // Note: we removed the .replace(/\//g, '\\slash{}')
+  };
+  
   const handleLinkChange = (e, index) => {
     const newPersonalInfo = [...formData.personalInfo];
     let linkValue = e.target.value.trim();
     if (!linkValue.startsWith('http://') && !linkValue.startsWith('https://')) {
       linkValue = `https://${linkValue}`;
     }
-    newPersonalInfo[index].link = decodeURIComponent(linkValue);
+    newPersonalInfo[index].link = linkValue;
     setFormData({ ...formData, personalInfo: newPersonalInfo });
   };
-  
-  
 
   const handleAddField = () => {
     setFormData({
@@ -176,12 +229,54 @@ export default function Home() {
     setFormData({ ...formData, projects: newProjects });
   };
 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log('Form Data:', formData);
-      const response = await axios.post('/api/generate', formData);
-      console.log('Server Response:', response.data);
+      const formattedData = {
+        ...formData,
+        personalInfo: formData.personalInfo.map((info, index) => {
+          if (index === 0) {
+            info.link = `mailto:${escapeLatex(info.value)}`;
+          } else if (index === 1) {
+            const digitsOnly = info.value.replace(/\D/g, '');
+            info.link = `tel:${digitsOnly}`;
+          } else {
+            info.link = info.link; // Keep link unescaped
+            info.value = escapeLatex(info.value); // Escape value
+          }
+          return info;
+        }),
+        name: escapeLatex(formData.name),
+        education: formData.education.map(edu => ({
+          ...edu,
+          institution: escapeLatex(edu.institution),
+          city: escapeLatex(edu.city),
+          degree: escapeLatex(edu.degree),
+          dates: escapeLatex(edu.dates)
+        })),
+        experience: formData.experience.map(exp => ({
+          ...exp,
+          title: escapeLatex(exp.title),
+          company: escapeLatex(exp.company),
+          location: escapeLatex(exp.location),
+          dates: escapeLatex(exp.dates),
+          responsibilities: exp.responsibilities.map(res => escapeLatex(res))
+        })),
+        projects: formData.projects.map(proj => ({
+          ...proj,
+          title: escapeLatex(proj.title),
+          tech_stack: escapeLatex(proj.tech_stack),
+          dates: escapeLatex(proj.dates),
+          details: proj.details.map(detail => escapeLatex(detail))
+        })),
+        skills: formData.skills.map(skill => ({
+          ...skill,
+          name: escapeLatex(skill.name),
+          details: skill.details.map(detail => escapeLatex(detail))
+        }))
+      };
+      const response = await axios.post('/api/generate', formattedData);
       setPdfUrl(response.data.pdfUrl);
     } catch (error) {
       console.error('Error generating PDF:', error);
@@ -192,7 +287,7 @@ export default function Home() {
     console.log('Current formData:', formData);
   }, [formData]);
 
-  return (
+  return(
     <div className="app-container">
       <button
         className="md:hidden bg-gray-900 text-white p-4"
@@ -206,7 +301,7 @@ export default function Home() {
         } md:translate-x-0 sidebar`}
       >
         <div className="sidebar-header">
-          <h2 className="text-3xl font-extrabold">Resume Generator</h2>
+          <h2 className="text-3xl font-extrabold">Engr Resumes</h2>
         </div>
         <nav className="sidebar-nav flex flex-col space-y-4">
           <button onClick={() => { setCurrentSection('personal-info'); setIsSidebarOpen(false); }} className={`${currentSection === 'personal-info' ? 'bg-gray-700' : 'bg-gray-800 hover:bg-gray-700'}`}>
@@ -241,7 +336,7 @@ export default function Home() {
             {currentSection === 'personal-info' && (
               <div className="col-span-1">
                 <div className="form-group">
-                  <label htmlFor="name" className="form-label">Name:</label>
+                  <label htmlFor="name" className="form-label">Name</label>
                   <input type="text" className="form-control" id="name" name="name" onChange={handleChange} value={formData.name || ''} placeholder="John Doe" />
                 </div>
                 {formData.personalInfo.map((info, index) => (
@@ -260,7 +355,7 @@ export default function Home() {
                       value={info.value}
                       placeholder={info.placeholder}
                     />
-                    {info.isLink && (
+                    {info.isLink && index > 1 && (
                       <input
                         type="text"
                         className="form-control mt-2"
@@ -274,15 +369,17 @@ export default function Home() {
                         ✕
                       </button>
                     )}
-                    <label className="form-label inline-flex items-center mt-3">
-                      <input
-                        type="checkbox"
-                        className="h-4 w-4 text-indigo-600 transition duration-150 ease-in-out"
-                        onChange={() => handleLinkToggle(index)}
-                        checked={info.isLink}
-                      />
-                      <span className="ml-2">Is Link</span>
-                    </label>
+                    {index > 1 && (
+                      <label className="form-label inline-flex items-center mt-3">
+                        <input
+                          type="checkbox"
+                          className="h-4 w-4 text-indigo-600 transition duration-150 ease-in-out"
+                          onChange={() => handleLinkToggle(index)}
+                          checked={info.isLink}
+                        />
+                        <span className="ml-2">Is Link</span>
+                      </label>
+                    )}
                   </div>
                 ))}
                 <button type="button" className="btn btn-secondary" onClick={handleAddField}>
