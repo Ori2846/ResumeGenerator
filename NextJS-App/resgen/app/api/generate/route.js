@@ -47,9 +47,14 @@ export async function POST(req) {
       })) || [],
     });
 
-    console.log('Rendered LaTeX:', renderedLatex);
+    console.log('Rendered LaTeX before replacement:', renderedLatex);
 
-    await writeFile(texFilePath, renderedLatex);
+    // Replace \slash{} with / and x2F; with /
+    const finalLatex = renderedLatex.replace(/\\slash\{\}/g, '/').replace(/x2F;/g, '/');
+
+    console.log('Rendered LaTeX after replacement:', finalLatex);
+
+    await writeFile(texFilePath, finalLatex);
 
     await new Promise((resolve, reject) => {
       const process = spawn('xelatex', ['-interaction=nonstopmode', '-output-directory=public', texFilePath]);
