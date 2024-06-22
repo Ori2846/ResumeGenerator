@@ -85,7 +85,10 @@ export async function POST(req) {
 
     if (fs.existsSync(pdfFilePath)) {
       console.log('PDF file exists:', pdfFilePath);
-      return NextResponse.json({ pdfUrl: `/resume_output.pdf?${new Date().getTime()}` });  // Append timestamp to URL to force update
+      return NextResponse.json({
+        pdfUrl: `/resume_output.pdf?${new Date().getTime()}`,  // Append timestamp to URL to force update
+        latexSource: finalLatex // Return LaTeX source
+      });
     } else {
       throw new Error('PDF was not generated. Check the LaTeX template and XeLaTeX output for errors.');
     }
