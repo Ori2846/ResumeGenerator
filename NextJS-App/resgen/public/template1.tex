@@ -1,3 +1,10 @@
+%-------------------------
+% Resume in Latex
+% Author : Henry Do
+% Based off of: https://www.overleaf.com/latex/templates/jakes-resume/syzfjbzwjncs
+% License : MIT
+%------------------------
+
 \documentclass[letterpaper,11pt]{article}
 
 \usepackage{latexsym}
@@ -100,66 +107,66 @@
       {{/value}}
     {{/personalInfo}}
 \end{center}
-
-% Summary
+%-----------SUMMARY-----------
 {{#summary}}
 \section{Summary}
 {{summary}}
 {{/summary}}
 
-% Education
-{{#education.length}}
+%-----------EDUCATION-----------
+{{#education}}
 \section{Education}
   \resumeSubHeadingListStart
   {{#education}}
     \resumeSubheading
-      {{institution}} { {{city}} }
-      {{degree}} { {{dates}} }
+      { {{institution}} }{ {{city}} }
+      { {{degree}} }{ {{dates}} }
   {{/education}}
   \resumeSubHeadingListEnd
-{{/education.length}}
+{{/education}}
 
-% Experience
-{{#experience.length}}
+%-----------EXPERIENCE-----------
+{{#experience}}
 \section{Experience}
   \resumeSubHeadingListStart
   {{#experience}}
     \resumeSubheading
-      {{title}} { {{dates}} }
-      {{company}} { {{location}} }
+      { {{title}} }{ {{dates}} }
+      { {{company}} }{ {{location}} }
       {{#responsibilities}}
       \resumeItemListStart
-        \resumeItem{{.}}
+        \resumeItem{ {{.}} }
       \resumeItemListEnd
       {{/responsibilities}}
   {{/experience}}
   \resumeSubHeadingListEnd
-{{/experience.length}}
+{{/experience}}
 
-% Projects
-{{#projects.length}}
+%-----------PROJECTS-----------
+{{#projects}}
 \section{Projects}
   \resumeSubHeadingListStart
   {{#projects}}
     \resumeProjectHeading
-      {{title}} { {{tech_stack}} } { {{dates}} }
+      { {{title}} $|$ \emph{ {{tech_stack}} } }{ {{dates}} }
       {{#details}}
       \resumeItemListStart
-        \resumeItem{{.}}
+        \resumeItem{ {{.}} }
       \resumeItemListEnd
       {{/details}}
   {{/projects}}
   \resumeSubHeadingListEnd
-{{/projects.length}}
+{{/projects}}
 
-% Skills
-{{#skills.length}}
+%-----------SKILLS-----------
+{{#skills}}
 \section{Technical Skills}
-  \resumeSubHeadingListStart
-  {{#skills}}
-    \item \textbf{{name}} : {{#details}}{{.}}{{^last}}, {{/last}}{{/details}}
-  {{/skills}}
-  \resumeSubHeadingListEnd
-{{/skills.length}}
+ \begin{itemize}[leftmargin=0.15in, label={}]
+    \small{\item{
+      \textbf{ {{name}} }{ {{details}} } \\
+    }}
+ \end{itemize}
+{{/skills}}
 
+%-------------------------------------------
 \end{document}

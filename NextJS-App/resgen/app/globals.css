@@ -1,3 +1,4 @@
+/* globals.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -20,41 +21,44 @@ button {
   @apply cursor-pointer;
 }
 
-/* Custom classes if needed */
-.app-container {
-  @apply flex flex-col md:flex-row h-screen;
-}
-
-.sidebar {
-  @apply w-full md:w-1/4 bg-gray-900 text-white p-4 md:p-6 flex flex-col shadow-lg;
-}
 
 .sidebar-header {
   @apply text-center mb-8;
 }
 
+/* Ensure icons are visible and properly aligned */
 .sidebar-nav button {
-  @apply py-2 md:py-3 px-4 md:px-6 rounded-lg transition-colors duration-300;
+  @apply py-2 md:py-3 px-4 md:px-6 rounded-lg transition-colors duration-300 flex items-center;
 }
 
-.main-content {
-  @apply flex-1 p-4 md:p-8 overflow-y-auto;
+.sidebar-nav button .icon {
+  @apply h-6 w-6 flex-shrink-0;
 }
+
+.sidebar-nav button.collapsed .text {
+  display: none;
+}
+
+.sidebar-nav button .text {
+  @apply ml-3;
+}
+
 
 .form {
-  @apply bg-white p-4 md:p-8 rounded-lg shadow-lg;
+  @apply bg-white p-4 md:p-8 rounded-lg shadow-lg max-w-4xl mx-auto w-full;
 }
 
 .form-header {
   @apply mb-6 text-center text-2xl md:text-3xl font-extrabold text-gray-900;
 }
-
+/* globals.css */
 .form-body {
-  @apply grid grid-cols-1 gap-4 md:gap-6;
+  @apply w-full;
 }
 
 .form-group {
   @apply mb-4 relative;
+  width: 100%;
 }
 
 .form-control {
@@ -68,6 +72,7 @@ button {
 .form-label-input {
   @apply mt-1 block w-full bg-transparent border-none font-bold;
 }
+
 
 .btn {
   @apply px-4 py-2 rounded-lg shadow transition-colors duration-300;
@@ -101,7 +106,21 @@ button {
   @apply text-gray-700 text-lg;
 }
 
-/* Responsive adjustments */
+/* globals.css */
+.app-container {
+  @apply flex flex-col md:flex-row h-screen;
+}
+
+.sidebar {
+  @apply w-full md:w-64 bg-gray-900 text-white p-4 md:p-6 flex flex-col shadow-lg fixed md:relative;
+}
+
+.main-content {
+  @apply flex-1 p-4 md:p-8 overflow-y-auto;
+  width: calc(100% - 64px); /* Adjust width based on sidebar */
+  margin-left: 0px; /* Adjust margin to prevent overlapping */
+}
+
 @media (max-width: 1024px) {
   .app-container {
     @apply flex-col;
@@ -109,11 +128,16 @@ button {
 
   .sidebar {
     @apply w-full p-2;
+    position: relative;
   }
 
   .main-content {
     @apply p-4;
+    width: 100%;
+    margin-left: 0;
   }
+
+
 
   .pdf-container {
     @apply w-full mt-4;
@@ -122,4 +146,29 @@ button {
   .pdf-iframe-container {
     @apply h-60;
   }
+}
+
+.pdf-box-container {
+  @apply w-full h-full bg-white shadow-lg rounded-lg flex flex-col;
+}
+
+.pdf-box-buttons .btn {
+  @apply bg-gray-200 text-gray-700 py-2 px-4 rounded transition-colors duration-300 hover:bg-gray-300;
+  font-size: 0.875rem; /* Smaller font size for discrete appearance */
+}
+
+.pdf-box-buttons .btn-active {
+  @apply bg-blue-500 text-white;
+}
+
+.pdf-box-content {
+  @apply flex-1 bg-gray-100 rounded-lg p-4 overflow-auto;
+}
+
+.pdf-iframe {
+  @apply w-full h-full rounded-lg;
+}
+
+.json-content, .latex-content {
+  @apply p-4 font-mono text-sm bg-white rounded-lg shadow-inner;
 }
