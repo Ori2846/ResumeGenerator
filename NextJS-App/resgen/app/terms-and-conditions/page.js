@@ -1,4 +1,4 @@
-// pages/terms-and-conditions.js
+// terms-and-conditions/terms-and-conditions.js
 "use client"
 import Link from 'next/link';
 import 'tailwindcss/tailwind.css';

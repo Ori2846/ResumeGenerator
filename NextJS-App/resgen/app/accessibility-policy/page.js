@@ -1,3 +1,4 @@
+//accessibility-policy/page.js
 import Link from 'next/link';
 import 'tailwindcss/tailwind.css';
 
