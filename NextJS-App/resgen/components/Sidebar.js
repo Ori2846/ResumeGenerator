@@ -22,12 +22,15 @@ export default function Sidebar({ currentSection, setCurrentSection, isSidebarOp
       <div className="sidebar-header p-6 flex items-center justify-between">
         {!isCollapsed && <h2 className="text-3xl font-extrabold">Engr Resumes</h2>}
         <button className="text-white" onClick={toggleSidebar}>
-          {isCollapsed ? <Bars3Icon className="h-6 w-6" /> : <ChevronLeftIcon className="h-6 w-6" />}
+          {isCollapsed ? <Bars3Icon className="h-6 w-8" /> : <ChevronLeftIcon className="h-6 w-6" />}
         </button>
       </div>
-      <nav className="sidebar-nav flex flex-col space-y-4 p-6">
+      <nav className="sidebar-nav flex flex-col space-y-4 p-3">
+        <button onClick={() => { setCurrentSection('template'); setIsSidebarOpen(false); }} className={`${currentSection === 'template' ? 'bg-gray-700' : 'bg-gray-800 hover:bg-gray-700'} flex items-center text-white py-2 px-4 rounded-lg ${isCollapsed ? 'justify-center' : ''}`}>
+          <DocumentTextIcon className="icon" /> {!isCollapsed && <span className="text">Template</span>}
+        </button>
         <button onClick={() => { setCurrentSection('personal-info'); setIsSidebarOpen(false); }} className={`${currentSection === 'personal-info' ? 'bg-gray-700' : 'bg-gray-800 hover:bg-gray-700'} flex items-center text-white py-2 px-4 rounded-lg ${isCollapsed ? 'justify-center' : ''}`}>
-          <UserIcon className="icon" /> {!isCollapsed && <span className="text">Personal Information</span>}
+          <UserIcon className="icon" /> {!isCollapsed && <span className="text">Personal Info</span>}
         </button>
         <button onClick={() => { setCurrentSection('summary'); setIsSidebarOpen(false); }} className={`${currentSection === 'summary' ? 'bg-gray-700' : 'bg-gray-800 hover:bg-gray-700'} flex items-center text-white py-2 px-4 rounded-lg ${isCollapsed ? 'justify-center' : ''}`}>
           <BookOpenIcon className="icon" /> {!isCollapsed && <span className="text">Summary</span>}
@@ -44,9 +47,7 @@ export default function Sidebar({ currentSection, setCurrentSection, isSidebarOp
         <button onClick={() => { setCurrentSection('projects'); setIsSidebarOpen(false); }} className={`${currentSection === 'projects' ? 'bg-gray-700' : 'bg-gray-800 hover:bg-gray-700'} flex items-center text-white py-2 px-4 rounded-lg ${isCollapsed ? 'justify-center' : ''}`}>
           <DocumentTextIcon className="icon" /> {!isCollapsed && <span className="text">Projects</span>}
         </button>
-        <button onClick={() => { setCurrentSection('template'); setIsSidebarOpen(false); }} className={`${currentSection === 'template' ? 'bg-gray-700' : 'bg-gray-800 hover:bg-gray-700'} flex items-center text-white py-2 px-4 rounded-lg ${isCollapsed ? 'justify-center' : ''}`}>
-          <DocumentTextIcon className="icon" /> {!isCollapsed && <span className="text">Template</span>}
-        </button>
+        
         {!isCollapsed && (
           <>
             <a href="/terms-and-conditions" className="text-gray-500 text-sm hover:text-gray-300">Terms and Conditions</a>

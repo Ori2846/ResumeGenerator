@@ -98,9 +98,11 @@ export default function MainForm({
           <Template formData={formData} handleChange={handleChange} />
         )}
       </div>
-      <button type="submit" className="btn btn-success mt-6">
-        Generate Resume
-      </button>
+      {currentSection !== 'template' && (
+        <button type="submit" className="btn btn-success mt-6">
+          Generate Resume
+        </button>
+      )}
     </form>
   );
 }

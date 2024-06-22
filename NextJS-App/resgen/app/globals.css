@@ -172,3 +172,22 @@ button {
 .json-content, .latex-content {
   @apply p-4 font-mono text-sm bg-white rounded-lg shadow-inner;
 }
+.textLayer {
+  pointer-events: none;
+}
+
+.textLayer span {
+  pointer-events: all;
+}
+
+.annotationLayer {
+  pointer-events: none;
+}
+
+.annotationLayer a {
+  pointer-events: all;
+  position: absolute;
+  text-decoration: none;
+  color: inherit;
+  opacity: 0; /* Invisible but clickable */
+}
