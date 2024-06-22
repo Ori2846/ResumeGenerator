@@ -1,3 +1,4 @@
+// page.js
 "use client";
 import { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -26,6 +27,7 @@ export default function Home() {
   const [latexSource, setLatexSource] = useState('');
   const [currentSection, setCurrentSection] = useState('personal-info');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
   const replaceLatexSlash = (str) => {
     if (!str) return str;
@@ -77,6 +79,17 @@ export default function Home() {
 
   useEffect(() => {
     localStorage.setItem('formData', JSON.stringify(formData));
+  }, [formData]);
+
+  // Autosave every 10 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      localStorage.setItem('formData', JSON.stringify(formData));
+      // Optionally, you can also save to the server
+      // saveToServer(formData);
+    }, 10000); // 10 seconds interval
+
+    return () => clearInterval(interval);
   }, [formData]);
 
   const handleChange = (e, index = null, section = null) => {
@@ -307,10 +320,12 @@ export default function Home() {
       <Sidebar
         currentSection={currentSection}
         setCurrentSection={setCurrentSection}
-        isSidebarOpen={isSidebarOpen} // Pass isSidebarOpen here
+        isSidebarOpen={isSidebarOpen}
         setIsSidebarOpen={setIsSidebarOpen}
+        isSidebarCollapsed={isSidebarCollapsed}
+        setIsSidebarCollapsed={setIsSidebarCollapsed}
       />
-      <main className="main-content flex-1 p-6 bg-gray-50">
+      <main className={`main-content flex-1 p-6 bg-gray-50`}>
         <MainForm
           currentSection={currentSection}
           formData={formData}

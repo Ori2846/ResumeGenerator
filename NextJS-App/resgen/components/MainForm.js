@@ -1,3 +1,4 @@
+// components/MainForm.js
 import PersonalInfo from './formSections/PersonalInfo';
 import Summary from './formSections/Summary';
 import Experience from './formSections/Experience';
@@ -32,11 +33,11 @@ export default function MainForm({
   handleSubmit
 }) {
   return (
-    <form onSubmit={handleSubmit} className="form bg-white p-6 rounded-lg shadow-md">
+    <form onSubmit={handleSubmit} className="form bg-white p-6 rounded-lg shadow-md w-full">
       <div className="form-header mb-4">
         <h1 className="text-2xl font-semibold">{currentSection.replace('-', ' ').toUpperCase()}</h1>
       </div>
-      <div className="form-body grid grid-cols-1 gap-6">
+      <div className="form-body w-full">
         {currentSection === 'personal-info' && (
           <PersonalInfo
             formData={formData}

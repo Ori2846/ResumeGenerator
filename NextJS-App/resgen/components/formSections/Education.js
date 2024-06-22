@@ -1,3 +1,4 @@
+//components/formSections/Education.js
 export default function Education({ formData, handleEducationChange, handleAddEducation }) {
     return (
       <div className="col-span-1">

@@ -1,3 +1,4 @@
+//components/pdfbox.js
 import { useState } from 'react';
 
 export default function PdfBox({ pdfUrl, formData, latexSource }) {
