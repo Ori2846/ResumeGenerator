@@ -1,34 +1,26 @@
-//components/pdfbox.js
+// PdfBox.js
 import { useState } from 'react';
 
 export default function PdfBox({ pdfUrl, formData, latexSource }) {
   const [view, setView] = useState('pdf');
 
   const handleDownload = () => {
+    const link = document.createElement('a');
     if (view === 'pdf') {
-      const link = document.createElement('a');
       link.href = pdfUrl;
       link.download = 'resume.pdf';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
     } else if (view === 'json') {
       const jsonBlob = new Blob([JSON.stringify(formData, null, 2)], { type: 'application/json' });
-      const link = document.createElement('a');
       link.href = URL.createObjectURL(jsonBlob);
       link.download = 'resume.json';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
     } else if (view === 'latex') {
       const latexBlob = new Blob([latexSource], { type: 'text/plain' });
-      const link = document.createElement('a');
       link.href = URL.createObjectURL(latexBlob);
       link.download = 'resume.tex';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
     }
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   return (

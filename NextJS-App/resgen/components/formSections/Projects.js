@@ -1,5 +1,5 @@
 // components/formSections/Projects.js
-export default function Projects({ formData, handleProjectChange, handleProjectDetailChange, handleAddProject, handleRemoveProjectDetail }) {
+export default function Projects({ formData, handleProjectChange, handleProjectDetailChange, handleAddProject, handleRemoveProject, handleRemoveProjectDetail }) {
   return (
     <div className="w-full">
       {formData.projects.map((proj, index) => (
@@ -18,7 +18,6 @@ export default function Projects({ formData, handleProjectChange, handleProjectD
           </div>
           {proj.details.map((detail, detailIndex) => (
             <div key={detailIndex} className="form-group flex items-center">
-              <label htmlFor={`project_details_${index}_${detailIndex}`} className="form-label">Detail:</label>
               <input type="text" className="form-control" id={`project_details_${index}_${detailIndex}`} name={`project_details_${index}_${detailIndex}`} onChange={(e) => handleProjectDetailChange(index, detailIndex, e.target.value)} value={detail} placeholder="Detail" />
               <button type="button" className="btn btn-danger ml-2" onClick={() => handleRemoveProjectDetail(index, detailIndex)}>
                 -
@@ -27,6 +26,9 @@ export default function Projects({ formData, handleProjectChange, handleProjectD
           ))}
           <button type="button" className="btn btn-secondary mt-2" onClick={() => handleProjectDetailChange(index, proj.details.length, '')}>
             Add Detail
+          </button>
+          <button type="button" className="btn btn-danger mt-2" onClick={() => handleRemoveProject(index)}>
+            Remove Project
           </button>
         </div>
       ))}

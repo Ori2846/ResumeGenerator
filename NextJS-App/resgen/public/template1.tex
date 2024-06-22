@@ -1,5 +1,5 @@
 %-------------------------
-% Resume in Latex
+% Resume in LaTeX
 % Author : Henry Do
 % Based off of: https://www.overleaf.com/latex/templates/jakes-resume/syzfjbzwjncs
 % License : MIT
@@ -120,7 +120,7 @@
   {{#education}}
     \resumeSubheading
       { {{institution}} }{ {{city}} }
-      { {{degree}} }{ {{dates}} }
+      { {{degree}} {{#gpa}} GPA: {{gpa}}{{/gpa}} }{ {{dates}} }
   {{/education}}
   \resumeSubHeadingListEnd
 {{/education}}

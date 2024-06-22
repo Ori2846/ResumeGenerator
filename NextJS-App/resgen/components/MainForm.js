@@ -1,4 +1,4 @@
-// components/MainForm.js
+// MainForm.js
 import PersonalInfo from './formSections/PersonalInfo';
 import Summary from './formSections/Summary';
 import Experience from './formSections/Experience';
@@ -19,8 +19,11 @@ export default function MainForm({
   handleExperienceChange,
   handleExperienceResponsibilityChange,
   handleAddExperience,
+  handleRemoveExperience,
+  handleRemoveResponsibility,
   handleEducationChange,
   handleAddEducation,
+  handleRemoveEducation,
   handleSkillChange,
   handleSkillDetailChange,
   handleAddSkill,
@@ -29,6 +32,7 @@ export default function MainForm({
   handleProjectChange,
   handleProjectDetailChange,
   handleAddProject,
+  handleRemoveProject,
   handleRemoveProjectDetail,
   handleSubmit
 }) {
@@ -58,6 +62,8 @@ export default function MainForm({
             handleExperienceChange={handleExperienceChange}
             handleExperienceResponsibilityChange={handleExperienceResponsibilityChange}
             handleAddExperience={handleAddExperience}
+            handleRemoveExperience={handleRemoveExperience}
+            handleRemoveResponsibility={handleRemoveResponsibility}
           />
         )}
         {currentSection === 'education' && (
@@ -65,6 +71,7 @@ export default function MainForm({
             formData={formData}
             handleEducationChange={handleEducationChange}
             handleAddEducation={handleAddEducation}
+            handleRemoveEducation={handleRemoveEducation}
           />
         )}
         {currentSection === 'skills' && (
@@ -83,6 +90,7 @@ export default function MainForm({
             handleProjectChange={handleProjectChange}
             handleProjectDetailChange={handleProjectDetailChange}
             handleAddProject={handleAddProject}
+            handleRemoveProject={handleRemoveProject}
             handleRemoveProjectDetail={handleRemoveProjectDetail}
           />
         )}
