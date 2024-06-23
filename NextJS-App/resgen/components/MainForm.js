@@ -40,7 +40,7 @@ export default function MainForm({
       <div className="form-header mb-4">
         <h1 className="text-2xl font-semibold">{currentSection.replace('-', ' ').toUpperCase()}</h1>
       </div>
-      <div className="form-body w-full">
+      <div className="form-body w-full overflow-y-auto max-h-[80vh] pr-6">
         {currentSection === 'personal-info' && (
           <PersonalInfo
             formData={formData}
@@ -98,7 +98,7 @@ export default function MainForm({
         )}
       </div>
       {currentSection !== 'template' && (
-        <button type="submit" className="btn btn-success mt-6">
+        <button type="submit" className="btn btn-success mt-3">
           Generate Resume
         </button>
       )}

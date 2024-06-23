@@ -2,11 +2,10 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import 'tailwindcss/tailwind.css';
-import './globals.css';
-import PdfBox from '../components/PdfBox';
-import Sidebar from '../components/Sidebar';
-import MainForm from '../components/MainForm';
-import Footer from '../components/Footer'; 
+import PdfBox from '/components/PdfBox';
+import Sidebar from '/components/Sidebar';
+import MainForm from '/components/MainForm';
+import Footer from '/components/Footer'; 
 
 const initialFormData = {
   template: 'template1',
@@ -25,20 +24,18 @@ const initialFormData = {
 };
 
 export default function Home() {
-  const [formData, setFormData] = useState(() => {
-    const savedData = localStorage.getItem('savedFormData');
-    return savedData ? JSON.parse(savedData) : initialFormData;
-  });
-
+  const [formData, setFormData] = useState(initialFormData);
   const [pdfUrl, setPdfUrl] = useState(null);
   const [latexSource, setLatexSource] = useState('');
   const [currentSection, setCurrentSection] = useState('personal-info');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  const replaceLatexSlash = (str) => {
-    if (!str) return str;
-    return str.replace(/\\slash\{\}/g, '/');
-  };
+  useEffect(() => {
+    const savedData = localStorage.getItem('savedFormData');
+    if (savedData) {
+      setFormData(JSON.parse(savedData));
+    }
+  }, []);
 
   useEffect(() => {
     if (formData !== initialFormData) {
@@ -258,8 +255,8 @@ export default function Home() {
           details: skill.details.map(detail => escapeLatex(detail))
         }))
       };
-
-      const response = await axios.post('/api/generate', formattedData);
+  
+      const response = await axios.post('/api/generate', formattedData); // Corrected URL
       setPdfUrl(response.data.pdfUrl);
       setLatexSource(response.data.latexSource);
       localStorage.setItem('savedFormData', JSON.stringify(formattedData));
@@ -267,6 +264,7 @@ export default function Home() {
       console.error('Error generating PDF:', error);
     }
   };
+  
 
   return (
     <div className="app-container flex flex-col min-h-screen">
