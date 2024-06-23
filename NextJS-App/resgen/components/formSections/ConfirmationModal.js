@@ -1,5 +1,4 @@
 import React from 'react';
-import './ConfirmationModal.css';
 
 function ConfirmationModal({ show, handleClose, handleConfirm }) {
   if (!show) {

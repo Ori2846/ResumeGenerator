@@ -6,28 +6,34 @@ import './globals.css';
 import PdfBox from '../components/PdfBox';
 import Sidebar from '../components/Sidebar';
 import MainForm from '../components/MainForm';
-import Footer from '../components/Footer'; // Import the Footer component
+import Footer from '../components/Footer'; 
+
+const initialFormData = {
+  template: 'template1',
+  education: [],
+  experience: [],
+  projects: [],
+  skills: [],
+  name: '',
+  summary: '',
+  personalInfo: [
+    { label: 'Email', value: '', link: '', placeholder: 'john.doe@example.com', removable: false, isLink: false },
+    { label: 'Phone', value: '', link: '', placeholder: '+1(234)567-8901', removable: false, isLink: false },
+    { label: 'GitHub', value: '', link: '', placeholder: 'Github/username', removable: false, isLink: false },
+    { label: 'LinkedIn', value: '', link: '', placeholder: 'Linkedin/username', removable: false, isLink: false }
+  ],
+};
 
 export default function Home() {
-  const [formData, setFormData] = useState({
-    template: 'template1',
-    education: [],
-    experience: [],
-    projects: [],
-    skills: [],
-    name: '',
-    personalInfo: [
-      { label: 'Email', value: '', link: '', placeholder: 'john.doe@example.com', removable: false, isLink: false },
-      { label: 'Phone', value: '', link: '', placeholder: '+1(234)567-8901', removable: false, isLink: false },
-      { label: 'GitHub', value: '', link: '', placeholder: 'Github/username', removable: false, isLink: false },
-      { label: 'LinkedIn', value: '', link: '', placeholder: 'Linkedin/username', removable: false, isLink: false }
-    ],
+  const [formData, setFormData] = useState(() => {
+    const savedData = localStorage.getItem('savedFormData');
+    return savedData ? JSON.parse(savedData) : initialFormData;
   });
+
   const [pdfUrl, setPdfUrl] = useState(null);
   const [latexSource, setLatexSource] = useState('');
   const [currentSection, setCurrentSection] = useState('personal-info');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
   const replaceLatexSlash = (str) => {
     if (!str) return str;
@@ -35,68 +41,9 @@ export default function Home() {
   };
 
   useEffect(() => {
-    const savedFormData = JSON.parse(localStorage.getItem('formData'));
-    if (savedFormData) {
-      const processedFormData = {
-        ...savedFormData,
-        personalInfo: savedFormData.personalInfo ? savedFormData.personalInfo.map(info => ({
-          ...info,
-          value: typeof info.value === 'string' ? replaceLatexSlash(info.value) : info.value,
-          link: typeof info.link === 'string' ? replaceLatexSlash(info.link) : info.link
-        })) : [],
-        name: typeof savedFormData.name === 'string' ? replaceLatexSlash(savedFormData.name) : savedFormData.name,
-        education: savedFormData.education ? savedFormData.education.map(edu => ({
-          ...edu,
-          institution: typeof edu.institution === 'string' ? replaceLatexSlash(edu.institution) : edu.institution,
-          city: typeof edu.city === 'string' ? replaceLatexSlash(edu.city) : edu.city,
-          degree: typeof edu.degree === 'string' ? replaceLatexSlash(edu.degree) : edu.degree,
-          dates: typeof edu.dates === 'string' ? replaceLatexSlash(edu.dates) : edu.dates,
-          gpa: typeof edu.gpa === 'string' ? replaceLatexSlash(edu.gpa) : edu.gpa
-        })) : [],
-        experience: savedFormData.experience ? savedFormData.experience.map(exp => ({
-          ...exp,
-          title: typeof exp.title === 'string' ? replaceLatexSlash(exp.title) : exp.title,
-          company: typeof exp.company === 'string' ? replaceLatexSlash(exp.company) : exp.company,
-          location: typeof exp.location === 'string' ? replaceLatexSlash(exp.location) : exp.location,
-          dates: typeof exp.dates === 'string' ? replaceLatexSlash(exp.dates) : exp.dates,
-          responsibilities: exp.responsibilities ? exp.responsibilities.map(res => 
-            typeof res === 'string' ? replaceLatexSlash(res) : res
-          ) : []
-        })) : [],
-        projects: savedFormData.projects ? savedFormData.projects.map(proj => ({
-          ...proj,
-          title: typeof proj.title === 'string' ? replaceLatexSlash(proj.title) : proj.title,
-          tech_stack: typeof proj.tech_stack === 'string' ? replaceLatexSlash(proj.tech_stack) : proj.tech_stack,
-          dates: typeof proj.dates === 'string' ? replaceLatexSlash(proj.dates) : proj.dates,
-          details: proj.details ? proj.details.map(detail => 
-            typeof detail === 'string' ? replaceLatexSlash(detail) : detail
-          ) : []
-        })) : [],
-        skills: savedFormData.skills ? savedFormData.skills.map(skill => ({
-          ...skill,
-          name: typeof skill.name === 'string' ? replaceLatexSlash(skill.name) : skill.name,
-          details: skill.details ? skill.details.map(detail => 
-            typeof detail === 'string' ? replaceLatexSlash(detail) : detail
-          ) : []
-        })) : []
-      };
-      setFormData(processedFormData);
+    if (formData !== initialFormData) {
+      localStorage.setItem('savedFormData', JSON.stringify(formData));
     }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem('formData', JSON.stringify(formData));
-  }, [formData]);
-
-  // Autosave every 10 seconds
-  useEffect(() => {
-    const interval = setInterval(() => {
-      localStorage.setItem('formData', JSON.stringify(formData));
-      // Optionally, you can also save to the server
-      // saveToServer(formData);
-    }, 10000); // 10 seconds interval
-
-    return () => clearInterval(interval);
   }, [formData]);
 
   const handleChange = (e, index = null, section = null) => {
@@ -123,7 +70,6 @@ export default function Home() {
       .replace(/\\/g, '\\textbackslash{}')
       .replace(/\$/g, '\\$');
   }
-
 
   const handleLinkChange = (e, index) => {
     const newPersonalInfo = [...formData.personalInfo];
@@ -158,10 +104,6 @@ export default function Home() {
     const newPersonalInfo = [...formData.personalInfo];
     newPersonalInfo[index].isLink = !newPersonalInfo[index].isLink;
     setFormData({ ...formData, personalInfo: newPersonalInfo });
-  };
-
-  const clearLocalStorage = () => {
-    localStorage.removeItem('formData');
   };
 
   const handleAddEducation = () => {
@@ -290,6 +232,7 @@ export default function Home() {
           link: escapeLatex(info.link)
         })),
         name: escapeLatex(formData.name),
+        summary: escapeLatex(formData.summary),
         education: formData.education.map(edu => ({
           institution: escapeLatex(edu.institution),
           city: escapeLatex(edu.city),
@@ -319,6 +262,7 @@ export default function Home() {
       const response = await axios.post('/api/generate', formattedData);
       setPdfUrl(response.data.pdfUrl);
       setLatexSource(response.data.latexSource);
+      localStorage.setItem('savedFormData', JSON.stringify(formattedData));
     } catch (error) {
       console.error('Error generating PDF:', error);
     }
@@ -338,7 +282,8 @@ export default function Home() {
           setCurrentSection={setCurrentSection}
           isSidebarOpen={isSidebarOpen}
           setIsSidebarOpen={setIsSidebarOpen}
-          setFormData={setFormData} // Pass setFormData to Sidebar
+          setFormData={setFormData}
+          initialFormData={initialFormData} // Pass initialFormData as a prop
         />
         <main className="main-content flex-1 p-6 bg-gray-50">
           <MainForm
@@ -375,7 +320,7 @@ export default function Home() {
           <PdfBox pdfUrl={pdfUrl} formData={formData} latexSource={latexSource} />
         </section>
       </div>
-      <Footer /> {/* Include the Footer component */}
+      <Footer />
     </div>
   );
 }
