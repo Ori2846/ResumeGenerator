@@ -16,6 +16,7 @@ export default function Footer() {
           <a href="/privacy-policy">Privacy Policy</a>
           <a href="/accessibility-policy">Accessibility Policy</a>
           <a href="/copyright-notice">Copyright Notice</a> 
+          <a href="/cookie-policy">Cookie Policy</a> 
         </div>
       </div>
     </footer>

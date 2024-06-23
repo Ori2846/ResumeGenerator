@@ -110,11 +110,16 @@ export default function Home() {
     });
   };
 
-  const handleEducationChange = (index, field, value) => {
+  const handleEducationChange = (updatedEducation) => {
+    setFormData({ ...formData, education: updatedEducation });
+  };
+  
+  const handleEducationFieldChange = (index, field, value) => {
     const newEducation = [...formData.education];
     newEducation[index][field] = value;
     setFormData({ ...formData, education: newEducation });
   };
+  
 
   const handleAddExperience = () => {
     setFormData({
@@ -126,11 +131,16 @@ export default function Home() {
     });
   };
 
-  const handleExperienceChange = (index, field, value) => {
+  const handleExperienceChange = (updatedExperiences) => {
+    setFormData({ ...formData, experience: updatedExperiences });
+  };
+  
+  const handleExperienceFieldChange = (index, field, value) => {
     const newExperience = [...formData.experience];
     newExperience[index][field] = value;
     setFormData({ ...formData, experience: newExperience });
   };
+  
 
   const handleExperienceResponsibilityChange = (expIndex, resIndex, value) => {
     const newExperience = [...formData.experience];
@@ -145,11 +155,16 @@ export default function Home() {
     });
   };
 
-  const handleProjectChange = (index, field, value) => {
+  const handleProjectChange = (updatedProjects) => {
+    setFormData({ ...formData, projects: updatedProjects });
+  };
+  
+  const handleProjectFieldChange = (index, field, value) => {
     const newProjects = [...formData.projects];
     newProjects[index][field] = value;
     setFormData({ ...formData, projects: newProjects });
   };
+  
 
   const handleProjectDetailChange = (projIndex, detIndex, value) => {
     const newProjects = [...formData.projects];
@@ -188,11 +203,16 @@ export default function Home() {
     setFormData({ ...formData, projects: newProjects });
   };
 
-  const handleSkillChange = (index, field, value) => {
+  const handleSkillChange = (updatedSkills) => {
+    setFormData({ ...formData, skills: updatedSkills });
+  };
+  
+  const handleSkillFieldChange = (index, field, value) => {
     const newSkills = [...formData.skills];
     newSkills[index][field] = value;
     setFormData({ ...formData, skills: newSkills });
   };
+  
 
   const handleSkillDetailChange = (skillIndex, detailIndex, value) => {
     const newSkills = [...formData.skills];
