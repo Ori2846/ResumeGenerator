@@ -1,5 +1,5 @@
 %-------------------------
-% Resume in Latex
+% Resume in LaTeX
 % Author : Henry Do
 % Based off of: https://www.overleaf.com/latex/templates/jakes-resume/syzfjbzwjncs
 % License : MIT
@@ -43,8 +43,8 @@
 
 % Sections formatting
 \titleformat{\section}{
-  \vspace{-4pt}\scshape\raggedright\large
-}{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
+  \vspace{-8pt}\scshape\raggedright\large
+}{}{0em}{}[\color{black}\titlerule \vspace{-8pt}]
 
 % Custom commands
 \newcommand{\resumeItem}[1]{
@@ -58,31 +58,35 @@
     \begin{tabularx}{\textwidth}{Xr}
       \textbf{#1} & #2 \\
       \textit{\small#3} & \textit{\small #4} \\
-    \end{tabularx}\vspace{-7pt}
+    \end{tabularx}\vspace{-6pt}
 }
 
 \newcommand{\resumeSubSubheading}[2]{
     \item
     \begin{tabularx}{\textwidth}{Xr}
       \textit{\small#1} & \textit{\small #2} \\
-    \end{tabularx}\vspace{-7pt}
+    \end{tabularx}\vspace{-6pt}
 }
 
 \newcommand{\resumeProjectHeading}[2]{
     \item
     \begin{tabularx}{\textwidth}{Xr}
       \small #1 & #2 \\
-    \end{tabularx}\vspace{-7pt}
+    \end{tabularx}\vspace{-6pt}
 }
 
-\newcommand{\resumeSubItem}[1]{\resumeItem{#1}\vspace{-4pt}}
+\newcommand{\resumeSubItem}[1]{\resumeItem{#1}\vspace{-2pt}}
 
 \renewcommand\labelitemii{$\vcenter{\hbox{\tiny$\bullet$}}$}
 
-\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.15in, label={}]}
+\newcommand{\resumeSubHeadingListStart}{
+  \begin{itemize}[leftmargin=0.15in, label={}, itemsep=3pt, parsep=0pt, topsep=0pt]
+}
 \newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
-\newcommand{\resumeItemListStart}{\begin{itemize}}
-\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-12pt}}
+\newcommand{\resumeItemListStart}{
+  \begin{itemize}[itemsep=2pt, parsep=0pt, topsep=0pt]
+}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-8pt}}
 
 \begin{document}
 
@@ -107,6 +111,7 @@
       {{/value}}
     {{/personalInfo}}
 \end{center}
+
 %-----------SUMMARY-----------
 {{#summary}}
 \section{Summary}
@@ -114,59 +119,65 @@
 {{/summary}}
 
 %-----------EDUCATION-----------
-{{#education}}
+{{#education.length}}
 \section{Education}
-  \resumeSubHeadingListStart
+\resumeSubHeadingListStart
   {{#education}}
     \resumeSubheading
-      { {{institution}} }{ {{city}} }
-      { {{degree}} }{ {{dates}} }
+      { {{institution}} }{ {{dates}} }
+      { {{degree}} {{#gpa}} GPA: {{gpa}}{{/gpa}} }{ {{city}} }
   {{/education}}
-  \resumeSubHeadingListEnd
-{{/education}}
+\resumeSubHeadingListEnd
+{{/education.length}}
 
 %-----------EXPERIENCE-----------
-{{#experience}}
+{{#experience.length}}
 \section{Experience}
-  \resumeSubHeadingListStart
+\resumeSubHeadingListStart
   {{#experience}}
     \resumeSubheading
       { {{title}} }{ {{dates}} }
       { {{company}} }{ {{location}} }
-      {{#responsibilities}}
+      {{#responsibilities.length}}
       \resumeItemListStart
-        \resumeItem{ {{.}} }
+        {{#responsibilities}}
+          \resumeItem{ {{.}} }
+        {{/responsibilities}}
       \resumeItemListEnd
-      {{/responsibilities}}
+      {{/responsibilities.length}}
   {{/experience}}
-  \resumeSubHeadingListEnd
-{{/experience}}
+\resumeSubHeadingListEnd
+{{/experience.length}}
 
 %-----------PROJECTS-----------
-{{#projects}}
+{{#projects.length}}
 \section{Projects}
-  \resumeSubHeadingListStart
+\resumeSubHeadingListStart
   {{#projects}}
     \resumeProjectHeading
-      { {{title}} $|$ \emph{ {{tech_stack}} } }{ {{dates}} }
-      {{#details}}
+      { \textbf{ {{title}} } $|$ \emph{ {{tech_stack}} } }{ {{dates}} }
+      {{#details.length}}
       \resumeItemListStart
-        \resumeItem{ {{.}} }
+        {{#details}}
+          \resumeItem{ {{.}} }
+        {{/details}}
       \resumeItemListEnd
-      {{/details}}
+      {{/details.length}}
   {{/projects}}
-  \resumeSubHeadingListEnd
-{{/projects}}
+\resumeSubHeadingListEnd
+{{/projects.length}}
 
 %-----------SKILLS-----------
-{{#skills}}
+{{#skills.length}}
 \section{Technical Skills}
- \begin{itemize}[leftmargin=0.15in, label={}]
+ \begin{itemize}[leftmargin=0.15in, label={}, itemsep=3pt, parsep=0pt, topsep=0pt]
+    {{#skills}}
     \small{\item{
       \textbf{ {{name}} }{ {{details}} } \\
     }}
+    {{/skills}}
  \end{itemize}
-{{/skills}}
+{{/skills.length}}
 
 %-------------------------------------------
 \end{document}

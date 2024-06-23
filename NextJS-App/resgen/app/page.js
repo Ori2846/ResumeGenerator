@@ -1,4 +1,3 @@
-// page.js
 "use client";
 import { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -41,36 +40,43 @@ export default function Home() {
         ...savedFormData,
         personalInfo: savedFormData.personalInfo ? savedFormData.personalInfo.map(info => ({
           ...info,
-          value: replaceLatexSlash(info.value),
-          link: replaceLatexSlash(info.link)
+          value: typeof info.value === 'string' ? replaceLatexSlash(info.value) : info.value,
+          link: typeof info.link === 'string' ? replaceLatexSlash(info.link) : info.link
         })) : [],
-        name: replaceLatexSlash(savedFormData.name),
+        name: typeof savedFormData.name === 'string' ? replaceLatexSlash(savedFormData.name) : savedFormData.name,
         education: savedFormData.education ? savedFormData.education.map(edu => ({
           ...edu,
-          institution: replaceLatexSlash(edu.institution),
-          city: replaceLatexSlash(edu.city),
-          degree: replaceLatexSlash(edu.degree),
-          dates: replaceLatexSlash(edu.dates)
+          institution: typeof edu.institution === 'string' ? replaceLatexSlash(edu.institution) : edu.institution,
+          city: typeof edu.city === 'string' ? replaceLatexSlash(edu.city) : edu.city,
+          degree: typeof edu.degree === 'string' ? replaceLatexSlash(edu.degree) : edu.degree,
+          dates: typeof edu.dates === 'string' ? replaceLatexSlash(edu.dates) : edu.dates,
+          gpa: typeof edu.gpa === 'string' ? replaceLatexSlash(edu.gpa) : edu.gpa
         })) : [],
         experience: savedFormData.experience ? savedFormData.experience.map(exp => ({
           ...exp,
-          title: replaceLatexSlash(exp.title),
-          company: replaceLatexSlash(exp.company),
-          location: replaceLatexSlash(exp.location),
-          dates: replaceLatexSlash(exp.dates),
-          responsibilities: exp.responsibilities ? exp.responsibilities.map(res => replaceLatexSlash(res)) : []
+          title: typeof exp.title === 'string' ? replaceLatexSlash(exp.title) : exp.title,
+          company: typeof exp.company === 'string' ? replaceLatexSlash(exp.company) : exp.company,
+          location: typeof exp.location === 'string' ? replaceLatexSlash(exp.location) : exp.location,
+          dates: typeof exp.dates === 'string' ? replaceLatexSlash(exp.dates) : exp.dates,
+          responsibilities: exp.responsibilities ? exp.responsibilities.map(res => 
+            typeof res === 'string' ? replaceLatexSlash(res) : res
+          ) : []
         })) : [],
         projects: savedFormData.projects ? savedFormData.projects.map(proj => ({
           ...proj,
-          title: replaceLatexSlash(proj.title),
-          tech_stack: replaceLatexSlash(proj.tech_stack),
-          dates: replaceLatexSlash(proj.dates),
-          details: proj.details ? proj.details.map(detail => replaceLatexSlash(detail)) : []
+          title: typeof proj.title === 'string' ? replaceLatexSlash(proj.title) : proj.title,
+          tech_stack: typeof proj.tech_stack === 'string' ? replaceLatexSlash(proj.tech_stack) : proj.tech_stack,
+          dates: typeof proj.dates === 'string' ? replaceLatexSlash(proj.dates) : proj.dates,
+          details: proj.details ? proj.details.map(detail => 
+            typeof detail === 'string' ? replaceLatexSlash(detail) : detail
+          ) : []
         })) : [],
         skills: savedFormData.skills ? savedFormData.skills.map(skill => ({
           ...skill,
-          name: replaceLatexSlash(skill.name),
-          details: skill.details ? skill.details.map(detail => replaceLatexSlash(detail)) : []
+          name: typeof skill.name === 'string' ? replaceLatexSlash(skill.name) : skill.name,
+          details: skill.details ? skill.details.map(detail => 
+            typeof detail === 'string' ? replaceLatexSlash(detail) : detail
+          ) : []
         })) : []
       };
       setFormData(processedFormData);
@@ -102,21 +108,22 @@ export default function Home() {
     }
   };
 
-  const escapeLatex = (str) => {
-    if (!str) return str;
-    return str.replace(/&/g, '\\&')
-              .replace(/%/g, '\\%')
-              .replace(/_/g, '\\_')
-              .replace(/#/g, '\\#')
-              .replace(/{/g, '\\{')
-              .replace(/}/g, '\\}')
-              .replace(/~/g, '\\textasciitilde{}')
-              .replace(/\^/g, '\\^{}')
-              .replace(/\\/g, '\\textbackslash{}')
-              .replace(/\$/g, '\\$');
-    // Note: we removed the .replace(/\//g, '\\slash{}')
-  };
-  
+function escapeLatex(str) {
+  if (!str) return str;
+  return str
+    .replace(/&/g, '\\&')
+    .replace(/%/g, '\\%')
+    .replace(/_/g, '\\_')
+    .replace(/#/g, '\\#')
+    .replace(/{/g, '\\{')
+    .replace(/}/g, '\\}')
+    .replace(/~/g, '\\textasciitilde{}')
+    .replace(/\^/g, '\\^{}')
+    .replace(/\\/g, '\\textbackslash{}')
+    .replace(/\$/g, '\\$');
+}
+
+
   const handleLinkChange = (e, index) => {
     const newPersonalInfo = [...formData.personalInfo];
     let linkValue = e.target.value.trim();
@@ -159,7 +166,7 @@ export default function Home() {
   const handleAddEducation = () => {
     setFormData({
       ...formData,
-      education: [...formData.education, { institution: '', city: '', degree: '', dates: '' }],
+      education: [...formData.education, { institution: '', city: '', degree: '', dates: '', gpa: '' }],
     });
   };
 
@@ -217,6 +224,30 @@ export default function Home() {
     });
   };
 
+  const handleRemoveExperience = (index) => {
+    const newExperience = [...formData.experience];
+    newExperience.splice(index, 1);
+    setFormData({ ...formData, experience: newExperience });
+  };
+
+  const handleRemoveResponsibility = (expIndex, resIndex) => {
+    const newExperience = [...formData.experience];
+    newExperience[expIndex].responsibilities.splice(resIndex, 1);
+    setFormData({ ...formData, experience: newExperience });
+  };
+
+  const handleRemoveEducation = (index) => {
+    const newEducation = [...formData.education];
+    newEducation.splice(index, 1);
+    setFormData({ ...formData, education: newEducation });
+  };
+
+  const handleRemoveProject = (index) => {
+    const newProjects = [...formData.projects];
+    newProjects.splice(index, 1);
+    setFormData({ ...formData, projects: newProjects });
+  };
+
   const handleSkillChange = (index, field, value) => {
     const newSkills = [...formData.skills];
     newSkills[index][field] = value;
@@ -250,37 +281,22 @@ export default function Home() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const processedPersonalInfo = formData.personalInfo
-        .filter(info => info.value.trim() !== "")
-        .map((info, index, array) => {
-          if (index === 0) {
-            info.link = `mailto:${escapeLatex(info.value)}`;
-          } else if (index === 1) {
-            const digitsOnly = info.value.replace(/\D/g, '');
-            info.link = `tel:${digitsOnly}`;
-          } else {
-            info.link = info.link; // Keep link unescaped
-            info.value = escapeLatex(info.value); // Escape value
-          }
-          return {
-            ...info,
-            last: index === array.length - 1,
-          };
-        });
-
       const formattedData = {
         ...formData,
-        personalInfo: processedPersonalInfo,
+        personalInfo: formData.personalInfo.map(info => ({
+          ...info,
+          value: escapeLatex(info.value),
+          link: escapeLatex(info.link)
+        })),
         name: escapeLatex(formData.name),
         education: formData.education.map(edu => ({
-          ...edu,
           institution: escapeLatex(edu.institution),
           city: escapeLatex(edu.city),
           degree: escapeLatex(edu.degree),
-          dates: escapeLatex(edu.dates)
+          dates: escapeLatex(edu.dates),
+          gpa: escapeLatex(edu.gpa)
         })),
         experience: formData.experience.map(exp => ({
-          ...exp,
           title: escapeLatex(exp.title),
           company: escapeLatex(exp.company),
           location: escapeLatex(exp.location),
@@ -288,14 +304,12 @@ export default function Home() {
           responsibilities: exp.responsibilities.map(res => escapeLatex(res))
         })),
         projects: formData.projects.map(proj => ({
-          ...proj,
           title: escapeLatex(proj.title),
           tech_stack: escapeLatex(proj.tech_stack),
           dates: escapeLatex(proj.dates),
           details: proj.details.map(detail => escapeLatex(detail))
         })),
         skills: formData.skills.map(skill => ({
-          ...skill,
           name: escapeLatex(skill.name),
           details: skill.details.map(detail => escapeLatex(detail))
         }))
@@ -322,11 +336,15 @@ export default function Home() {
         setCurrentSection={setCurrentSection}
         isSidebarOpen={isSidebarOpen}
         setIsSidebarOpen={setIsSidebarOpen}
-        isSidebarCollapsed={isSidebarCollapsed}
-        setIsSidebarCollapsed={setIsSidebarCollapsed}
+        setFormData={setFormData} // Pass setFormData to Sidebar
       />
       <main className={`main-content flex-1 p-6 bg-gray-50`}>
         <MainForm
+          handleRemoveExperience={handleRemoveExperience}
+          handleRemoveResponsibility={handleRemoveResponsibility}
+          handleRemoveEducation={handleRemoveEducation}
+          handleRemoveProject={handleRemoveProject}
+          handleRemoveProjectDetail={handleRemoveProjectDetail}
           currentSection={currentSection}
           formData={formData}
           handleChange={handleChange}
@@ -348,7 +366,6 @@ export default function Home() {
           handleProjectChange={handleProjectChange}
           handleProjectDetailChange={handleProjectDetailChange}
           handleAddProject={handleAddProject}
-          handleRemoveProjectDetail={handleRemoveProjectDetail}
           handleSubmit={handleSubmit}
         />
       </main>

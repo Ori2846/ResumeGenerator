@@ -1,74 +1,135 @@
+% template2.tex
 \documentclass[a4paper,11pt]{article}
-\usepackage{geometry}
-\geometry{a4paper, margin=1in}
-\usepackage{enumitem}
-\usepackage{parskip}
-\usepackage{hyperref}
-\hypersetup{
-    colorlinks=true,
-    urlcolor=blue,
-}
+
+% Required packages
+\usepackage[empty]{fullpage}
 \usepackage{titlesec}
-\usepackage{fontspec}
-\setmainfont{Times New Roman}
-\newfontface\namefont{Arial}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
 \usepackage{fancyhdr}
-\usepackage{longtable}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+\usepackage{fontawesome5}
+\usepackage{multicol}
+\usepackage{geometry}
 
-\pagestyle{fancy}
-\fancyhf{}
-\rfoot{\thepage}
+% Set page margins
+\geometry{left=1.25cm, top=1.5cm, right=1.25cm, bottom=1.5cm, footskip=.5cm}
 
-\titleformat{\section}{\large\bfseries}{}{0em}{}
-\titleformat{\subsection}{\normalsize\bfseries}{}{0em}{}
+% Define colors
+\definecolor{darkgray}{HTML}{333333}
+\definecolor{gray}{HTML}{4D4D4D}
+\definecolor{lightgray}{HTML}{999999}
+\definecolor{sidecolor}{HTML}{E7E7E7}
+\definecolor{mainblue}{HTML}{0E5484}
+
+% Set main font
+\renewcommand{\familydefault}{\sfdefault}
+
+% Section formatting
+\titleformat{\section}{\color{mainblue}\scshape\large\raggedright}{}{0em}{}[\titlerule]
+\titlespacing*{\section}{0cm}{1.5ex plus 1ex minus .2ex}{1ex plus .2ex}
+
+% Header formatting
+\newcommand{\header}[2]{
+  \begin{center}
+    {\Huge\color{mainblue}#1}\\[0.5em]
+    {\large\color{gray}#2}
+  \end{center}
+}
+
+% Sidebar section formatting
+\newcommand{\sidebarSection}[1]{
+  \vspace{1em}
+  {\color{mainblue}\large\textbf{#1}}
+  \vspace{0.5em}
+}
+
+% Main body section formatting
+\newcommand{\bodySection}[1]{
+  \section{#1}
+}
+
+% Entry formatting
+\newcommand{\entry}[4]{
+  \textbf{#1} \hfill \textit{#2}\\
+  \textit{#3}\\
+  #4
+}
+
+% Two-column layout
+\setlength{\columnsep}{1cm}
 
 \begin{document}
 
-\begin{center}
-    {\Huge \namefont{\textbf{ {{name}} }}} \\
-    {\small {{email}} · {{phone}} · {{address}}}
-\end{center}
+% Header
+\header{ {{name}} }{ {{#personalInfo}}{{#value}}{{value}}{{^last}} | {{/last}}{{/value}}{{/personalInfo}} }
 
-\section*{Summary}
-{{summary}}
+\vspace{1em}
 
-\section*{Education}
-{{#education}}
-\textbf{ {{institution}}, {{city}} } \\
-\textit{ {{degree}}, {{dates}} } \\
-{{/education}}
+\begin{multicols}{2}
 
-\section*{Experience}
-{{#experience}}
-\textbf{ {{title}}, {{company}}, {{location}} } \\
-\textit{ {{dates}} }
-{{#responsibilities}}
-\begin{itemize}[noitemsep]
-    {{#responsibilities}}
-    \item {{.}}
-    {{/responsibilities}}
-\end{itemize}
-{{/responsibilities}}
-{{/experience}}
+% Left column (Sidebar)
+\begin{minipage}[t]{0.3\textwidth}
+  \color{gray}
 
-\section*{Skills}
-{{#skills}}
-\begin{itemize}[noitemsep]
-    \item \textbf{ {{name}} }: {{details}}
-{{/skills}}
-\end{itemize}
+  \sidebarSection{Contact}
+  {{#personalInfo}}
+  \faIcon{ {{icon}} } {{value}}\\
+  {{/personalInfo}}
 
-\section*{Projects}
-{{#projects}}
-\textbf{ {{title}} } \\
-\textit{ Tech Stack: {{tech_stack}}, {{dates}} }
-{{#details}}
-\begin{itemize}[noitemsep]
-    {{#details}}
-    \item {{.}}
-    {{/details}}
-\end{itemize}
-{{/details}}
-{{/projects}}
+  \sidebarSection{Skills}
+  {{#skills}}
+  \textbf{ {{name}} }\\
+  {{details}}\\
+  {{/skills}}
+
+\end{minipage}
+
+\columnbreak
+
+% Right column (Main content)
+\begin{minipage}[t]{0.7\textwidth}
+
+  {{#summary}}
+  \bodySection{Summary}
+  {{summary}}
+  {{/summary}}
+
+  \bodySection{Experience}
+  {{#experience}}
+  \entry{ {{title}} }{ {{dates}} }{ {{company}}, {{location}} }{
+    \begin{itemize}
+      {{#responsibilities}}
+      \item {{.}}
+      {{/responsibilities}}
+    \end{itemize}
+  }
+  {{/experience}}
+
+  \bodySection{Education}
+  {{#education}}
+  \entry{ {{degree}} }{ {{dates}} }{ {{institution}}, {{city}} }{
+    {{#gpa}}GPA: {{gpa}}{{/gpa}}
+  }
+  {{/education}}
+
+  \bodySection{Projects}
+  {{#projects}}
+  \entry{ {{title}} }{ {{dates}} }{ {{tech_stack}} }{
+    \begin{itemize}
+      {{#details}}
+      \item {{.}}
+      {{/details}}
+    \end{itemize}
+  }
+  {{/projects}}
+
+\end{minipage}
+
+\end{multicols}
 
 \end{document}
