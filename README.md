@@ -2,7 +2,8 @@
 
 **Resume Generator** is a sleek web app for creating professional resumes. Input your details, education, experience, projects, and skills to generate customized PDF resumes with LaTeX templates. Built with **React.js**, **Next.js**, and **Node.js**, it offers a seamless, user-friendly experience.
 
-![image](https://github.com/Ori2846/ResumeGenerator/assets/74078771/ad2dae12-c601-4734-a3ee-10f14b6b8c41)
+![image](https://github.com/Ori2846/ResumeGenerator/assets/74078771/cf0f562b-67f4-4d32-872f-c040e064bf4d)
+
 
 ## Example Resume
 
