@@ -191,3 +191,8 @@ button {
   color: inherit;
   opacity: 0; /* Invisible but clickable */
 }
+.draggable-item {
+  display: flex;
+  align-items: center;
+  cursor: move;
+}

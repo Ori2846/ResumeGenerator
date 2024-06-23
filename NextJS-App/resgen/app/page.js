@@ -108,22 +108,23 @@ export default function Home() {
     }
   };
 
-  const escapeLatex = (str) => {
-    if (!str) return str;
-    return str.replace(/&/g, '\\&')  // Escape &
-              .replace(/%/g, '\\%')
-              .replace(/_/g, '\\_')
-              .replace(/#/g, '\\#')
-              .replace(/{/g, '\\{')
-              .replace(/}/g, '\\}')
-              .replace(/~/g, '\\textasciitilde{}')
-              .replace(/\^/g, '\\^{}')
-              .replace(/\\/g, '\\textbackslash{}')
-              .replace(/\$/g, '\\$');
-  };
-  
+function escapeLatex(str) {
+  if (!str) return str;
+  return str
+    .replace(/&/g, '\\&')
+    .replace(/%/g, '\\%')
+    .replace(/_/g, '\\_')
+    .replace(/#/g, '\\#')
+    .replace(/{/g, '\\{')
+    .replace(/}/g, '\\}')
+    .replace(/~/g, '\\textasciitilde{}')
+    .replace(/\^/g, '\\^{}')
+    .replace(/\\/g, '\\textbackslash{}')
+    .replace(/\$/g, '\\$');
+}
 
-const handleLinkChange = (e, index) => {
+
+  const handleLinkChange = (e, index) => {
     const newPersonalInfo = [...formData.personalInfo];
     let linkValue = e.target.value.trim();
     if (!linkValue.startsWith('http://') && !linkValue.startsWith('https://')) {
@@ -222,24 +223,25 @@ const handleLinkChange = (e, index) => {
       skills: [...formData.skills, { name: '', details: [''] }],
     });
   };
+
   const handleRemoveExperience = (index) => {
     const newExperience = [...formData.experience];
     newExperience.splice(index, 1);
     setFormData({ ...formData, experience: newExperience });
   };
-  
+
   const handleRemoveResponsibility = (expIndex, resIndex) => {
     const newExperience = [...formData.experience];
     newExperience[expIndex].responsibilities.splice(resIndex, 1);
     setFormData({ ...formData, experience: newExperience });
   };
-  
+
   const handleRemoveEducation = (index) => {
     const newEducation = [...formData.education];
     newEducation.splice(index, 1);
     setFormData({ ...formData, education: newEducation });
   };
-  
+
   const handleRemoveProject = (index) => {
     const newProjects = [...formData.projects];
     newProjects.splice(index, 1);
@@ -274,7 +276,9 @@ const handleLinkChange = (e, index) => {
     const newProjects = [...formData.projects];
     newProjects[projIndex].details.splice(detailIndex, 1);
     setFormData({ ...formData, projects: newProjects });
-  };const handleSubmit = async (e) => {
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const formattedData = {
@@ -310,7 +314,7 @@ const handleLinkChange = (e, index) => {
           details: skill.details.map(detail => escapeLatex(detail))
         }))
       };
-  
+
       const response = await axios.post('/api/generate', formattedData);
       setPdfUrl(response.data.pdfUrl);
       setLatexSource(response.data.latexSource);
@@ -318,7 +322,6 @@ const handleLinkChange = (e, index) => {
       console.error('Error generating PDF:', error);
     }
   };
-  
 
   return (
     <div className="app-container flex">
@@ -333,8 +336,7 @@ const handleLinkChange = (e, index) => {
         setCurrentSection={setCurrentSection}
         isSidebarOpen={isSidebarOpen}
         setIsSidebarOpen={setIsSidebarOpen}
-        isSidebarCollapsed={isSidebarCollapsed}
-        setIsSidebarCollapsed={setIsSidebarCollapsed}
+        setFormData={setFormData} // Pass setFormData to Sidebar
       />
       <main className={`main-content flex-1 p-6 bg-gray-50`}>
         <MainForm
