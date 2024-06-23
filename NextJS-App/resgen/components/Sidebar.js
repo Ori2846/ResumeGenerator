@@ -11,7 +11,6 @@ import {
 } from '@heroicons/react/24/outline';
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 
-// Define the initial sections with unique ids
 const initialSections = [
   { id: 'template', icon: DocumentTextIcon, label: 'Template' },
   { id: 'personal-info', icon: UserIcon, label: 'Personal Info' },
@@ -22,7 +21,7 @@ const initialSections = [
   { id: 'skills', icon: CogIcon, label: 'Skills' },
 ];
 
-export default function Sidebar({ currentSection, setCurrentSection, isSidebarOpen, setIsSidebarOpen, setFormData }) {
+export default function Sidebar({ currentSection, setCurrentSection, isSidebarOpen, setIsSidebarOpen, setFormData, initialFormData }) {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [orderedSections, setOrderedSections] = useState(initialSections);
 
@@ -46,10 +45,16 @@ export default function Sidebar({ currentSection, setCurrentSection, isSidebarOp
       const reader = new FileReader();
       reader.onload = (e) => {
         const json = JSON.parse(e.target.result);
-        setFormData(json);  // Update the form data state
+        setFormData(json);
       };
       reader.readAsText(file);
     }
+  };
+
+  const clearData = () => {
+    localStorage.removeItem('savedFormData');
+    setFormData(initialFormData);
+    window.location.reload(); // Refresh the page
   };
 
   return (
@@ -68,7 +73,7 @@ export default function Sidebar({ currentSection, setCurrentSection, isSidebarOp
                 section.id === 'template' ? (
                   <div
                     key={section.id}
-                    className="draggable-item flex-grow flex" // Flex properties for equal sizing and alignment
+                    className="draggable-item flex-grow flex"
                   >
                     <button
                       onClick={() => { setCurrentSection(section.id); setIsSidebarOpen(false); }}
@@ -85,7 +90,7 @@ export default function Sidebar({ currentSection, setCurrentSection, isSidebarOp
                         ref={provided.innerRef}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
-                        className="draggable-item flex-grow flex" // Flex properties for equal sizing and alignment
+                        className="draggable-item flex-grow flex"
                       >
                         <button
                           onClick={() => { setCurrentSection(section.id); setIsSidebarOpen(false); }}
@@ -93,7 +98,7 @@ export default function Sidebar({ currentSection, setCurrentSection, isSidebarOp
                         >
                           <section.icon className="icon" />
                           {!isCollapsed && <span className="ml-3 flex-grow">{section.label}</span>}
-                          <Bars3Icon className="h-5 w-5 text-gray-400 ml-auto" /> {/* Drag handle inside the button */}
+                          <Bars3Icon className="h-5 w-5 text-gray-400 ml-auto" />
                         </button>
                       </div>
                     )}
@@ -107,16 +112,19 @@ export default function Sidebar({ currentSection, setCurrentSection, isSidebarOp
       </DragDropContext>
       {!isCollapsed && (
         <div className="flex flex-col p-3 space-y-2">
-          <hr className="border-gray-700 my-4" /> {/* Divider */}
+          <hr className="border-gray-700 my-4" />
           <button className="bg-gray-800 hover:bg-gray-700 text-white py-2 px-4 rounded-lg text-center">
             <label className="cursor-pointer flex items-center justify-center">
               Import JSON
               <input type="file" accept=".json" onChange={handleFileUpload} className="hidden" />
             </label>
           </button>
-          <a href="/terms-and-conditions" className="text-gray-500 text-sm hover:text-gray-300">Terms and Conditions</a>
-          <a href="/privacy-policy" className="text-gray-500 text-sm hover:text-gray-300">Privacy Policy</a>
-          <a href="/accessibility-policy" className="text-gray-500 text-sm hover:text-gray-300">Accessibility Policy</a>
+          <button
+            onClick={clearData}
+            className="bg-gray-800 hover:bg-gray-700 text-white py-2 px-4 rounded-lg text-center"
+          >
+            Clear Data
+          </button>
         </div>
       )}
     </aside>
