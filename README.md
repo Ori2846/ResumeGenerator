@@ -158,14 +158,14 @@ Contributions are welcome! Feel free to open issues or submit pull requests.
 - Make Resume Generator mobile-friendly.
 - ~~Add GitHub and LinkedIn links.~~
 - ~~Add option to download as JSON, PDF, or TeX.~~
-- Ask users to format phone numbers correctly.
+- ~~Ask users to format phone numbers correctly.~~
 - Allow usage of & character in input fields.
 - ~~Enable users to remove responsibilities.~~
-- Fix the "4 details" bug.
-- Bold project titles and remove | from tech stack.
+- ~~Fix the "4 details" bug.~~
+- ~~Bold project titles and remove | from tech stack.~~
 - Fix the ampersand (&) bug in all text boxes.
-- Fix the comma bug in technical skills.
-- Change header option for improved customization.
+- ~~Fix the comma bug in technical skills.~~
+- ~~Change header option for improved customization.~~
 
 
 ## Like this package? Star it!
