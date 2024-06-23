@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import * as pdfjsLib from 'pdfjs-dist/webpack';
 import 'pdfjs-dist/web/pdf_viewer.css';
+import yaml from 'js-yaml';
 
 export default function PdfBox({ pdfUrl, formData, latexSource }) {
   const [view, setView] = useState('pdf');
@@ -55,6 +56,10 @@ export default function PdfBox({ pdfUrl, formData, latexSource }) {
       const latexBlob = new Blob([latexSource], { type: 'text/plain' });
       link.href = URL.createObjectURL(latexBlob);
       link.download = 'resume.tex';
+    } else if (view === 'yaml') {
+      const yamlBlob = new Blob([yaml.dump(formData)], { type: 'text/yaml' });
+      link.href = URL.createObjectURL(yamlBlob);
+      link.download = 'resume.yaml';
     }
     document.body.appendChild(link);
     link.click();
@@ -82,6 +87,12 @@ export default function PdfBox({ pdfUrl, formData, latexSource }) {
         >
           LaTeX
         </button>
+        <button
+          onClick={() => setView('yaml')}
+          className={`btn ${view === 'yaml' ? 'btn-active' : ''}`}
+        >
+          YAML
+        </button>
         <button onClick={handleDownload} className="btn btn-download">
           Download
         </button>
@@ -98,6 +109,11 @@ export default function PdfBox({ pdfUrl, formData, latexSource }) {
         {view === 'latex' && (
           <pre className="latex-content p-4 font-mono text-sm bg-white rounded-lg shadow-inner">
             {latexSource}
+          </pre>
+        )}
+        {view === 'yaml' && (
+          <pre className="yaml-content p-4 font-mono text-sm bg-white rounded-lg shadow-inner">
+            {yaml.dump(formData)}
           </pre>
         )}
       </div>

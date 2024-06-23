@@ -114,9 +114,6 @@ export default function Sidebar({ currentSection, setCurrentSection, isSidebarOp
               <input type="file" accept=".json" onChange={handleFileUpload} className="hidden" />
             </label>
           </button>
-          <a href="/terms-and-conditions" className="text-gray-500 text-sm hover:text-gray-300">Terms and Conditions</a>
-          <a href="/privacy-policy" className="text-gray-500 text-sm hover:text-gray-300">Privacy Policy</a>
-          <a href="/accessibility-policy" className="text-gray-500 text-sm hover:text-gray-300">Accessibility Policy</a>
         </div>
       )}
     </aside>

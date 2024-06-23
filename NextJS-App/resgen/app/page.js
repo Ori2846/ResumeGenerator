@@ -6,6 +6,7 @@ import './globals.css';
 import PdfBox from '../components/PdfBox';
 import Sidebar from '../components/Sidebar';
 import MainForm from '../components/MainForm';
+import Footer from '../components/Footer'; // Import the Footer component
 
 export default function Home() {
   const [formData, setFormData] = useState({
@@ -108,20 +109,20 @@ export default function Home() {
     }
   };
 
-function escapeLatex(str) {
-  if (!str) return str;
-  return str
-    .replace(/&/g, '\\&')
-    .replace(/%/g, '\\%')
-    .replace(/_/g, '\\_')
-    .replace(/#/g, '\\#')
-    .replace(/{/g, '\\{')
-    .replace(/}/g, '\\}')
-    .replace(/~/g, '\\textasciitilde{}')
-    .replace(/\^/g, '\\^{}')
-    .replace(/\\/g, '\\textbackslash{}')
-    .replace(/\$/g, '\\$');
-}
+  function escapeLatex(str) {
+    if (!str) return str;
+    return str
+      .replace(/&/g, '\\&')
+      .replace(/%/g, '\\%')
+      .replace(/_/g, '\\_')
+      .replace(/#/g, '\\#')
+      .replace(/{/g, '\\{')
+      .replace(/}/g, '\\}')
+      .replace(/~/g, '\\textasciitilde{}')
+      .replace(/\^/g, '\\^{}')
+      .replace(/\\/g, '\\textbackslash{}')
+      .replace(/\$/g, '\\$');
+  }
 
 
   const handleLinkChange = (e, index) => {
@@ -324,54 +325,57 @@ function escapeLatex(str) {
   };
 
   return (
-    <div className="app-container flex">
+    <div className="app-container flex flex-col min-h-screen">
       <button
         className="md:hidden bg-gray-900 text-white p-4"
         onClick={() => setIsSidebarOpen(!isSidebarOpen)}
       >
         Menu
       </button>
-      <Sidebar
-        currentSection={currentSection}
-        setCurrentSection={setCurrentSection}
-        isSidebarOpen={isSidebarOpen}
-        setIsSidebarOpen={setIsSidebarOpen}
-        setFormData={setFormData} // Pass setFormData to Sidebar
-      />
-      <main className={`main-content flex-1 p-6 bg-gray-50`}>
-        <MainForm
-          handleRemoveExperience={handleRemoveExperience}
-          handleRemoveResponsibility={handleRemoveResponsibility}
-          handleRemoveEducation={handleRemoveEducation}
-          handleRemoveProject={handleRemoveProject}
-          handleRemoveProjectDetail={handleRemoveProjectDetail}
+      <div className="flex flex-grow">
+        <Sidebar
           currentSection={currentSection}
-          formData={formData}
-          handleChange={handleChange}
-          handleFieldLabelChange={handleFieldLabelChange}
-          handleAddField={handleAddField}
-          handleRemoveField={handleRemoveField}
-          handleLinkChange={handleLinkChange}
-          handleLinkToggle={handleLinkToggle}
-          handleExperienceChange={handleExperienceChange}
-          handleExperienceResponsibilityChange={handleExperienceResponsibilityChange}
-          handleAddExperience={handleAddExperience}
-          handleEducationChange={handleEducationChange}
-          handleAddEducation={handleAddEducation}
-          handleSkillChange={handleSkillChange}
-          handleSkillDetailChange={handleSkillDetailChange}
-          handleAddSkill={handleAddSkill}
-          handleRemoveSkill={handleRemoveSkill}
-          handleRemoveSkillDetail={handleRemoveSkillDetail}
-          handleProjectChange={handleProjectChange}
-          handleProjectDetailChange={handleProjectDetailChange}
-          handleAddProject={handleAddProject}
-          handleSubmit={handleSubmit}
+          setCurrentSection={setCurrentSection}
+          isSidebarOpen={isSidebarOpen}
+          setIsSidebarOpen={setIsSidebarOpen}
+          setFormData={setFormData} // Pass setFormData to Sidebar
         />
-      </main>
-      <section className="pdf-container p-6">
-        <PdfBox pdfUrl={pdfUrl} formData={formData} latexSource={latexSource} />
-      </section>
+        <main className="main-content flex-1 p-6 bg-gray-50">
+          <MainForm
+            handleRemoveExperience={handleRemoveExperience}
+            handleRemoveResponsibility={handleRemoveResponsibility}
+            handleRemoveEducation={handleRemoveEducation}
+            handleRemoveProject={handleRemoveProject}
+            handleRemoveProjectDetail={handleRemoveProjectDetail}
+            currentSection={currentSection}
+            formData={formData}
+            handleChange={handleChange}
+            handleFieldLabelChange={handleFieldLabelChange}
+            handleAddField={handleAddField}
+            handleRemoveField={handleRemoveField}
+            handleLinkChange={handleLinkChange}
+            handleLinkToggle={handleLinkToggle}
+            handleExperienceChange={handleExperienceChange}
+            handleExperienceResponsibilityChange={handleExperienceResponsibilityChange}
+            handleAddExperience={handleAddExperience}
+            handleEducationChange={handleEducationChange}
+            handleAddEducation={handleAddEducation}
+            handleSkillChange={handleSkillChange}
+            handleSkillDetailChange={handleSkillDetailChange}
+            handleAddSkill={handleAddSkill}
+            handleRemoveSkill={handleRemoveSkill}
+            handleRemoveSkillDetail={handleRemoveSkillDetail}
+            handleProjectChange={handleProjectChange}
+            handleProjectDetailChange={handleProjectDetailChange}
+            handleAddProject={handleAddProject}
+            handleSubmit={handleSubmit}
+          />
+        </main>
+        <section className="pdf-container p-6">
+          <PdfBox pdfUrl={pdfUrl} formData={formData} latexSource={latexSource} />
+        </section>
+      </div>
+      <Footer /> {/* Include the Footer component */}
     </div>
   );
 }
