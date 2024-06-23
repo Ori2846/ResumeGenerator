@@ -1,5 +1,25 @@
-// components/formSections/Experience.js
+import React, { useState } from 'react';
+import ConfirmationModal from './ConfirmationModal';
+
 export default function Experience({ formData, handleExperienceChange, handleExperienceResponsibilityChange, handleAddExperience, handleRemoveExperience, handleRemoveResponsibility }) {
+  const [showModal, setShowModal] = useState(false);
+  const [itemToRemove, setItemToRemove] = useState(null);
+
+  const handleShowModal = (index) => {
+    setItemToRemove(index);
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setItemToRemove(null);
+  };
+
+  const handleConfirmRemove = () => {
+    handleRemoveExperience(itemToRemove);
+    handleCloseModal();
+  };
+
   return (
     <div className="w-full">
       <h2 className="text-xl font-bold mb-4">Experience</h2>
@@ -33,7 +53,11 @@ export default function Experience({ formData, handleExperienceChange, handleExp
           <button type="button" className="btn btn-secondary mt-2" onClick={() => handleExperienceResponsibilityChange(index, exp.responsibilities.length, '')}>
             Add Responsibility
           </button>
-          <button type="button" className="btn btn-danger mt-2" onClick={() => handleRemoveExperience(index)}>
+          <button
+            type="button"
+            className="btn btn-danger mt-2"
+            onClick={() => handleShowModal(index)}
+          >
             Remove Experience
           </button>
         </div>
@@ -41,6 +65,11 @@ export default function Experience({ formData, handleExperienceChange, handleExp
       <button type="button" className="btn btn-success mt-4" onClick={handleAddExperience}>
         Add Experience
       </button>
+      <ConfirmationModal
+        show={showModal}
+        handleClose={handleCloseModal}
+        handleConfirm={handleConfirmRemove}
+      />
     </div>
   );
 }

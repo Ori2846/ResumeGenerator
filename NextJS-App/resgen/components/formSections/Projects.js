@@ -1,5 +1,25 @@
-// components/formSections/Projects.js
+import React, { useState } from 'react';
+import ConfirmationModal from './ConfirmationModal';
+
 export default function Projects({ formData, handleProjectChange, handleProjectDetailChange, handleAddProject, handleRemoveProject, handleRemoveProjectDetail }) {
+  const [showModal, setShowModal] = useState(false);
+  const [itemToRemove, setItemToRemove] = useState(null);
+
+  const handleShowModal = (index) => {
+    setItemToRemove(index);
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setItemToRemove(null);
+  };
+
+  const handleConfirmRemove = () => {
+    handleRemoveProject(itemToRemove);
+    handleCloseModal();
+  };
+
   return (
     <div className="w-full">
       {formData.projects.map((proj, index) => (
@@ -27,7 +47,11 @@ export default function Projects({ formData, handleProjectChange, handleProjectD
           <button type="button" className="btn btn-secondary mt-2" onClick={() => handleProjectDetailChange(index, proj.details.length, '')}>
             Add Detail
           </button>
-          <button type="button" className="btn btn-danger mt-2" onClick={() => handleRemoveProject(index)}>
+          <button
+            type="button"
+            className="btn btn-danger mt-2"
+            onClick={() => handleShowModal(index)}
+          >
             Remove Project
           </button>
         </div>
@@ -35,6 +59,11 @@ export default function Projects({ formData, handleProjectChange, handleProjectD
       <button type="button" className="btn btn-success mt-4" onClick={handleAddProject}>
         Add Project
       </button>
+      <ConfirmationModal
+        show={showModal}
+        handleClose={handleCloseModal}
+        handleConfirm={handleConfirmRemove}
+      />
     </div>
   );
 }

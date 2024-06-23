@@ -1,5 +1,25 @@
-// components/formSections/PersonalInfo.js
+import React, { useState } from 'react';
+import ConfirmationModal from './ConfirmationModal';
+
 export default function PersonalInfo({ formData, handleChange, handleFieldLabelChange, handleAddField, handleRemoveField, handleLinkChange, handleLinkToggle }) {
+  const [showModal, setShowModal] = useState(false);
+  const [itemToRemove, setItemToRemove] = useState(null);
+
+  const handleShowModal = (index) => {
+    setItemToRemove(index);
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setItemToRemove(null);
+  };
+
+  const handleConfirmRemove = () => {
+    handleRemoveField(itemToRemove);
+    handleCloseModal();
+  };
+
   return (
     <div className="w-full">
       <div className="form-group">
@@ -32,7 +52,11 @@ export default function PersonalInfo({ formData, handleChange, handleFieldLabelC
             />
           )}
           {info.removable && (
-            <button type="button" className="btn-remove" onClick={() => handleRemoveField(index)}>
+            <button
+              type="button"
+              className="btn-remove"
+              onClick={() => handleShowModal(index)}
+            >
               ✕
             </button>
           )}
@@ -52,6 +76,11 @@ export default function PersonalInfo({ formData, handleChange, handleFieldLabelC
       <button type="button" className="btn btn-secondary mt-4" onClick={handleAddField}>
         Add Field
       </button>
+      <ConfirmationModal
+        show={showModal}
+        handleClose={handleCloseModal}
+        handleConfirm={handleConfirmRemove}
+      />
     </div>
   );
 }
