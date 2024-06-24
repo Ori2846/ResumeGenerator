@@ -1,20 +1,19 @@
-/* globals.css */
+/* Tailwind Base, Components, and Utilities */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* Divider Styles */
 .divider {
   border: 0;
-  height: 3px; /* Increased thickness */
-  background: linear-gradient(to right, #ff7e5f, #feb47b); /* Stronger color gradient */
+  height: 3px;
+  background: linear-gradient(to right, #ff7e5f, #feb47b);
   margin: 20px 0;
   border-radius: 5px;
-  opacity: 1; /* Full opacity */
+  opacity: 1;
 }
 
-
-
-/* Additional global styles */
+/* Global Styles */
 body {
   @apply bg-gray-50 text-gray-900;
   font-family: 'Inter', sans-serif;
@@ -32,12 +31,86 @@ button {
   @apply cursor-pointer;
 }
 
+/* Custom Scrollbar Styles */
+::-webkit-scrollbar {
+  width: 12px;
+}
 
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to right, #b0b0b0, #e0e0e0);
+  border-radius: 10px;
+  border: 3px solid #f1f1f1;
+  transition: background 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to right, #e0e0e0, #b0b0b0);
+}
+
+
+
+/* Footer Styles */
+.footer {
+  @apply bg-gray-900 text-white py-6;
+}
+
+.footer-content {
+  @apply container mx-auto flex justify-between items-center px-6;
+}
+
+.footer-right a {
+  @apply text-white hover:text-gray-400;
+}
+
+/* Application Container Styles */
+.app-container {
+  @apply flex flex-col min-h-screen;
+}
+
+/* Main Content Styles */
+.main-content {
+  @apply flex-1 p-6 bg-gray-50 flex flex-col items-center;
+}
+
+.header {
+  @apply bg-gray-900 text-white p-6 text-center;
+}
+
+.buttons-container {
+  @apply flex flex-col justify-center items-center space-y-6 mb-8;
+}
+
+.example-container {
+  @apply w-full flex justify-center;
+}
+
+/* Button Styles */
+.btn {
+  @apply px-6 py-3 rounded-lg shadow-lg transition-colors duration-300 text-lg;
+}
+
+.btn-success {
+  @apply bg-green-600 hover:bg-green-700 text-white;
+}
+
+.btn-secondary {
+  @apply bg-gray-600 hover:bg-gray-700 text-white;
+}
+
+button {
+  @apply cursor-pointer;
+}
+
+/* Sidebar Styles */
 .sidebar-header {
   @apply text-center mb-8;
 }
 
-/* Ensure icons are visible and properly aligned */
 .sidebar-nav button {
   @apply py-2 md:py-3 px-4 md:px-6 rounded-lg transition-colors duration-300 flex items-center;
 }
@@ -54,71 +127,19 @@ button {
   @apply ml-3;
 }
 
-
+/* Form Styles */
 .form {
   @apply bg-white p-4 md:p-6 rounded-lg shadow-lg max-w-4xl mx-auto w-full; /* Adjusted padding for a shorter form */
 }
 
-
 .form-header {
   @apply mb-6 text-center text-2xl md:text-3xl font-extrabold text-gray-900;
 }
-/* globals.css */
-/* globals.css */
+
 .form-body {
   @apply w-full overflow-y-auto max-h-[60vh] pr-4; /* Reduce max height and add right padding */
 }
 
-.pdf-box-content {
-  @apply flex-1 bg-gray-100 rounded-lg p-4 overflow-auto max-h-[80vh] pr-4; /* Add right padding */
-}
-
-/* Custom scrollbar styles */
-.form-body::-webkit-scrollbar {
-  width: 12px;
-}
-
-.form-body::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 10px;
-}
-
-.form-body::-webkit-scrollbar-thumb {
-  background-color: #888;
-  border-radius: 10px;
-  border: 3px solid #f1f1f1;
-}
-
-.form-body::-webkit-scrollbar-thumb:hover {
-  background: #555;
-}
-
-/* Custom scrollbar for PDF box */
-.pdf-box-content::-webkit-scrollbar {
-  width: 12px;
-}
-
-.pdf-box-content::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 10px;
-}
-
-.pdf-box-content::-webkit-scrollbar-thumb {
-  background-color: #888;
-  border-radius: 10px;
-  border: 3px solid #f1f1f1;
-}
-
-.pdf-box-content::-webkit-scrollbar-thumb:hover {
-  background: #555;
-}
-
-
-
-.pdf-box-content {
-  @apply flex-1 bg-gray-100 rounded-lg p-4 overflow-auto;
-  max-height: 80vh;
-}
 .form-group {
   @apply mb-3 relative;
   width: 100%;
@@ -136,6 +157,155 @@ button {
   @apply mt-1 block w-full bg-transparent border-none font-bold;
 }
 
+/* Button Styles */
+.btn {
+  @apply px-4 py-2 rounded-lg shadow transition-colors duration-300;
+}
+
+.btn-success {
+  @apply bg-green-500 text-white hover:bg-green-600 mt-6;
+}
+
+.btn-secondary {
+  @apply bg-gray-500 text-white hover:bg-gray-600;
+}
+
+.btn-remove {
+  @apply absolute right-0 top-1/2 transform -translate-y-1/2 bg-transparent text-red-500 hover:text-red-700;
+}
+
+
+.pdf-iframe-container {
+  @apply w-full h-full bg-gray-300 rounded-lg flex justify-center items-center shadow-inner;
+}
+
+.pdf-iframe {
+  @apply w-full h-full rounded-lg;
+}
+
+/* Placeholder Styles */
+.placeholder {
+  @apply text-gray-700 text-lg;
+}
+
+/* Application Container Styles */
+.app-container {
+  @apply flex flex-col md:flex-row h-screen;
+}
+
+/* Sidebar Styles */
+.sidebar {
+  @apply w-full md:w-64 bg-gray-900 text-white p-4 md:p-6 flex flex-col shadow-lg fixed md:relative;
+}
+
+.sidebar-header {
+  @apply text-center mb-8 flex justify-between items-center;
+}
+
+.sidebar-nav {
+  @apply flex-1 flex flex-col space-y-4 p-3;
+}
+
+.sidebar-nav button {
+  @apply py-2 md:py-3 px-4 md:px-6 rounded-lg transition-colors duration-300 flex items-center;
+}
+
+.sidebar-nav button .icon {
+  @apply h-6 w-6 flex-shrink-0;
+}
+
+.sidebar-nav button .text {
+  @apply ml-3;
+}
+
+
+
+/* Main Content Styles */
+.main-content {
+  @apply flex-1 p-4 md:p-8 overflow-y-auto;
+  display: flex;
+  flex-direction: column;
+}
+/* PDF Container Styles */
+.pdf-container {
+  @apply flex-1 p-4 md:p-8 bg-gray-100 flex justify-center items-center;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.pdf-box-container {
+  @apply w-full h-full bg-white shadow-lg rounded-lg flex flex-col overflow-hidden;
+}
+
+.pdf-box-content {
+  @apply flex-1 bg-gray-100 p-4 overflow-auto relative;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .app-container {
+    @apply flex-col;
+  }
+
+  .sidebar {
+    @apply w-full p-2;
+    position: relative;
+  }
+
+  .main-content {
+    @apply p-4;
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .pdf-container {
+    @apply w-full mt-4 h-auto;
+  }
+
+  .pdf-box-container {
+    height: 100%; /* Ensure it takes full height available */
+  }
+}
+
+
+.json-content, .latex-content {
+  @apply p-4 font-mono text-sm bg-white rounded-lg shadow-inner;
+}
+
+.yaml-content {
+  @apply p-4 font-mono text-sm bg-white rounded-lg shadow-inner;
+}
+
+/* Form Styles */
+.form {
+  @apply bg-white p-4 md:p-6 rounded-lg shadow-lg max-w-4xl mx-auto w-full;
+}
+
+.form-header {
+  @apply mb-6 text-center text-2xl md:text-3xl font-extrabold text-gray-900;
+}
+
+.form-body {
+  @apply w-full overflow-y-auto max-h-[60vh] pr-4;
+}
+
+.form-group {
+  @apply mb-3 relative;
+  width: 100%;
+}
+
+.form-control {
+  @apply mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50;
+}
+
+.form-label {
+  @apply block font-semibold;
+}
+
+.form-label-input {
+  @apply mt-1 block w-full bg-transparent border-none font-bold;
+}
 
 .btn {
   @apply px-4 py-2 rounded-lg shadow transition-colors duration-300;
@@ -153,264 +323,7 @@ button {
   @apply absolute right-0 top-1/2 transform -translate-y-1/2 bg-transparent text-red-500 hover:text-red-700;
 }
 
-.pdf-container {
-  @apply w-full md:w-1/2 p-4 md:p-8 bg-gray-100 flex justify-center items-center;
-}
-
-.pdf-iframe-container {
-  @apply w-full h-full bg-gray-300 rounded-lg flex justify-center items-center shadow-inner;
-}
-
-.pdf-iframe {
-  @apply w-full h-full rounded-lg;
-}
-
-.placeholder {
-  @apply text-gray-700 text-lg;
-}
-
-/* globals.css */
-.app-container {
-  @apply flex flex-col md:flex-row h-screen;
-}
-
-.sidebar {
-  @apply w-full md:w-64 bg-gray-900 text-white p-4 md:p-6 flex flex-col shadow-lg fixed md:relative;
-}
-
-.main-content {
-  @apply flex-1 p-4 md:p-8 overflow-y-auto;
-  width: calc(100% - 64px); /* Adjust width based on sidebar */
-  margin-left: 0px; /* Adjust margin to prevent overlapping */
-}
-
-@media (max-width: 1024px) {
-  .app-container {
-    @apply flex-col;
-  }
-
-  .sidebar {
-    @apply w-full p-2;
-    position: relative;
-  }
-
-  .main-content {
-    @apply p-4;
-    width: 100%;
-    margin-left: 0;
-  }
-
-
-
-  .pdf-container {
-    @apply w-full mt-4;
-  }
-
-  .pdf-iframe-container {
-    @apply h-60;
-  }
-}
-
-.pdf-box-container {
-  @apply w-full h-full bg-white shadow-lg rounded-lg flex flex-col;
-}
-
-.pdf-box-buttons .btn {
-  @apply bg-gray-200 text-gray-700 py-2 px-4 rounded transition-colors duration-300 hover:bg-gray-300;
-  font-size: 0.875rem; /* Smaller font size for discrete appearance */
-}
-
-.pdf-box-buttons .btn-active {
-  @apply bg-blue-500 text-white;
-}
-
-.pdf-box-content {
-  @apply flex-1 bg-gray-100 rounded-lg p-4 overflow-auto;
-}
-
-.pdf-iframe {
-  @apply w-full h-full rounded-lg;
-}
-
-.json-content, .latex-content {
-  @apply p-4 font-mono text-sm bg-white rounded-lg shadow-inner;
-}
-.textLayer {
-  pointer-events: none;
-}
-
-.textLayer span {
-  pointer-events: all;
-}
-
-.annotationLayer {
-  pointer-events: none;
-}
-
-.annotationLayer a {
-  pointer-events: all;
-  position: absolute;
-  text-decoration: none;
-  color: inherit;
-  opacity: 0; /* Invisible but clickable */
-}
-.draggable-item {
-  display: flex;
-  align-items: center;
-  cursor: move;
-}
-/*About container*/
-.about-container {
-  padding: 20px;
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-.about-container h1 {
-  font-size: 2em;
-  margin-bottom: 20px;
-}
-
-.about-container h2 {
-  font-size: 1.5em;
-  margin-top: 40px;
-  margin-bottom: 20px;
-}
-
-.about-container h3 {
-  font-size: 1.2em;
-  margin-top: 20px;
-}
-
-.about-container p {
-  font-size: 1em;
-  line-height: 1.5;
-  margin-bottom: 20px;
-}
-
-.about-container a {
-  color: #1a73e8;
-  text-decoration: none;
-}
-
-.about-container a:hover {
-  text-decoration: underline;
-}
-
-.divider {
-  margin: 40px 0;
-  border: 0;
-  height: 1px;
-  background: #ddd;
-}
-/*Contact container*/
-.contact-container {
-  padding: 20px;
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-.contact-container h1 {
-  font-size: 2em;
-  margin-bottom: 20px;
-}
-
-.contact-container p {
-  font-size: 1em;
-  line-height: 1.5;
-  margin-bottom: 20px;
-}
-
-.contact-container a {
-  color: #1a73e8;
-  text-decoration: none;
-}
-
-.contact-container a:hover {
-  text-decoration: underline;
-}
-/*Copyright*/
-.copyright-container {
-  padding: 20px;
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-.copyright-container h1 {
-  font-size: 2em;
-  margin-bottom: 20px;
-}
-
-.copyright-container p {
-  font-size: 1em;
-  line-height: 1.5;
-  margin-bottom: 20px;
-}
-
-.copyright-container ul {
-  list-style-type: disc;
-  padding-left: 20px;
-}
-
-.copyright-container li {
-  margin-bottom: 10px;
-}
-
-.copyright-container a {
-  color: #1a73e8;
-  text-decoration: none;
-}
-
-.copyright-container a:hover {
-  text-decoration: underline;
-}
-/*Footer*/
-.footer {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  background-color: #333;
-  color: white;
-  padding: 10px 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-.footer-content {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  padding: 0 50px; /* Increase padding to push content farther apart */
-  max-width: 2000px; /* Optionally increase max-width */
-  margin: 0 auto;
-}
-
-.footer-left {
-  font-size: 14px;
-  text-align: left;
-  flex: 1;
-}
-
-.footer-right {
-  display: flex;
-  justify-content: flex-end;
-  text-align: right;
-  flex: 1;
-}
-
-.footer-right a {
-  color: white;
-  margin-left: 15px;
-  text-decoration: none;
-  font-size: 14px;
-}
-
-.footer-right a:hover {
-  text-decoration: underline;
-}
-/* Overlay */
+/* Modal Styles */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -424,7 +337,6 @@ button {
   z-index: 1000;
 }
 
-/* Modal Content */
 .modal-content {
   background: white;
   border-radius: 8px;
@@ -468,7 +380,6 @@ button {
   margin-left: 10px;
 }
 
-/* Custom Red Button */
 .red-button {
   background-color: #dc3545;
   border-color: #dc3545;
@@ -480,7 +391,7 @@ button {
   border-color: #bd2130;
 }
 
-/* Animation */
+/* Animation Keyframes */
 @keyframes fadeIn {
   from {
     opacity: 0;

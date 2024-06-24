@@ -18,7 +18,6 @@
 \usepackage[usenames,dvipsnames]{color}
 \usepackage{verbatim}
 \usepackage{enumitem}
-\usepackage[hidelinks]{hyperref}
 \usepackage{fancyhdr}
 \usepackage[english]{babel}
 \usepackage{tabularx}
@@ -51,11 +50,16 @@
 }{}{0em}{}[\color{black}\titlerule \vspace{-8pt}]
 
 % Custom commands
-\newcommand{\resumeItem}[1]{
+%DOTTED
+\newcommand{\resumeDottedItem}[1]{
   \item\small{
     {#1 \vspace{-2pt}}
   }
 }
+%PARAGRAPH
+\newcommand{\resumeParagraphItem}[1]{\small{
+  {#1 \vspace{-2pt}}
+}}
 
 \newcommand{\resumeSubheading}[4]{
   \vspace{-2pt}\item
@@ -66,20 +70,20 @@
 }
 
 \newcommand{\resumeSubSubheading}[2]{
-    \item
+  \item
     \begin{tabularx}{\textwidth}{Xr}
       \textit{\small#1} & \textit{\small #2} \\
     \end{tabularx}\vspace{-6pt}
 }
 
 \newcommand{\resumeProjectHeading}[2]{
-    \item
+  \item
     \begin{tabularx}{\textwidth}{Xr}
       \small #1 & #2 \\
     \end{tabularx}\vspace{-6pt}
 }
 
-\newcommand{\resumeSubItem}[1]{\resumeItem{#1}\vspace{-2pt}}
+\newcommand{\resumeSubItem}[1]{\resumeDottedItem{#1}\vspace{-2pt}}
 
 \renewcommand\labelitemii{$\vcenter{\hbox{\tiny$\bullet$}}$}
 
@@ -116,72 +120,80 @@
     {{/personalInfo}}
 \end{center}
 
-%-----------SUMMARY-----------
-{{#summary}}
-\section{Summary}
-{{summary}}
-{{/summary}}
-
-%-----------EDUCATION-----------
-{{#education.length}}
-\section{Education}
-\resumeSubHeadingListStart
-  {{#education}}
-    \resumeSubheading
-      { {{institution}} }{ {{dates}} }
-      { {{degree}} {{#gpa}} GPA: {{gpa}}{{/gpa}} }{ {{city}} }
-  {{/education}}
-\resumeSubHeadingListEnd
-{{/education.length}}
-
-%-----------EXPERIENCE-----------
-{{#experience.length}}
-\section{Experience}
-\resumeSubHeadingListStart
-  {{#experience}}
-    \resumeSubheading
-      { {{title}} }{ {{dates}} }
-      { {{company}} }{ {{location}} }
-      {{#responsibilities.length}}
-      \resumeItemListStart
-        {{#responsibilities}}
-          \resumeItem{ {{.}} }
-        {{/responsibilities}}
-      \resumeItemListEnd
-      {{/responsibilities.length}}
-  {{/experience}}
-\resumeSubHeadingListEnd
-{{/experience.length}}
-
-%-----------PROJECTS-----------
-{{#projects.length}}
-\section{Projects}
-\resumeSubHeadingListStart
-  {{#projects}}
-    \resumeProjectHeading
-      { \textbf{ {{title}} } $|$ \emph{ {{tech_stack}} } }{ {{dates}} }
-      {{#details.length}}
-      \resumeItemListStart
-        {{#details}}
-          \resumeItem{ {{.}} }
-        {{/details}}
-      \resumeItemListEnd
-      {{/details.length}}
-  {{/projects}}
-\resumeSubHeadingListEnd
-{{/projects.length}}
-
-%-----------SKILLS-----------
-{{#skills.length}}
-\section{Technical Skills}
- \begin{itemize}[leftmargin=0.15in, label={}, itemsep=3pt, parsep=0pt, topsep=0pt]
-    {{#skills}}
-    \small{\item{
-      \textbf{ {{name}} }{ {{details}} } \\
-    }}
-    {{/skills}}
- \end{itemize}
-{{/skills.length}}
+{{#sectionOrder}}
+  {{#isSummary}}
+    {{#summary}}
+      \section{Summary}
+      {{summary}}
+    {{/summary}}
+  {{/isSummary}}
+  {{#isEducation}}
+    {{#education.length}}
+      \section{Education}
+      \resumeSubHeadingListStart
+        {{#education}}
+          \resumeSubheading
+            { {{institution}} }{ {{dates}} }
+            { {{degree}} {{#gpa}} GPA: {{gpa}}{{/gpa}} }{ {{city}} }
+        {{/education}}
+      \resumeSubHeadingListEnd
+    {{/education.length}}
+  {{/isEducation}}
+  {{#isExperience}}
+    {{#experience.length}}
+      \section{Experience}
+      \resumeSubHeadingListStart
+        {{#experience}}
+          \resumeSubheading
+            { {{title}} }{ {{dates}} }
+            { {{company}} }{ {{location}} }
+            {{#responsibilities.length}}
+            \resumeItemListStart
+              {{#responsibilities}}
+                \resumeDottedItem{ {{.}} }
+              {{/responsibilities}}
+            \resumeItemListEnd
+            {{/responsibilities.length}}
+        {{/experience}}
+      \resumeSubHeadingListEnd
+    {{/experience.length}}
+  {{/isExperience}}
+  {{#isProjects}}
+    {{#projects.length}}
+      \section{Projects}
+      \resumeSubHeadingListStart
+        {{#projects}}
+          \resumeProjectHeading
+            { {{#link}} \href{ {{{link}}} }{ \underline{\textbf{ {{{title}}} }} } {{/link}} {{^link}} \textbf{ {{{title}}} } {{/link}} $|$ \emph{ {{{tech_stack}}} } }{ {{{dates}}} }
+            {{#details.length}}
+            \resumeItemListStart
+              {{#details}}
+                {{#isDotted}}
+                  \resumeDottedItem{ {{{.}}} }
+                {{/isDotted}}
+                {{^isDotted}}
+                  \resumeParagraphItem{ {{{.}}} }
+                {{/isDotted}}
+              {{/details}}
+            \resumeItemListEnd
+            {{/details.length}}
+        {{/projects}}
+      \resumeSubHeadingListEnd
+    {{/projects.length}}
+  {{/isProjects}}
+  {{#isSkills}}
+    {{#skills.length}}
+      \section{Technical Skills}
+      \begin{itemize}[leftmargin=0.15in, label={}, itemsep=3pt, parsep=0pt, topsep=0pt]
+        {{#skills}}
+        \small{\item{
+          \textbf{ {{{name}}} }{ {{{details}}} } \\
+        }}
+        {{/skills}}
+      \end{itemize}
+    {{/skills.length}}
+  {{/isSkills}}
+{{/sectionOrder}}
 
 %-------------------------------------------
 \end{document}

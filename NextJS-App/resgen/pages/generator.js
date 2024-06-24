@@ -1,3 +1,4 @@
+// pages/generator.js
 "use client";
 import { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -5,7 +6,6 @@ import 'tailwindcss/tailwind.css';
 import PdfBox from '/components/PdfBox';
 import Sidebar from '/components/Sidebar';
 import MainForm from '/components/MainForm';
-
 
 const initialFormData = {
   template: 'template1',
@@ -21,6 +21,7 @@ const initialFormData = {
     { label: 'GitHub', value: '', link: '', placeholder: 'Github/username', removable: false, isLink: false },
     { label: 'LinkedIn', value: '', link: '', placeholder: 'Linkedin/username', removable: false, isLink: false }
   ],
+  sectionOrder: ['personal-info', 'summary', 'education', 'experience', 'projects', 'skills'], // default section order
 };
 
 export default function Home() {
@@ -29,19 +30,21 @@ export default function Home() {
   const [latexSource, setLatexSource] = useState('');
   const [currentSection, setCurrentSection] = useState('personal-info');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [sectionOrder, setSectionOrder] = useState(initialFormData.sectionOrder);
 
   useEffect(() => {
     const savedData = localStorage.getItem('savedFormData');
     if (savedData) {
-      setFormData(JSON.parse(savedData));
+      const parsedData = JSON.parse(savedData);
+      setFormData(parsedData);
+      setSectionOrder(parsedData.sectionOrder || initialFormData.sectionOrder);
     }
   }, []);
 
   useEffect(() => {
-    if (formData !== initialFormData) {
-      localStorage.setItem('savedFormData', JSON.stringify(formData));
-    }
-  }, [formData]);
+    const dataToSave = { ...formData, sectionOrder };
+    localStorage.setItem('savedFormData', JSON.stringify(dataToSave));
+  }, [formData, sectionOrder]);
 
   const handleChange = (e, index = null, section = null) => {
     if (section === 'personalInfo') {
@@ -67,8 +70,6 @@ export default function Home() {
       .replace(/\^/g, '\\^{}')
       .replace(/\$/g, '\\$');
   }
-  
-  
 
   const handleLinkChange = (e, index) => {
     const newPersonalInfo = [...formData.personalInfo];
@@ -98,7 +99,6 @@ export default function Home() {
     newPersonalInfo[index].label = e.target.value;
     setFormData({ ...formData, personalInfo: newPersonalInfo });
   };
-  
 
   const handleLinkToggle = (index) => {
     const newPersonalInfo = [...formData.personalInfo];
@@ -116,13 +116,12 @@ export default function Home() {
   const handleEducationChange = (updatedEducation) => {
     setFormData({ ...formData, education: updatedEducation });
   };
-  
+
   const handleEducationFieldChange = (index, field, value) => {
     const newEducation = [...formData.education];
     newEducation[index][field] = value;
     setFormData({ ...formData, education: newEducation });
   };
-  
 
   const handleAddExperience = () => {
     setFormData({
@@ -137,13 +136,12 @@ export default function Home() {
   const handleExperienceChange = (updatedExperiences) => {
     setFormData({ ...formData, experience: updatedExperiences });
   };
-  
+
   const handleExperienceFieldChange = (index, field, value) => {
     const newExperience = [...formData.experience];
     newExperience[index][field] = value;
     setFormData({ ...formData, experience: newExperience });
   };
-  
 
   const handleExperienceResponsibilityChange = (expIndex, resIndex, value) => {
     const newExperience = [...formData.experience];
@@ -154,12 +152,8 @@ export default function Home() {
   const handleAddProject = () => {
     setFormData({
       ...formData,
-      projects: [...formData.projects, { title: '', tech_stack: '', dates: '', details: [''] }],
+      projects: [...formData.projects, { title: '', tech_stack: '', dates: '', details: [''], detailDisplay: 'dotted', link: '' }],
     });
-  };
-
-  const handleProjectChange = (updatedProjects) => {
-    setFormData({ ...formData, projects: updatedProjects });
   };
   
   const handleProjectFieldChange = (index, field, value) => {
@@ -168,6 +162,12 @@ export default function Home() {
     setFormData({ ...formData, projects: newProjects });
   };
   
+
+  const handleProjectChange = (updatedProjects) => {
+    setFormData({ ...formData, projects: updatedProjects });
+  };
+
+
 
   const handleProjectDetailChange = (projIndex, detIndex, value) => {
     const newProjects = [...formData.projects];
@@ -209,13 +209,12 @@ export default function Home() {
   const handleSkillChange = (updatedSkills) => {
     setFormData({ ...formData, skills: updatedSkills });
   };
-  
+
   const handleSkillFieldChange = (index, field, value) => {
     const newSkills = [...formData.skills];
     newSkills[index][field] = value;
     setFormData({ ...formData, skills: newSkills });
   };
-  
 
   const handleSkillDetailChange = (skillIndex, detailIndex, value) => {
     const newSkills = [...formData.skills];
@@ -233,6 +232,12 @@ export default function Home() {
     const newSkills = [...formData.skills];
     newSkills.splice(index, 1);
     setFormData({ ...formData, skills: newSkills });
+  };
+
+  const handleDetailDisplayChange = (index, value) => {
+    const newProjects = [...formData.projects];
+    newProjects[index].detailDisplay = value;
+    setFormData({ ...formData, projects: newProjects });
   };
 
   const handleRemoveProjectDetail = (projIndex, detailIndex) => {
@@ -272,14 +277,17 @@ export default function Home() {
           title: escapeLatex(proj.title),
           tech_stack: escapeLatex(proj.tech_stack),
           dates: escapeLatex(proj.dates),
-          details: proj.details.map(detail => escapeLatex(detail))
+          details: proj.details.map(detail => escapeLatex(detail)),
+          detailDisplay: proj.detailDisplay,
+          link: escapeLatex(proj.link) // Add the link here
         })),
         skills: formData.skills.map(skill => ({
           name: escapeLatex(skill.name),
           details: skill.details.map(detail => escapeLatex(detail))
-        }))
+        })),
+        sectionOrder // Include section order in the submitted data
       };
-  
+
       const response = await axios.post('/api/generate', formattedData);
       setPdfUrl(response.data.pdfUrl);
       setLatexSource(response.data.latexSource);
@@ -287,9 +295,6 @@ export default function Home() {
       console.error('Error generating PDF:', error);
     }
   };
-  
-  
-  
 
   return (
     <div className="app-container flex flex-col min-h-screen">
@@ -299,7 +304,7 @@ export default function Home() {
       >
         Menu
       </button>
-      <div className="flex flex-grow">
+      <div className="flex flex-grow flex-col md:flex-row">
         <Sidebar
           currentSection={currentSection}
           setCurrentSection={setCurrentSection}
@@ -307,9 +312,11 @@ export default function Home() {
           setIsSidebarOpen={setIsSidebarOpen}
           setFormData={setFormData}
           initialFormData={initialFormData} // Pass initialFormData as a prop
+          setSectionOrder={setSectionOrder} // Add this line
         />
         <main className="main-content flex-1 p-6 bg-gray-50">
           <MainForm
+            handleDetailDisplayChange={handleDetailDisplayChange}
             handleRemoveExperience={handleRemoveExperience}
             handleRemoveResponsibility={handleRemoveResponsibility}
             handleRemoveEducation={handleRemoveEducation}
@@ -341,13 +348,13 @@ export default function Home() {
             handleProjectDetailChange={handleProjectDetailChange}
             handleAddProject={handleAddProject}
             handleSubmit={handleSubmit}
+            sectionOrder={sectionOrder} // Pass sectionOrder as a prop
           />
         </main>
-        <section className="pdf-container p-6">
+        <section className="pdf-container flex-1 p-6 bg-gray-100 md:flex md:justify-center">
           <PdfBox pdfUrl={pdfUrl} formData={formData} latexSource={latexSource} />
         </section>
       </div>
-      
     </div>
   );
 }

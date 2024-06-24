@@ -29,11 +29,11 @@ export default function Home() {
   return (
     <div className="app-container flex flex-col min-h-screen">
       <header className="bg-gray-900 text-white p-6 text-center">
-        <h1 className="text-3xl font-bold">Engr Resumes</h1>
+        <h1 className="text-4xl font-bold">Engr Resumes</h1>
       </header>
-      
-      <main className="main-content flex flex-1 p-6 bg-gray-50">
-        <div className="flex-1 flex flex-col justify-center items-center space-y-4">
+
+      <main className="main-content flex flex-1 p-6 bg-gray-50 flex-col items-center">
+        <div className="buttons-container flex flex-col justify-center items-center space-y-6 mb-8">
           <button
             className="btn bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg shadow-lg text-lg"
             onClick={handleNewSession}
@@ -56,11 +56,12 @@ export default function Home() {
             />
           </label>
         </div>
-        <div className="w-1/2 p-4 flex justify-center items-center">
+
+        <div className="example-container w-full flex justify-center">
           <Image src="/images/template1.png" alt="Template 1" width={600} height={800} className="rounded-lg shadow-lg" />
         </div>
       </main>
-      
+
       <Footer />
     </div>
   );

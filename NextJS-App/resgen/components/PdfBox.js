@@ -2,6 +2,8 @@ import { useState, useEffect, useRef } from 'react';
 import * as pdfjsLib from 'pdfjs-dist/webpack';
 import 'pdfjs-dist/web/pdf_viewer.css';
 import yaml from 'js-yaml';
+import JSZip from 'jszip';
+import { saveAs } from 'file-saver';
 
 export default function PdfBox({ pdfUrl, formData, latexSource }) {
   const [view, setView] = useState('pdf');
@@ -21,7 +23,7 @@ export default function PdfBox({ pdfUrl, formData, latexSource }) {
 
     for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
       const page = await pdf.getPage(pageNum);
-      const scale = 1.35; // Adjust the scale to fit the size of the container
+      const scale = 1.22; // Adjust the scale to fit the size of the container
       const viewport = page.getViewport({ scale });
 
       const canvas = document.createElement('canvas');
@@ -44,26 +46,37 @@ export default function PdfBox({ pdfUrl, formData, latexSource }) {
   };
 
   const handleDownload = () => {
-    const link = document.createElement('a');
     if (view === 'pdf') {
+      const link = document.createElement('a');
       link.href = pdfUrl;
       link.download = 'resume.pdf';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     } else if (view === 'json') {
       const jsonBlob = new Blob([JSON.stringify(formData, null, 2)], { type: 'application/json' });
+      const link = document.createElement('a');
       link.href = URL.createObjectURL(jsonBlob);
       link.download = 'resume.json';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     } else if (view === 'latex') {
-      const latexBlob = new Blob([latexSource], { type: 'text/plain' });
-      link.href = URL.createObjectURL(latexBlob);
-      link.download = 'resume.tex';
+      const zip = new JSZip();
+      zip.file('resume.tex', latexSource);
+      zip.file('README.txt', "This is the LaTeX source file for the resume. To view this file, import it to overleaf.com and set the compiler to XeLaTeX.");
+      zip.generateAsync({ type: 'blob' }).then((content) => {
+        saveAs(content, 'resume.zip');
+      });
     } else if (view === 'yaml') {
       const yamlBlob = new Blob([yaml.dump(formData)], { type: 'text/yaml' });
+      const link = document.createElement('a');
       link.href = URL.createObjectURL(yamlBlob);
       link.download = 'resume.yaml';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     }
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
   };
 
   return (
