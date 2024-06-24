@@ -121,77 +121,80 @@
     {{/personalInfo}}
 \end{center}
 
-%-----------SUMMARY-----------
-{{#summary}}
-\section{Summary}
-{{summary}}
-{{/summary}}
-
-%-----------EDUCATION-----------
-{{#education.length}}
-\section{Education}
-\resumeSubHeadingListStart
-  {{#education}}
-    \resumeSubheading
-      { {{institution}} }{ {{dates}} }
-      { {{degree}} {{#gpa}} GPA: {{gpa}}{{/gpa}} }{ {{city}} }
-  {{/education}}
-\resumeSubHeadingListEnd
-{{/education.length}}
-
-%-----------EXPERIENCE-----------
-{{#experience.length}}
-\section{Experience}
-\resumeSubHeadingListStart
-  {{#experience}}
-    \resumeSubheading
-      { {{title}} }{ {{dates}} }
-      { {{company}} }{ {{location}} }
-      {{#responsibilities.length}}
-      \resumeItemListStart
-        {{#responsibilities}}
-          \resumeDottedItem{ {{.}} }
-        {{/responsibilities}}
-      \resumeItemListEnd
-      {{/responsibilities.length}}
-  {{/experience}}
-\resumeSubHeadingListEnd
-{{/experience.length}}
-
-%-----------PROJECTS-----------
-{{#projects.length}}
-\section{Projects}
-\resumeSubHeadingListStart
-  {{#projects}}
-    \resumeProjectHeading
-      { \textbf{ {{title}} } $|$ \emph{ {{tech_stack}} } }{ {{dates}} }
-      {{#details.length}}
-      \resumeItemListStart
-        {{#details}}
-          {{#isDotted}}
-            \resumeDottedItem{ {{.}} }
-          {{/isDotted}}
-          {{^isDotted}}
-            \resumeParagraphItem{ {{.}} }
-          {{/isDotted}}
-        {{/details}}
-      \resumeItemListEnd
-      {{/details.length}}
-  {{/projects}}
-\resumeSubHeadingListEnd
-{{/projects.length}}
-
-%-----------SKILLS-----------
-{{#skills.length}}
-\section{Technical Skills}
- \begin{itemize}[leftmargin=0.15in, label={}, itemsep=3pt, parsep=0pt, topsep=0pt]
-    {{#skills}}
-    \small{\item{
-      \textbf{ {{name}} }{ {{details}} } \\
-    }}
-    {{/skills}}
- \end{itemize}
-{{/skills.length}}
+{{#sectionOrder}}
+  {{#isSummary}}
+    {{#summary}}
+      \section{Summary}
+      {{summary}}
+    {{/summary}}
+  {{/isSummary}}
+  {{#isEducation}}
+    {{#education.length}}
+      \section{Education}
+      \resumeSubHeadingListStart
+        {{#education}}
+          \resumeSubheading
+            { {{institution}} }{ {{dates}} }
+            { {{degree}} {{#gpa}} GPA: {{gpa}}{{/gpa}} }{ {{city}} }
+        {{/education}}
+      \resumeSubHeadingListEnd
+    {{/education.length}}
+  {{/isEducation}}
+  {{#isExperience}}
+    {{#experience.length}}
+      \section{Experience}
+      \resumeSubHeadingListStart
+        {{#experience}}
+          \resumeSubheading
+            { {{title}} }{ {{dates}} }
+            { {{company}} }{ {{location}} }
+            {{#responsibilities.length}}
+            \resumeItemListStart
+              {{#responsibilities}}
+                \resumeDottedItem{ {{.}} }
+              {{/responsibilities}}
+            \resumeItemListEnd
+            {{/responsibilities.length}}
+        {{/experience}}
+      \resumeSubHeadingListEnd
+    {{/experience.length}}
+  {{/isExperience}}
+  {{#isProjects}}
+    {{#projects.length}}
+      \section{Projects}
+      \resumeSubHeadingListStart
+        {{#projects}}
+          \resumeProjectHeading
+            { \textbf{ {{title}} } $|$ \emph{ {{tech_stack}} } }{ {{dates}} }
+            {{#details.length}}
+            \resumeItemListStart
+              {{#details}}
+                {{#isDotted}}
+                  \resumeDottedItem{ {{.}} }
+                {{/isDotted}}
+                {{^isDotted}}
+                  \resumeParagraphItem{ {{.}} }
+                {{/isDotted}}
+              {{/details}}
+            \resumeItemListEnd
+            {{/details.length}}
+        {{/projects}}
+      \resumeSubHeadingListEnd
+    {{/projects.length}}
+  {{/isProjects}}
+  {{#isSkills}}
+    {{#skills.length}}
+      \section{Technical Skills}
+       \begin{itemize}[leftmargin=0.15in, label={}, itemsep=3pt, parsep=0pt, topsep=0pt]
+          {{#skills}}
+          \small{\item{
+            \textbf{ {{name}} }{ {{details}} } \\
+          }}
+          {{/skills}}
+       \end{itemize}
+    {{/skills.length}}
+  {{/isSkills}}
+{{/sectionOrder}}
 
 %-------------------------------------------
 \end{document}

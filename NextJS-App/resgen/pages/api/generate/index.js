@@ -1,4 +1,4 @@
-//api/generate/index.js
+// /api/generate/index.js
 import { spawn } from 'child_process';
 import fs from 'fs';
 import path from 'path';
@@ -31,7 +31,7 @@ export default async function handler(req, res) {
     try {
       const latexTemplate = await readFile(latexTemplatePath, 'utf8');
 
-      const renderedLatex = Mustache.render(latexTemplate, {
+      const renderData = {
         ...data,
         education: data.education || [],
         experience: (data.experience || []).map(exp => ({
@@ -41,26 +41,26 @@ export default async function handler(req, res) {
         projects: (data.projects || []).map(proj => ({
           ...proj,
           details: proj.details.filter(detail => detail),
-          isDotted: proj.detailDisplay === 'dotted', // Set isDotted based on detailDisplay
+          isDotted: proj.detailDisplay === 'dotted',
         })),
         skills: (data.skills || []).map(skill => ({
           ...skill,
           details: skill.details.filter(detail => detail),
         })),
-      });
+        sectionOrder: data.sectionOrder.map(section => ({
+          isSummary: section === 'summary',
+          isEducation: section === 'education',
+          isExperience: section === 'experience',
+          isProjects: section === 'projects',
+          isSkills: section === 'skills'
+        }))
+      };
 
-      console.log('Rendered LaTeX before replacement:', renderedLatex);
+      const renderedLatex = Mustache.render(latexTemplate, renderData);
 
-      const finalLatex = renderedLatex
-      .replace(/\\slash\{\}/g, '/')
-      .replace(/x2F;/g, '/')
-      .replace(/&amp;/g, '\&')  // Ensure &amp; is handled
-      .replace(/&/g, '\&')      // Replace all & with \&
-      //.replace(/\\\\/g, '\\textbackslash{}'); // Replace double backslash with \textbackslash{}
-    
-    console.log('Rendered LaTeX after replacement:', finalLatex);
+      console.log('Rendered LaTeX:', renderedLatex);
 
-      await writeFile(texFilePath, finalLatex);
+      await writeFile(texFilePath, renderedLatex);
 
       await new Promise((resolve, reject) => {
         const process = spawn('xelatex', ['-interaction=nonstopmode', '-output-directory=public', texFilePath]);
@@ -92,8 +92,8 @@ export default async function handler(req, res) {
       if (fs.existsSync(pdfFilePath)) {
         console.log('PDF file exists:', pdfFilePath);
         return res.status(200).json({
-          pdfUrl: `/resume_output.pdf?${new Date().getTime()}`,  // Append timestamp to URL to force update
-          latexSource: finalLatex // Return LaTeX source
+          pdfUrl: `/resume_output.pdf?${new Date().getTime()}`,
+          latexSource: renderedLatex
         });
       } else {
         throw new Error('PDF was not generated. Check the LaTeX template and XeLaTeX output for errors.');

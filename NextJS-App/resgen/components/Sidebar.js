@@ -1,4 +1,5 @@
-import { useState } from 'react';
+// Sidebar.js
+import { useState, useEffect } from 'react';
 import {
   UserIcon,
   BriefcaseIcon,
@@ -21,9 +22,20 @@ const initialSections = [
   { id: 'skills', icon: CogIcon, label: 'Skills' },
 ];
 
-export default function Sidebar({ currentSection, setCurrentSection, isSidebarOpen, setIsSidebarOpen, setFormData, initialFormData }) {
+export default function Sidebar({ currentSection, setCurrentSection, isSidebarOpen, setIsSidebarOpen, setFormData, initialFormData, setSectionOrder }) {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [orderedSections, setOrderedSections] = useState(initialSections);
+
+  useEffect(() => {
+    const savedData = localStorage.getItem('savedFormData');
+    if (savedData) {
+      const parsedData = JSON.parse(savedData);
+      const savedOrder = parsedData.sectionOrder || initialSections.map(section => section.id);
+      const newOrderedSections = savedOrder.map(id => initialSections.find(section => section.id === id));
+      setOrderedSections(newOrderedSections);
+      setSectionOrder(savedOrder);
+    }
+  }, [setSectionOrder]);
 
   const toggleSidebar = () => {
     setIsCollapsed(!isCollapsed);
@@ -37,6 +49,7 @@ export default function Sidebar({ currentSection, setCurrentSection, isSidebarOp
     newSections.splice(result.destination.index, 0, movedSection);
 
     setOrderedSections(newSections);
+    setSectionOrder(newSections.map(section => section.id)); // Update section order
   };
 
   const handleFileUpload = (event) => {
@@ -46,6 +59,10 @@ export default function Sidebar({ currentSection, setCurrentSection, isSidebarOp
       reader.onload = (e) => {
         const json = JSON.parse(e.target.result);
         setFormData(json);
+        const savedOrder = json.sectionOrder || initialSections.map(section => section.id);
+        const newOrderedSections = savedOrder.map(id => initialSections.find(section => section.id === id));
+        setOrderedSections(newOrderedSections);
+        setSectionOrder(savedOrder);
       };
       reader.readAsText(file);
     }
@@ -54,6 +71,8 @@ export default function Sidebar({ currentSection, setCurrentSection, isSidebarOp
   const clearData = () => {
     localStorage.removeItem('savedFormData');
     setFormData(initialFormData);
+    setOrderedSections(initialSections);
+    setSectionOrder(initialFormData.sectionOrder); // Reset section order
     window.location.reload(); // Refresh the page
   };
 
@@ -84,12 +103,12 @@ export default function Sidebar({ currentSection, setCurrentSection, isSidebarOp
                     </button>
                   </div>
                 ) : (
-                  <Draggable key={section.id} draggableId={section.id} index={index}>
+                  <Draggable key={section.id} draggableId={section.id} index={index} isDragDisabled={section.id === 'personal-info'}>
                     {(provided) => (
                       <div
                         ref={provided.innerRef}
                         {...provided.draggableProps}
-                        {...provided.dragHandleProps}
+                        {...(section.id !== 'personal-info' && provided.dragHandleProps)}
                         className="draggable-item flex-grow flex"
                       >
                         <button
@@ -98,7 +117,7 @@ export default function Sidebar({ currentSection, setCurrentSection, isSidebarOp
                         >
                           <section.icon className="icon" />
                           {!isCollapsed && <span className="ml-3 flex-grow">{section.label}</span>}
-                          <Bars3Icon className="h-5 w-5 text-gray-400 ml-auto" />
+                          {section.id !== 'personal-info' && <Bars3Icon className="h-5 w-5 text-gray-400 ml-auto" />}
                         </button>
                       </div>
                     )}

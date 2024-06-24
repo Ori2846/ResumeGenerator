@@ -1,3 +1,4 @@
+// generator.js
 "use client";
 import { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -20,6 +21,7 @@ const initialFormData = {
     { label: 'GitHub', value: '', link: '', placeholder: 'Github/username', removable: false, isLink: false },
     { label: 'LinkedIn', value: '', link: '', placeholder: 'Linkedin/username', removable: false, isLink: false }
   ],
+  sectionOrder: ['personal-info', 'summary', 'education', 'experience', 'projects', 'skills'], // default section order
 };
 
 export default function Home() {
@@ -28,19 +30,21 @@ export default function Home() {
   const [latexSource, setLatexSource] = useState('');
   const [currentSection, setCurrentSection] = useState('personal-info');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [sectionOrder, setSectionOrder] = useState(initialFormData.sectionOrder);
 
   useEffect(() => {
     const savedData = localStorage.getItem('savedFormData');
     if (savedData) {
-      setFormData(JSON.parse(savedData));
+      const parsedData = JSON.parse(savedData);
+      setFormData(parsedData);
+      setSectionOrder(parsedData.sectionOrder || initialFormData.sectionOrder);
     }
   }, []);
 
   useEffect(() => {
-    if (formData !== initialFormData) {
-      localStorage.setItem('savedFormData', JSON.stringify(formData));
-    }
-  }, [formData]);
+    const dataToSave = { ...formData, sectionOrder };
+    localStorage.setItem('savedFormData', JSON.stringify(dataToSave));
+  }, [formData, sectionOrder]);
 
   const handleChange = (e, index = null, section = null) => {
     if (section === 'personalInfo') {
@@ -271,12 +275,13 @@ export default function Home() {
           tech_stack: escapeLatex(proj.tech_stack),
           dates: escapeLatex(proj.dates),
           details: proj.details.map(detail => escapeLatex(detail)),
-          detailDisplay: proj.detailDisplay // Add this line
+          detailDisplay: proj.detailDisplay
         })),
         skills: formData.skills.map(skill => ({
           name: escapeLatex(skill.name),
           details: skill.details.map(detail => escapeLatex(detail))
-        }))
+        })),
+        sectionOrder // Include section order in the submitted data
       };
 
       const response = await axios.post('/api/generate', formattedData);
@@ -303,6 +308,7 @@ export default function Home() {
           setIsSidebarOpen={setIsSidebarOpen}
           setFormData={setFormData}
           initialFormData={initialFormData} // Pass initialFormData as a prop
+          setSectionOrder={setSectionOrder} // Add this line
         />
         <main className="main-content flex-1 p-6 bg-gray-50">
           <MainForm
@@ -338,6 +344,7 @@ export default function Home() {
             handleProjectDetailChange={handleProjectDetailChange}
             handleAddProject={handleAddProject}
             handleSubmit={handleSubmit}
+            sectionOrder={sectionOrder} // Pass sectionOrder as a prop
           />
         </main>
         <section className="pdf-container flex-1 p-6 bg-gray-100 md:flex md:justify-center">
