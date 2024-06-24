@@ -1,6 +1,5 @@
 "use client";
 import { useRouter } from 'next/router';
-import { useState } from 'react';
 import Image from 'next/image';
 import 'tailwindcss/tailwind.css';
 import Footer from '/components/Footer';

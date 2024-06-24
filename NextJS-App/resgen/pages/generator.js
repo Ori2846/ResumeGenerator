@@ -56,6 +56,7 @@ export default function Home() {
   function escapeLatex(str) {
     if (!str) return str;
     return str
+      .replace(/\\/g, '\\textbackslash{}')
       .replace(/&/g, '\\&')
       .replace(/%/g, '\\%')
       .replace(/_/g, '\\_')
@@ -64,9 +65,10 @@ export default function Home() {
       .replace(/}/g, '\\}')
       .replace(/~/g, '\\textasciitilde{}')
       .replace(/\^/g, '\\^{}')
-      .replace(/\\/g, '\\textbackslash{}')
       .replace(/\$/g, '\\$');
   }
+  
+  
 
   const handleLinkChange = (e, index) => {
     const newPersonalInfo = [...formData.personalInfo];
@@ -96,6 +98,7 @@ export default function Home() {
     newPersonalInfo[index].label = e.target.value;
     setFormData({ ...formData, personalInfo: newPersonalInfo });
   };
+  
 
   const handleLinkToggle = (index) => {
     const newPersonalInfo = [...formData.personalInfo];
@@ -241,6 +244,7 @@ export default function Home() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      // Escape data for LaTeX rendering
       const formattedData = {
         ...formData,
         personalInfo: formData.personalInfo.map(info => ({
@@ -276,14 +280,15 @@ export default function Home() {
         }))
       };
   
-      const response = await axios.post('/api/generate', formattedData); // Corrected URL
+      const response = await axios.post('/api/generate', formattedData);
       setPdfUrl(response.data.pdfUrl);
       setLatexSource(response.data.latexSource);
-      localStorage.setItem('savedFormData', JSON.stringify(formattedData));
     } catch (error) {
       console.error('Error generating PDF:', error);
     }
   };
+  
+  
   
 
   return (
@@ -322,6 +327,10 @@ export default function Home() {
             handleExperienceResponsibilityChange={handleExperienceResponsibilityChange}
             handleAddExperience={handleAddExperience}
             handleEducationChange={handleEducationChange}
+            handleEducationFieldChange={handleEducationFieldChange}
+            handleExperienceFieldChange={handleExperienceFieldChange}
+            handleProjectFieldChange={handleProjectFieldChange}
+            handleSkillFieldChange={handleSkillFieldChange}
             handleAddEducation={handleAddEducation}
             handleSkillChange={handleSkillChange}
             handleSkillDetailChange={handleSkillDetailChange}

@@ -14,9 +14,9 @@ export default async function handler(req, res) {
 
     let latexTemplatePath;
     if (data.template === 'template1') {
-      latexTemplatePath = path.resolve('public', 'template1.tex');
+      latexTemplatePath = path.resolve(process.cwd(), 'public', 'template1.tex');
     } else if (data.template === 'template2') {
-      latexTemplatePath = path.resolve('public', 'template2.tex');
+      latexTemplatePath = path.resolve(process.cwd(), 'public', 'template2.tex');
     } else {
       console.log('Invalid template selected:', data.template);
       return res.status(400).json({ error: 'Invalid template selected' });
@@ -24,8 +24,8 @@ export default async function handler(req, res) {
 
     console.log('Using template:', latexTemplatePath);
 
-    const texFilePath = path.resolve('public', 'resume_output.tex');
-    const pdfFilePath = path.resolve('public', 'resume_output.pdf');
+    const texFilePath = path.resolve(process.cwd(), 'public', 'resume_output.tex');
+    const pdfFilePath = path.resolve(process.cwd(), 'public', 'resume_output.pdf');
 
     try {
       const latexTemplate = await readFile(latexTemplatePath, 'utf8');
@@ -49,9 +49,15 @@ export default async function handler(req, res) {
 
       console.log('Rendered LaTeX before replacement:', renderedLatex);
 
-      const finalLatex = renderedLatex.replace(/\\slash\{\}/g, '/').replace(/x2F;/g, '/');
-
-      console.log('Rendered LaTeX after replacement:', finalLatex);
+      const finalLatex = renderedLatex
+      .replace(/\\slash\{\}/g, '/')
+      .replace(/x2F;/g, '/')
+      .replace(/&amp;/g, '\&')  // Ensure &amp; is handled
+      .replace(/&/g, '\&')      // Replace all & with \&
+      //.replace(/\\\\/g, '\\textbackslash{}'); // Replace double backslash with \textbackslash{}
+    
+    console.log('Rendered LaTeX after replacement:', finalLatex);
+    
 
       await writeFile(texFilePath, finalLatex);
 
