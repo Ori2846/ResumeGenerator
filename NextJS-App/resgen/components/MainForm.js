@@ -22,6 +22,11 @@ export default function MainForm({
   handleRemoveResponsibility,
   handleEducationChange,
   handleAddEducation,
+  handleEducationFieldChange,
+  handleExperienceFieldChange,
+  handleSkillFieldChange,
+  handleFieldChange,
+  handleProjectFieldChange,
   handleRemoveEducation,
   handleSkillChange,
   handleSkillDetailChange,
@@ -35,12 +40,13 @@ export default function MainForm({
   handleRemoveProjectDetail,
   handleSubmit
 }) {
+  
   return (
     <form onSubmit={handleSubmit} className="form bg-white p-6 rounded-lg shadow-md w-full">
       <div className="form-header mb-4">
         <h1 className="text-2xl font-semibold">{currentSection.replace('-', ' ').toUpperCase()}</h1>
       </div>
-      <div className="form-body w-full">
+      <div className="form-body w-full overflow-y-auto max-h-[80vh] pr-6">
         {currentSection === 'personal-info' && (
           <PersonalInfo
             formData={formData}
@@ -49,6 +55,7 @@ export default function MainForm({
             handleAddField={handleAddField}
             handleRemoveField={handleRemoveField}
             handleLinkChange={handleLinkChange}
+            handleFieldChange={handleFieldChange}
             handleLinkToggle={handleLinkToggle}
           />
         )}
@@ -60,6 +67,7 @@ export default function MainForm({
             formData={formData}
             handleExperienceChange={handleExperienceChange}
             handleExperienceResponsibilityChange={handleExperienceResponsibilityChange}
+            handleExperienceFieldChange={handleExperienceFieldChange}
             handleAddExperience={handleAddExperience}
             handleRemoveExperience={handleRemoveExperience}
             handleRemoveResponsibility={handleRemoveResponsibility}
@@ -69,6 +77,7 @@ export default function MainForm({
           <Education
             formData={formData}
             handleEducationChange={handleEducationChange}
+            handleEducationFieldChange={handleEducationFieldChange}
             handleAddEducation={handleAddEducation}
             handleRemoveEducation={handleRemoveEducation}
           />
@@ -81,12 +90,14 @@ export default function MainForm({
             handleAddSkill={handleAddSkill}
             handleRemoveSkill={handleRemoveSkill}
             handleRemoveSkillDetail={handleRemoveSkillDetail}
+            handleSkillFieldChange={handleSkillFieldChange}
           />
         )}
         {currentSection === 'projects' && (
           <Projects
             formData={formData}
             handleProjectChange={handleProjectChange}
+            handleProjectFieldChange={handleProjectFieldChange}
             handleProjectDetailChange={handleProjectDetailChange}
             handleAddProject={handleAddProject}
             handleRemoveProject={handleRemoveProject}
@@ -98,7 +109,7 @@ export default function MainForm({
         )}
       </div>
       {currentSection !== 'template' && (
-        <button type="submit" className="btn btn-success mt-6">
+        <button type="submit" className="btn btn-success mt-3">
           Generate Resume
         </button>
       )}

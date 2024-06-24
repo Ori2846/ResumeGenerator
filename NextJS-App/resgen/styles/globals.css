@@ -56,19 +56,71 @@ button {
 
 
 .form {
-  @apply bg-white p-4 md:p-8 rounded-lg shadow-lg max-w-4xl mx-auto w-full;
+  @apply bg-white p-4 md:p-6 rounded-lg shadow-lg max-w-4xl mx-auto w-full; /* Adjusted padding for a shorter form */
 }
+
 
 .form-header {
   @apply mb-6 text-center text-2xl md:text-3xl font-extrabold text-gray-900;
 }
 /* globals.css */
+/* globals.css */
 .form-body {
-  @apply w-full;
+  @apply w-full overflow-y-auto max-h-[60vh] pr-4; /* Reduce max height and add right padding */
 }
 
+.pdf-box-content {
+  @apply flex-1 bg-gray-100 rounded-lg p-4 overflow-auto max-h-[80vh] pr-4; /* Add right padding */
+}
+
+/* Custom scrollbar styles */
+.form-body::-webkit-scrollbar {
+  width: 12px;
+}
+
+.form-body::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.form-body::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 10px;
+  border: 3px solid #f1f1f1;
+}
+
+.form-body::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Custom scrollbar for PDF box */
+.pdf-box-content::-webkit-scrollbar {
+  width: 12px;
+}
+
+.pdf-box-content::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.pdf-box-content::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 10px;
+  border: 3px solid #f1f1f1;
+}
+
+.pdf-box-content::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+
+
+.pdf-box-content {
+  @apply flex-1 bg-gray-100 rounded-lg p-4 overflow-auto;
+  max-height: 80vh;
+}
 .form-group {
-  @apply mb-4 relative;
+  @apply mb-3 relative;
   width: 100%;
 }
 

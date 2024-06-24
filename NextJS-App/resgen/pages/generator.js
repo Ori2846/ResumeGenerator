@@ -2,11 +2,10 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import 'tailwindcss/tailwind.css';
-import './globals.css';
-import PdfBox from '../components/PdfBox';
-import Sidebar from '../components/Sidebar';
-import MainForm from '../components/MainForm';
-import Footer from '../components/Footer'; 
+import PdfBox from '/components/PdfBox';
+import Sidebar from '/components/Sidebar';
+import MainForm from '/components/MainForm';
+
 
 const initialFormData = {
   template: 'template1',
@@ -25,20 +24,18 @@ const initialFormData = {
 };
 
 export default function Home() {
-  const [formData, setFormData] = useState(() => {
-    const savedData = localStorage.getItem('savedFormData');
-    return savedData ? JSON.parse(savedData) : initialFormData;
-  });
-
+  const [formData, setFormData] = useState(initialFormData);
   const [pdfUrl, setPdfUrl] = useState(null);
   const [latexSource, setLatexSource] = useState('');
   const [currentSection, setCurrentSection] = useState('personal-info');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  const replaceLatexSlash = (str) => {
-    if (!str) return str;
-    return str.replace(/\\slash\{\}/g, '/');
-  };
+  useEffect(() => {
+    const savedData = localStorage.getItem('savedFormData');
+    if (savedData) {
+      setFormData(JSON.parse(savedData));
+    }
+  }, []);
 
   useEffect(() => {
     if (formData !== initialFormData) {
@@ -59,6 +56,7 @@ export default function Home() {
   function escapeLatex(str) {
     if (!str) return str;
     return str
+      .replace(/\\/g, '\\textbackslash{}')
       .replace(/&/g, '\\&')
       .replace(/%/g, '\\%')
       .replace(/_/g, '\\_')
@@ -67,9 +65,10 @@ export default function Home() {
       .replace(/}/g, '\\}')
       .replace(/~/g, '\\textasciitilde{}')
       .replace(/\^/g, '\\^{}')
-      .replace(/\\/g, '\\textbackslash{}')
       .replace(/\$/g, '\\$');
   }
+  
+  
 
   const handleLinkChange = (e, index) => {
     const newPersonalInfo = [...formData.personalInfo];
@@ -99,6 +98,7 @@ export default function Home() {
     newPersonalInfo[index].label = e.target.value;
     setFormData({ ...formData, personalInfo: newPersonalInfo });
   };
+  
 
   const handleLinkToggle = (index) => {
     const newPersonalInfo = [...formData.personalInfo];
@@ -113,11 +113,16 @@ export default function Home() {
     });
   };
 
-  const handleEducationChange = (index, field, value) => {
+  const handleEducationChange = (updatedEducation) => {
+    setFormData({ ...formData, education: updatedEducation });
+  };
+  
+  const handleEducationFieldChange = (index, field, value) => {
     const newEducation = [...formData.education];
     newEducation[index][field] = value;
     setFormData({ ...formData, education: newEducation });
   };
+  
 
   const handleAddExperience = () => {
     setFormData({
@@ -129,11 +134,16 @@ export default function Home() {
     });
   };
 
-  const handleExperienceChange = (index, field, value) => {
+  const handleExperienceChange = (updatedExperiences) => {
+    setFormData({ ...formData, experience: updatedExperiences });
+  };
+  
+  const handleExperienceFieldChange = (index, field, value) => {
     const newExperience = [...formData.experience];
     newExperience[index][field] = value;
     setFormData({ ...formData, experience: newExperience });
   };
+  
 
   const handleExperienceResponsibilityChange = (expIndex, resIndex, value) => {
     const newExperience = [...formData.experience];
@@ -148,11 +158,16 @@ export default function Home() {
     });
   };
 
-  const handleProjectChange = (index, field, value) => {
+  const handleProjectChange = (updatedProjects) => {
+    setFormData({ ...formData, projects: updatedProjects });
+  };
+  
+  const handleProjectFieldChange = (index, field, value) => {
     const newProjects = [...formData.projects];
     newProjects[index][field] = value;
     setFormData({ ...formData, projects: newProjects });
   };
+  
 
   const handleProjectDetailChange = (projIndex, detIndex, value) => {
     const newProjects = [...formData.projects];
@@ -191,11 +206,16 @@ export default function Home() {
     setFormData({ ...formData, projects: newProjects });
   };
 
-  const handleSkillChange = (index, field, value) => {
+  const handleSkillChange = (updatedSkills) => {
+    setFormData({ ...formData, skills: updatedSkills });
+  };
+  
+  const handleSkillFieldChange = (index, field, value) => {
     const newSkills = [...formData.skills];
     newSkills[index][field] = value;
     setFormData({ ...formData, skills: newSkills });
   };
+  
 
   const handleSkillDetailChange = (skillIndex, detailIndex, value) => {
     const newSkills = [...formData.skills];
@@ -224,6 +244,7 @@ export default function Home() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      // Escape data for LaTeX rendering
       const formattedData = {
         ...formData,
         personalInfo: formData.personalInfo.map(info => ({
@@ -258,15 +279,17 @@ export default function Home() {
           details: skill.details.map(detail => escapeLatex(detail))
         }))
       };
-
+  
       const response = await axios.post('/api/generate', formattedData);
       setPdfUrl(response.data.pdfUrl);
       setLatexSource(response.data.latexSource);
-      localStorage.setItem('savedFormData', JSON.stringify(formattedData));
     } catch (error) {
       console.error('Error generating PDF:', error);
     }
   };
+  
+  
+  
 
   return (
     <div className="app-container flex flex-col min-h-screen">
@@ -304,6 +327,10 @@ export default function Home() {
             handleExperienceResponsibilityChange={handleExperienceResponsibilityChange}
             handleAddExperience={handleAddExperience}
             handleEducationChange={handleEducationChange}
+            handleEducationFieldChange={handleEducationFieldChange}
+            handleExperienceFieldChange={handleExperienceFieldChange}
+            handleProjectFieldChange={handleProjectFieldChange}
+            handleSkillFieldChange={handleSkillFieldChange}
             handleAddEducation={handleAddEducation}
             handleSkillChange={handleSkillChange}
             handleSkillDetailChange={handleSkillDetailChange}
@@ -320,7 +347,7 @@ export default function Home() {
           <PdfBox pdfUrl={pdfUrl} formData={formData} latexSource={latexSource} />
         </section>
       </div>
-      <Footer />
+      
     </div>
   );
 }

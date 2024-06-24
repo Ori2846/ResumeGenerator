@@ -1,6 +1,5 @@
-// privacy-policy/page.js
+// pages/privacy-policy.js
 import Link from 'next/link';
-import 'tailwindcss/tailwind.css';
 
 export default function PrivacyPolicy() {
   return (
@@ -54,7 +53,7 @@ export default function PrivacyPolicy() {
         <p className="mb-4">
           If we decide to change our privacy policy, we will post those changes on this page. This policy was last modified on June 21, 2024.
         </p>
-        <Link href="/" passHref legacyBehavior>
+        <Link href="/" legacyBehavior>
           <a className="text-blue-500 hover:underline mt-6 inline-block">Back to Home</a>
         </Link>
       </div>
