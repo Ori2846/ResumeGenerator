@@ -1,3 +1,4 @@
+//api/generate/index.js
 import { spawn } from 'child_process';
 import fs from 'fs';
 import path from 'path';
@@ -40,6 +41,7 @@ export default async function handler(req, res) {
         projects: (data.projects || []).map(proj => ({
           ...proj,
           details: proj.details.filter(detail => detail),
+          isDotted: proj.detailDisplay === 'dotted', // Set isDotted based on detailDisplay
         })),
         skills: (data.skills || []).map(skill => ({
           ...skill,
@@ -57,7 +59,6 @@ export default async function handler(req, res) {
       //.replace(/\\\\/g, '\\textbackslash{}'); // Replace double backslash with \textbackslash{}
     
     console.log('Rendered LaTeX after replacement:', finalLatex);
-    
 
       await writeFile(texFilePath, finalLatex);
 

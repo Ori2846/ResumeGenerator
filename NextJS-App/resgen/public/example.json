@@ -1,145 +1,135 @@
 {
-    "template": "template1",
-    "name": "John Doe",
-    "personalInfo": [
-      { "label": "Email", "value": "john.doe@example.com", "link": "", "placeholder": "john.doe@example.com", "removable": false, "isLink": false },
-      { "label": "Phone", "value": "+1(234)567-8901", "link": "", "placeholder": "+1(234)567-8901", "removable": false, "isLink": false },
-      { "label": "GitHub", "value": "github.com/johndoe", "link": "https://github.com/johndoe", "placeholder": "Github/username", "removable": false, "isLink": true },
-      { "label": "LinkedIn", "value": "linkedin.com/in/johndoe", "link": "https://linkedin.com/in/johndoe", "placeholder": "Linkedin/username", "removable": false, "isLink": true }
-    ],
-    "summary": "Results-oriented professional with over a decade of experience in software development and project management, specializing in scalable web applications, microservices architecture, and cross-functional team leadership.",
-    "education": [
+  "template": "template1",
+  "name": "Jordan Belfort",
+  "personalInfo": [
+      { "label": "Email", "value": "jordan.belfort@example.com", "link": "", "placeholder": "jordan.belfort@example.com", "removable": false, "isLink": false },
+      { "label": "Phone", "value": "(123) 456-7890", "link": "", "placeholder": "(123) 456-7890", "removable": false, "isLink": false }
+  ],
+  "summary": "Highly motivated and results-driven financial strategist with a proven track record in sales, entrepreneurship, and motivational speaking. Renowned for my tenure as the founder of Stratton Oakmont, my expertise lies in sales techniques, business development, and personal growth coaching.",
+  "education": [
       {
-        "institution": "University of Example",
-        "city": "Example City",
-        "degree": "Bachelor of Science in Computer Science",
-        "dates": "09 2010 - 06 2014",
-        "gpa": "3.8",
-        "courses": [
-          "Advanced Algorithms",
-          "Database Management Systems",
-          "Software Engineering Principles"
-        ],
-        "achievements": [
-          "Recipient of Academic Excellence Award in Computer Science"
-        ]
+          "institution": "American University",
+          "city": "Washington, D.C.",
+          "degree": "Bachelor of Science in Biology",
+          "dates": "1984 – 1987",
+          "gpa": ""
       },
       {
-        "institution": "Example College",
-        "city": "Another City",
-        "degree": "Master of Science in Engineering",
-        "dates": "09 2014 - 06 2016",
-        "gpa": "3.9",
-        "thesis": "Thesis: Enhancing Scalability of Distributed Systems using Microservices",
-        "research": [
-          "Researched and published papers on distributed computing and cloud architectures"
-        ]
+          "institution": "Harvard Extension School",
+          "city": "Cambridge, MA",
+          "degree": "Certificate in Finance and Investment Banking",
+          "dates": "1990",
+          "gpa": ""
+      },
+      {
+          "institution": "Professional Development Courses",
+          "city": "",
+          "degree": "",
+          "dates": "",
+          "gpa": ""
       }
-    ],
-    "experience": [
+  ],
+  "experience": [
       {
-        "title": "Software Engineer",
-        "company": "Example Corp",
-        "location": "Example City",
-        "dates": "07 2014 - Present",
-        "responsibilities": [
-          "Developed and maintained high-traffic web applications using JavaScript, HTML, and CSS.",
-          "Led a team of 10 engineers through agile development cycles, resulting in 20 faster delivery times.",
-          "Implemented performance optimizations, reducing server response times by 40."
-        ]
+          "title": "CEO & Founder",
+          "company": "Stratton Oakmont, Inc.",
+          "location": "New York, NY",
+          "dates": "1989 – 1996",
+          "responsibilities": [
+              "Built a leading brokerage firm that employed over 1,000 stockbrokers and raised over $1 billion for various companies.",
+              "Developed innovative sales strategies and techniques that significantly increased revenue and client acquisition.",
+              "Trained and managed a large team of brokers, fostering a high-energy, results-oriented work environment.",
+              "Navigated the firm through rapid growth and industry challenges, achieving substantial market presence."
+          ]
       },
       {
-        "title": "Senior Software Engineer",
-        "company": "Tech Solutions LLC",
-        "location": "Tech City",
-        "dates": "01 2010 - 06 2014",
-        "responsibilities": [
-          "Architected and implemented a microservices-based platform handling millions of daily transactions.",
-          "Mentored junior developers on best practices in software architecture and design patterns.",
-          "Automated deployment processes using Jenkins and Docker, improving deployment frequency by 50."
-        ]
+          "title": "Motivational Speaker & Sales Trainer",
+          "company": "Various Locations",
+          "location": "",
+          "dates": "2008 – Present",
+          "responsibilities": [
+              "Conduct motivational seminars and sales training workshops for businesses and individuals worldwide.",
+              "Teach the 'Straight Line Persuasion' system, focusing on effective communication, sales techniques, and personal development.",
+              "Work with clients to develop customized strategies to improve sales performance and achieve business goals."
+          ]
+      },
+      {
+          "title": "Author",
+          "company": "Various Locations",
+          "location": "",
+          "dates": "2007 – Present",
+          "responsibilities": [
+              "Wrote two bestselling memoirs detailing my experiences in the financial industry and personal journey of redemption.",
+              "Provided insights into the world of high finance, sales, and the importance of ethical business practices."
+          ]
+      },
+      {
+          "title": "Founder & CEO",
+          "company": "Global Motivation, Inc.",
+          "location": "New York, NY",
+          "dates": "2005 – 2008",
+          "responsibilities": [
+              "Established a company dedicated to motivational speaking and sales training.",
+              "Developed and delivered content for workshops and seminars on sales techniques and personal development.",
+              "Built a network of clients across various industries, enhancing their sales capabilities and personal growth."
+          ]
+      },
+      {
+          "title": "Sales Associate",
+          "company": "L.F. Rothschild",
+          "location": "New York, NY",
+          "dates": "1987 – 1989",
+          "responsibilities": [
+              "Gained foundational experience in stockbroking and financial services.",
+              "Assisted clients with investment strategies and portfolio management.",
+              "Developed strong sales skills and a deep understanding of financial markets."
+          ]
       }
-    ],
-    "projects": [
+  ],
+  "projects": [
       {
-        "title": "Project Management Tool",
-        "tech_stack": "React, Node.js, MongoDB",
-        "dates": "01 2020 - 06 2020",
-        "details": [
-          "Conceptualized and developed a project management tool used by over 1000 users.",
-          "Integrated real-time collaboration features using WebSockets, enhancing team productivity.",
-          "Implemented comprehensive unit and integration testing, achieving 95 code coverage."
-        ]
+          "title": "Straight Line Persuasion System",
+          "tech_stack": "Video Production, E-learning Platforms, CRM Systems",
+          "dates": "2009 – Present",
+          "details": [
+              "Developed a comprehensive sales training program that teaches effective communication and closing techniques.",
+              "The program has been adopted by sales teams globally, enhancing their performance and conversion rates."
+          ]
       },
       {
-        "title": "E-commerce Platform",
-        "tech_stack": "Angular, Spring Boot, PostgreSQL",
-        "dates": "07 2018 - 12 2019",
-        "details": [
-          "Designed and deployed an enterprise-grade e-commerce platform supporting 100,000+ SKUs.",
-          "Optimized database queries and indexing strategies, improving query performance by 60.",
-          "Implemented robust security measures and compliance with PCI-DSS standards."
-        ]
+          "title": "The Wolf of Wall Street Film Adaptation",
+          "tech_stack": "Film Production, Screenwriting, Consulting",
+          "dates": "2013",
+          "details": [
+              "Collaborated with filmmakers to ensure an accurate portrayal of my life story in the critically acclaimed movie 'The Wolf of Wall Street.'",
+              "Provided insights and guidance on the financial and sales practices depicted in the film."
+          ]
+      },
+      {
+          "title": "Sales Bootcamps",
+          "tech_stack": "Event Management, Online Webinar Platforms, CRM Systems",
+          "dates": "2010 – Present",
+          "details": [
+              "Organized and led intensive sales bootcamps aimed at training individuals and teams on high-performance sales strategies.",
+              "Participants reported significant improvements in their sales techniques and overall performance."
+          ]
+      },
+      {
+          "title": "Personal Development Seminars",
+          "tech_stack": "Event Management, E-learning Platforms, Marketing Automation",
+          "dates": "2008 – Present",
+          "details": [
+              "Designed and conducted seminars focused on personal development, goal setting, and achieving peak performance.",
+              "Helped thousands of individuals transform their personal and professional lives through actionable strategies and motivational coaching."
+          ]
       }
-    ],
-    "skills": [
-      {
-        "name": "Programming Languages",
-        "details": [
-          "JavaScript",
-          "Python",
-          "Java",
-          "C",
-          "Ruby",
-          "Go",
-          "PHP"
-        ]
-      },
-      {
-        "name": "Frameworks Libraries",
-        "details": [
-          "React",
-          "Node.js",
-          "Express",
-          "Angular",
-          "Spring",
-          "Flask",
-          "Django",
-          "Laravel"
-        ]
-      },
-      {
-        "name": "Databases",
-        "details": [
-          "MongoDB",
-          "MySQL",
-          "PostgreSQL",
-          "SQLite",
-          "Redis",
-          "Elasticsearch"
-        ]
-      },
-      {
-        "name": "DevOps Tools",
-        "details": [
-          "Docker",
-          "Kubernetes",
-          "Jenkins",
-          "AWS",
-          "Azure",
-          "Git",
-          "CICD pipelines"
-        ]
-      },
-      {
-        "name": "Methodologies",
-        "details": [
-          "Agile Development",
-          "Scrum",
-          "Kanban",
-          "Continuous Integration Continuous Deployment CICD"
-        ]
-      }
-    ]
-  }
-  
+  ],
+  "skills": [
+      { "name": "Sales Strategy & Techniques", "details": [] },
+      { "name": "Business Development", "details": [] },
+      { "name": "Public Speaking", "details": [] },
+      { "name": "Leadership & Management", "details": [] },
+      { "name": "Personal Development Coaching", "details": [] },
+      { "name": "Financial Analysis", "details": [] }
+  ]
+}

@@ -38,9 +38,10 @@ export default function MainForm({
   handleAddProject,
   handleRemoveProject,
   handleRemoveProjectDetail,
+  handleDetailDisplayChange,
   handleSubmit
 }) {
-  
+
   return (
     <form onSubmit={handleSubmit} className="form bg-white p-6 rounded-lg shadow-md w-full">
       <div className="form-header mb-4">
@@ -102,6 +103,7 @@ export default function MainForm({
             handleAddProject={handleAddProject}
             handleRemoveProject={handleRemoveProject}
             handleRemoveProjectDetail={handleRemoveProjectDetail}
+            handleDetailDisplayChange={handleDetailDisplayChange} 
           />
         )}
         {currentSection === 'template' && (

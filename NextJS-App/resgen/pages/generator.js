@@ -6,7 +6,6 @@ import PdfBox from '/components/PdfBox';
 import Sidebar from '/components/Sidebar';
 import MainForm from '/components/MainForm';
 
-
 const initialFormData = {
   template: 'template1',
   education: [],
@@ -67,8 +66,6 @@ export default function Home() {
       .replace(/\^/g, '\\^{}')
       .replace(/\$/g, '\\$');
   }
-  
-  
 
   const handleLinkChange = (e, index) => {
     const newPersonalInfo = [...formData.personalInfo];
@@ -98,7 +95,6 @@ export default function Home() {
     newPersonalInfo[index].label = e.target.value;
     setFormData({ ...formData, personalInfo: newPersonalInfo });
   };
-  
 
   const handleLinkToggle = (index) => {
     const newPersonalInfo = [...formData.personalInfo];
@@ -116,13 +112,12 @@ export default function Home() {
   const handleEducationChange = (updatedEducation) => {
     setFormData({ ...formData, education: updatedEducation });
   };
-  
+
   const handleEducationFieldChange = (index, field, value) => {
     const newEducation = [...formData.education];
     newEducation[index][field] = value;
     setFormData({ ...formData, education: newEducation });
   };
-  
 
   const handleAddExperience = () => {
     setFormData({
@@ -137,13 +132,12 @@ export default function Home() {
   const handleExperienceChange = (updatedExperiences) => {
     setFormData({ ...formData, experience: updatedExperiences });
   };
-  
+
   const handleExperienceFieldChange = (index, field, value) => {
     const newExperience = [...formData.experience];
     newExperience[index][field] = value;
     setFormData({ ...formData, experience: newExperience });
   };
-  
 
   const handleExperienceResponsibilityChange = (expIndex, resIndex, value) => {
     const newExperience = [...formData.experience];
@@ -154,20 +148,19 @@ export default function Home() {
   const handleAddProject = () => {
     setFormData({
       ...formData,
-      projects: [...formData.projects, { title: '', tech_stack: '', dates: '', details: [''] }],
+      projects: [...formData.projects, { title: '', tech_stack: '', dates: '', details: [''], detailDisplay: 'dotted' }],
     });
   };
 
   const handleProjectChange = (updatedProjects) => {
     setFormData({ ...formData, projects: updatedProjects });
   };
-  
+
   const handleProjectFieldChange = (index, field, value) => {
     const newProjects = [...formData.projects];
     newProjects[index][field] = value;
     setFormData({ ...formData, projects: newProjects });
   };
-  
 
   const handleProjectDetailChange = (projIndex, detIndex, value) => {
     const newProjects = [...formData.projects];
@@ -209,13 +202,12 @@ export default function Home() {
   const handleSkillChange = (updatedSkills) => {
     setFormData({ ...formData, skills: updatedSkills });
   };
-  
+
   const handleSkillFieldChange = (index, field, value) => {
     const newSkills = [...formData.skills];
     newSkills[index][field] = value;
     setFormData({ ...formData, skills: newSkills });
   };
-  
 
   const handleSkillDetailChange = (skillIndex, detailIndex, value) => {
     const newSkills = [...formData.skills];
@@ -233,6 +225,12 @@ export default function Home() {
     const newSkills = [...formData.skills];
     newSkills.splice(index, 1);
     setFormData({ ...formData, skills: newSkills });
+  };
+
+  const handleDetailDisplayChange = (index, value) => {
+    const newProjects = [...formData.projects];
+    newProjects[index].detailDisplay = value;
+    setFormData({ ...formData, projects: newProjects });
   };
 
   const handleRemoveProjectDetail = (projIndex, detailIndex) => {
@@ -272,14 +270,15 @@ export default function Home() {
           title: escapeLatex(proj.title),
           tech_stack: escapeLatex(proj.tech_stack),
           dates: escapeLatex(proj.dates),
-          details: proj.details.map(detail => escapeLatex(detail))
+          details: proj.details.map(detail => escapeLatex(detail)),
+          detailDisplay: proj.detailDisplay // Add this line
         })),
         skills: formData.skills.map(skill => ({
           name: escapeLatex(skill.name),
           details: skill.details.map(detail => escapeLatex(detail))
         }))
       };
-  
+
       const response = await axios.post('/api/generate', formattedData);
       setPdfUrl(response.data.pdfUrl);
       setLatexSource(response.data.latexSource);
@@ -287,9 +286,6 @@ export default function Home() {
       console.error('Error generating PDF:', error);
     }
   };
-  
-  
-  
 
   return (
     <div className="app-container flex flex-col min-h-screen">
@@ -310,6 +306,7 @@ export default function Home() {
         />
         <main className="main-content flex-1 p-6 bg-gray-50">
           <MainForm
+            handleDetailDisplayChange={handleDetailDisplayChange}
             handleRemoveExperience={handleRemoveExperience}
             handleRemoveResponsibility={handleRemoveResponsibility}
             handleRemoveEducation={handleRemoveEducation}
@@ -347,7 +344,6 @@ export default function Home() {
           <PdfBox pdfUrl={pdfUrl} formData={formData} latexSource={latexSource} />
         </section>
       </div>
-      
     </div>
   );
 }

@@ -51,11 +51,16 @@
 }{}{0em}{}[\color{black}\titlerule \vspace{-8pt}]
 
 % Custom commands
-\newcommand{\resumeItem}[1]{
+%DOTTED
+\newcommand{\resumeDottedItem}[1]{
   \item\small{
     {#1 \vspace{-2pt}}
   }
 }
+%PARAGRAPH
+\newcommand{\resumeParagraphItem}[1]{\small{
+  {#1 \vspace{-2pt}}
+}}
 
 \newcommand{\resumeSubheading}[4]{
   \vspace{-2pt}\item
@@ -79,7 +84,7 @@
     \end{tabularx}\vspace{-6pt}
 }
 
-\newcommand{\resumeSubItem}[1]{\resumeItem{#1}\vspace{-2pt}}
+\newcommand{\resumeSubItem}[1]{\resumeDottedItem{#1}\vspace{-2pt}}
 
 \renewcommand\labelitemii{$\vcenter{\hbox{\tiny$\bullet$}}$}
 
@@ -145,7 +150,7 @@
       {{#responsibilities.length}}
       \resumeItemListStart
         {{#responsibilities}}
-          \resumeItem{ {{.}} }
+          \resumeDottedItem{ {{.}} }
         {{/responsibilities}}
       \resumeItemListEnd
       {{/responsibilities.length}}
@@ -163,7 +168,12 @@
       {{#details.length}}
       \resumeItemListStart
         {{#details}}
-          \resumeItem{ {{.}} }
+          {{#isDotted}}
+            \resumeDottedItem{ {{.}} }
+          {{/isDotted}}
+          {{^isDotted}}
+            \resumeParagraphItem{ {{.}} }
+          {{/isDotted}}
         {{/details}}
       \resumeItemListEnd
       {{/details.length}}

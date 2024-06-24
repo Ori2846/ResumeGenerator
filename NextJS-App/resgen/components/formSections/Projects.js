@@ -10,6 +10,7 @@ export default function Projects({
   handleAddProject,
   handleRemoveProject,
   handleRemoveProjectDetail,
+  handleDetailDisplayChange
 }) {
   const [showModal, setShowModal] = useState(false);
   const [itemToRemove, setItemToRemove] = useState(null);
@@ -37,6 +38,12 @@ export default function Projects({
     reorderedProjects.splice(result.destination.index, 0, movedProject);
 
     handleProjectChange(reorderedProjects);
+  };
+
+  const handleDetailInputChange = (index, value) => {
+    const newProjects = [...formData.projects];
+    newProjects[index].details = value.split('\n');
+    handleProjectChange(newProjects);
   };
 
   return (
@@ -72,17 +79,39 @@ export default function Projects({
                         <label htmlFor={`project_dates_${index}`} className="form-label">Dates:</label>
                         <input type="text" className="form-control" id={`project_dates_${index}`} name={`project_dates_${index}`} onChange={(e) => handleProjectFieldChange(index, 'dates', e.target.value)} value={proj.dates} placeholder="MM/YYYY - MM/YYYY" />
                       </div>
-                      {proj.details.map((detail, detailIndex) => (
-                        <div key={detailIndex} className="form-group flex items-center">
-                          <input type="text" className="form-control" id={`project_details_${index}_${detailIndex}`} name={`project_details_${index}_${detailIndex}`} onChange={(e) => handleProjectDetailChange(index, detailIndex, e.target.value)} value={detail} placeholder="Detail" />
-                          <button type="button" className="btn btn-danger ml-2" onClick={() => handleRemoveProjectDetail(index, detailIndex)}>
-                            -
-                          </button>
-                        </div>
-                      ))}
-                      <button type="button" className="btn btn-secondary mt-2" onClick={() => handleProjectDetailChange(index, proj.details.length, '')}>
-                        Add Detail
-                      </button>
+                      <div className="form-group">
+                        <label htmlFor={`project_detail_display_${index}`} className="form-label">Detail Display:</label>
+                        <select className="form-control" id={`project_detail_display_${index}`} name={`project_detail_display_${index}`} onChange={(e) => handleDetailDisplayChange(index, e.target.value)} value={proj.detailDisplay}>
+                          <option value="dotted">Dotted</option>
+                          <option value="paragraph">Paragraph</option>
+                        </select>
+                      </div>
+                      <div className="form-group">
+                        {proj.detailDisplay === 'paragraph' ? (
+                          <textarea
+                            className="form-control"
+                            id={`project_details_${index}`}
+                            name={`project_details_${index}`}
+                            onChange={(e) => handleDetailInputChange(index, e.target.value)}
+                            value={proj.details.join('\n')}
+                            placeholder="Enter details as a paragraph"
+                          />
+                        ) : (
+                          proj.details.map((detail, detailIndex) => (
+                            <div key={detailIndex} className="form-group flex items-center">
+                              <input type="text" className="form-control" id={`project_details_${index}_${detailIndex}`} name={`project_details_${index}_${detailIndex}`} onChange={(e) => handleProjectDetailChange(index, detailIndex, e.target.value)} value={detail} placeholder="Detail" />
+                              <button type="button" className="btn btn-danger ml-2" onClick={() => handleRemoveProjectDetail(index, detailIndex)}>
+                                -
+                              </button>
+                            </div>
+                          ))
+                        )}
+                      </div>
+                      {proj.detailDisplay !== 'paragraph' && (
+                        <button type="button" className="btn btn-secondary mt-2" onClick={() => handleProjectDetailChange(index, proj.details.length, '')}>
+                          Add Detail
+                        </button>
+                      )}
                       <button
                         type="button"
                         className="btn btn-danger mt-2"
