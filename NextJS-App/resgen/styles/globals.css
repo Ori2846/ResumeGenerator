@@ -99,10 +99,6 @@ button {
   @apply absolute right-0 top-1/2 transform -translate-y-1/2 bg-transparent text-red-500 hover:text-red-700;
 }
 
-/* PDF Container Styles */
-.pdf-container {
-  @apply w-full md:w-1/2 p-4 md:p-8 bg-gray-100 flex justify-center items-center;
-}
 
 .pdf-iframe-container {
   @apply w-full h-full bg-gray-300 rounded-lg flex justify-center items-center shadow-inner;
@@ -122,17 +118,56 @@ button {
   @apply flex flex-col md:flex-row h-screen;
 }
 
+/* Sidebar Styles */
 .sidebar {
   @apply w-full md:w-64 bg-gray-900 text-white p-4 md:p-6 flex flex-col shadow-lg fixed md:relative;
 }
 
-.main-content {
-  @apply flex-1 p-4 md:p-8 overflow-y-auto;
-  width: calc(100% - 64px); /* Adjust width based on sidebar */
-  margin-left: 0px; /* Adjust margin to prevent overlapping */
+.sidebar-header {
+  @apply text-center mb-8 flex justify-between items-center;
 }
 
-/* Media Queries */
+.sidebar-nav {
+  @apply flex-1 flex flex-col space-y-4 p-3;
+}
+
+.sidebar-nav button {
+  @apply py-2 md:py-3 px-4 md:px-6 rounded-lg transition-colors duration-300 flex items-center;
+}
+
+.sidebar-nav button .icon {
+  @apply h-6 w-6 flex-shrink-0;
+}
+
+.sidebar-nav button .text {
+  @apply ml-3;
+}
+
+
+
+/* Main Content Styles */
+.main-content {
+  @apply flex-1 p-4 md:p-8 overflow-y-auto;
+  display: flex;
+  flex-direction: column;
+}
+/* PDF Container Styles */
+.pdf-container {
+  @apply flex-1 p-4 md:p-8 bg-gray-100 flex justify-center items-center;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.pdf-box-container {
+  @apply w-full h-full bg-white shadow-lg rounded-lg flex flex-col overflow-hidden;
+}
+
+.pdf-box-content {
+  @apply flex-1 bg-gray-100 p-4 overflow-auto relative;
+}
+
+/* Responsive adjustments */
 @media (max-width: 1024px) {
   .app-container {
     @apply flex-col;
@@ -150,238 +185,70 @@ button {
   }
 
   .pdf-container {
-    @apply w-full mt-4;
+    @apply w-full mt-4 h-auto;
   }
 
-  .pdf-iframe-container {
-    @apply h-60;
+  .pdf-box-container {
+    height: 100%; /* Ensure it takes full height available */
   }
 }
 
-/* PDF Box Container Styles */
-.pdf-box-container {
-  @apply w-full h-full bg-white shadow-lg rounded-lg flex flex-col;
-}
 
-.pdf-box-buttons .btn {
-  @apply bg-gray-200 text-gray-700 py-2 px-4 rounded transition-colors duration-300 hover:bg-gray-300;
-  font-size: 0.875rem; /* Smaller font size for discrete appearance */
-}
-
-.pdf-box-buttons .btn-active {
-  @apply bg-blue-500 text-white;
-}
-
-.pdf-box-content {
-  @apply flex-1 bg-gray-100 rounded-lg p-4 overflow-auto max-h-[80vh] pr-4; /* Add right padding */
-}
-
-/* Custom Scrollbar Styles */
-.form-body::-webkit-scrollbar,
-.pdf-box-content::-webkit-scrollbar {
-  width: 12px;
-}
-
-.form-body::-webkit-scrollbar-track,
-.pdf-box-content::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 10px;
-}
-
-.form-body::-webkit-scrollbar-thumb,
-.pdf-box-content::-webkit-scrollbar-thumb {
-  background-color: #888;
-  border-radius: 10px;
-  border: 3px solid #f1f1f1;
-}
-
-.form-body::-webkit-scrollbar-thumb:hover,
-.pdf-box-content::-webkit-scrollbar-thumb:hover {
-  background: #555;
-}
-
-/* JSON and LaTeX Content Styles */
 .json-content, .latex-content {
   @apply p-4 font-mono text-sm bg-white rounded-lg shadow-inner;
 }
 
-/* Annotation and Text Layer Styles */
-.textLayer {
-  pointer-events: none;
+.yaml-content {
+  @apply p-4 font-mono text-sm bg-white rounded-lg shadow-inner;
 }
 
-.textLayer span {
-  pointer-events: all;
+/* Form Styles */
+.form {
+  @apply bg-white p-4 md:p-6 rounded-lg shadow-lg max-w-4xl mx-auto w-full;
 }
 
-.annotationLayer {
-  pointer-events: none;
+.form-header {
+  @apply mb-6 text-center text-2xl md:text-3xl font-extrabold text-gray-900;
 }
 
-.annotationLayer a {
-  pointer-events: all;
-  position: absolute;
-  text-decoration: none;
-  color: inherit;
-  opacity: 0; /* Invisible but clickable */
+.form-body {
+  @apply w-full overflow-y-auto max-h-[60vh] pr-4;
 }
 
-/* Draggable Item Styles */
-.draggable-item {
-  display: flex;
-  align-items: center;
-  cursor: move;
-}
-
-/* About Container Styles */
-.about-container {
-  padding: 20px;
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-.about-container h1 {
-  font-size: 2em;
-  margin-bottom: 20px;
-}
-
-.about-container h2 {
-  font-size: 1.5em;
-  margin-top: 40px;
-  margin-bottom: 20px;
-}
-
-.about-container h3 {
-  font-size: 1.2em;
-  margin-top: 20px;
-}
-
-.about-container p {
-  font-size: 1em;
-  line-height: 1.5;
-  margin-bottom: 20px;
-}
-
-.about-container a {
-  color: #1a73e8;
-  text-decoration: none;
-}
-
-.about-container a:hover {
-  text-decoration: underline;
-}
-
-/* Contact Container Styles */
-.contact-container {
-  padding: 20px;
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-.contact-container h1 {
-  font-size: 2em;
-  margin-bottom: 20px;
-}
-
-.contact-container p {
-  font-size: 1em;
-  line-height: 1.5;
-  margin-bottom: 20px;
-}
-
-.contact-container a {
-  color: #1a73e8;
-  text-decoration: none;
-}
-
-.contact-container a:hover {
-  text-decoration: underline;
-}
-
-/* Copyright Container Styles */
-.copyright-container {
-  padding: 20px;
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-.copyright-container h1 {
-  font-size: 2em;
-  margin-bottom: 20px;
-}
-
-.copyright-container p {
-  font-size: 1em;
-  line-height: 1.5;
-  margin-bottom: 20px;
-}
-
-.copyright-container ul {
-  list-style-type: disc;
-  padding-left: 20px;
-}
-
-.copyright-container li {
-  margin-bottom: 10px;
-}
-
-.copyright-container a {
-  color: #1a73e8;
-  text-decoration: none;
-}
-
-.copyright-container a:hover {
-  text-decoration: underline;
-}
-
-/* Footer Styles */
-.footer {
-  position: fixed;
-  bottom: 0;
+.form-group {
+  @apply mb-3 relative;
   width: 100%;
-  background-color: #333;
-  color: white;
-  padding: 10px 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
 }
 
-.footer-content {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  padding: 0 50px; /* Increase padding to push content farther apart */
-  max-width: 2000px; /* Optionally increase max-width */
-  margin: 0 auto;
+.form-control {
+  @apply mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50;
 }
 
-.footer-left {
-  font-size: 14px;
-  text-align: left;
-  flex: 1;
+.form-label {
+  @apply block font-semibold;
 }
 
-.footer-right {
-  display: flex;
-  justify-content: flex-end;
-  text-align: right;
-  flex: 1;
+.form-label-input {
+  @apply mt-1 block w-full bg-transparent border-none font-bold;
 }
 
-.footer-right a {
-  color: white;
-  margin-left: 15px;
-  text-decoration: none;
-  font-size: 14px;
+.btn {
+  @apply px-4 py-2 rounded-lg shadow transition-colors duration-300;
 }
 
-.footer-right a:hover {
-  text-decoration: underline;
+.btn-success {
+  @apply bg-green-500 text-white hover:bg-green-600 mt-6;
 }
 
-/* Modal Overlay Styles */
+.btn-secondary {
+  @apply bg-gray-500 text-white hover:bg-gray-600;
+}
+
+.btn-remove {
+  @apply absolute right-0 top-1/2 transform -translate-y-1/2 bg-transparent text-red-500 hover:text-red-700;
+}
+
+/* Modal Styles */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -395,7 +262,6 @@ button {
   z-index: 1000;
 }
 
-/* Modal Content Styles */
 .modal-content {
   background: white;
   border-radius: 8px;
@@ -439,7 +305,6 @@ button {
   margin-left: 10px;
 }
 
-/* Custom Red Button Styles */
 .red-button {
   background-color: #dc3545;
   border-color: #dc3545;

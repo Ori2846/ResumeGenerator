@@ -21,7 +21,7 @@ export default function PdfBox({ pdfUrl, formData, latexSource }) {
 
     for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
       const page = await pdf.getPage(pageNum);
-      const scale = 1.35; // Adjust the scale to fit the size of the container
+      const scale = 1.22; // Adjust the scale to fit the size of the container
       const viewport = page.getViewport({ scale });
 
       const canvas = document.createElement('canvas');

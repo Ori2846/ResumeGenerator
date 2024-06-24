@@ -295,7 +295,7 @@ export default function Home() {
       >
         Menu
       </button>
-      <div className="flex flex-grow">
+      <div className="flex flex-grow flex-col md:flex-row">
         <Sidebar
           currentSection={currentSection}
           setCurrentSection={setCurrentSection}
@@ -340,7 +340,7 @@ export default function Home() {
             handleSubmit={handleSubmit}
           />
         </main>
-        <section className="pdf-container p-6">
+        <section className="pdf-container flex-1 p-6 bg-gray-100 md:flex md:justify-center">
           <PdfBox pdfUrl={pdfUrl} formData={formData} latexSource={latexSource} />
         </section>
       </div>
