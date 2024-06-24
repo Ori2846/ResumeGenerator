@@ -1,13 +1,9 @@
 //layout.js
 import { Inter } from "next/font/google";
-import '/styles/globals.css';
+
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata = {
-  title: "Engineering Resumes",
-  description: "Need a resume?",
-};
 
 export default function RootLayout({ children }) {
   return (
