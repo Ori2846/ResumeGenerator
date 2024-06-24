@@ -1,3 +1,4 @@
+// components/formSections/Projects.js
 import React, { useState } from 'react';
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 import ConfirmationModal from './ConfirmationModal';
@@ -78,6 +79,10 @@ export default function Projects({
                       <div className="form-group">
                         <label htmlFor={`project_dates_${index}`} className="form-label">Dates:</label>
                         <input type="text" className="form-control" id={`project_dates_${index}`} name={`project_dates_${index}`} onChange={(e) => handleProjectFieldChange(index, 'dates', e.target.value)} value={proj.dates} placeholder="MM/YYYY - MM/YYYY" />
+                      </div>
+                      <div className="form-group">
+                        <label htmlFor={`project_link_${index}`} className="form-label">Project Link:</label>
+                        <input type="text" className="form-control" id={`project_link_${index}`} name={`project_link_${index}`} onChange={(e) => handleProjectFieldChange(index, 'link', e.target.value)} value={proj.link || ''} placeholder="https://example.com" />
                       </div>
                       <div className="form-group">
                         <label htmlFor={`project_detail_display_${index}`} className="form-label">Detail Display:</label>

@@ -42,6 +42,7 @@ export default async function handler(req, res) {
           ...proj,
           details: proj.details.filter(detail => detail),
           isDotted: proj.detailDisplay === 'dotted',
+          link: proj.link || '',
         })),
         skills: (data.skills || []).map(skill => ({
           ...skill,
@@ -55,6 +56,7 @@ export default async function handler(req, res) {
           isSkills: section === 'skills'
         }))
       };
+      
 
       const renderedLatex = Mustache.render(latexTemplate, renderData);
 

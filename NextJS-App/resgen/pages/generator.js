@@ -1,4 +1,4 @@
-// generator.js
+// pages/generator.js
 "use client";
 import { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -152,19 +152,22 @@ export default function Home() {
   const handleAddProject = () => {
     setFormData({
       ...formData,
-      projects: [...formData.projects, { title: '', tech_stack: '', dates: '', details: [''], detailDisplay: 'dotted' }],
+      projects: [...formData.projects, { title: '', tech_stack: '', dates: '', details: [''], detailDisplay: 'dotted', link: '' }],
     });
   };
-
-  const handleProjectChange = (updatedProjects) => {
-    setFormData({ ...formData, projects: updatedProjects });
-  };
-
+  
   const handleProjectFieldChange = (index, field, value) => {
     const newProjects = [...formData.projects];
     newProjects[index][field] = value;
     setFormData({ ...formData, projects: newProjects });
   };
+  
+
+  const handleProjectChange = (updatedProjects) => {
+    setFormData({ ...formData, projects: updatedProjects });
+  };
+
+
 
   const handleProjectDetailChange = (projIndex, detIndex, value) => {
     const newProjects = [...formData.projects];
@@ -275,7 +278,8 @@ export default function Home() {
           tech_stack: escapeLatex(proj.tech_stack),
           dates: escapeLatex(proj.dates),
           details: proj.details.map(detail => escapeLatex(detail)),
-          detailDisplay: proj.detailDisplay
+          detailDisplay: proj.detailDisplay,
+          link: escapeLatex(proj.link) // Add the link here
         })),
         skills: formData.skills.map(skill => ({
           name: escapeLatex(skill.name),
