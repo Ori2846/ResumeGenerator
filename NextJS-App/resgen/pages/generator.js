@@ -167,8 +167,6 @@ export default function Home() {
     setFormData({ ...formData, projects: updatedProjects });
   };
 
-
-
   const handleProjectDetailChange = (projIndex, detIndex, value) => {
     const newProjects = [...formData.projects];
     newProjects[projIndex].details[detIndex] = value;
