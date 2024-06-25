@@ -25,10 +25,10 @@ jobs:
     - name: Compile LaTeX to PDF
       run: |
         mkdir output
-        pdflatex -interaction=nonstopmode -output-directory=output public/file.tex
+        pdflatex -interaction=nonstopmode -output-directory=output NextJS-App/resgen/public/file.tex
     
     - name: Upload PDF
       uses: actions/upload-artifact@v2
       with:
         name: compiled-pdf
-        path: output/file.pdf
+        path: NextJS-App/resgen/output/file.pdf
