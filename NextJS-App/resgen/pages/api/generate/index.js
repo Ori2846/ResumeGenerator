@@ -1,8 +1,8 @@
-// /api/generate/index.js
 import { spawn } from 'child_process';
 import fs from 'fs';
 import path from 'path';
 import { promisify } from 'util';
+import os from 'os';
 import Mustache from 'mustache';
 
 const readFile = promisify(fs.readFile);
@@ -25,8 +25,10 @@ export default async function handler(req, res) {
 
     console.log('Using template:', latexTemplatePath);
 
-    const texFilePath = path.resolve(process.cwd(), 'public', 'resume_output.tex');
-    const pdfFilePath = path.resolve(process.cwd(), 'public', 'resume_output.pdf');
+    // Use OS temp directory
+    const tempDir = os.tmpdir();
+    const texFilePath = path.join(tempDir, 'resume_output.tex');
+    const pdfFilePath = path.join(tempDir, 'resume_output.pdf');
 
     try {
       const latexTemplate = await readFile(latexTemplatePath, 'utf8');
@@ -56,7 +58,6 @@ export default async function handler(req, res) {
           isSkills: section === 'skills'
         }))
       };
-      
 
       const renderedLatex = Mustache.render(latexTemplate, renderData);
 
@@ -65,7 +66,7 @@ export default async function handler(req, res) {
       await writeFile(texFilePath, renderedLatex);
 
       await new Promise((resolve, reject) => {
-        const process = spawn('xelatex', ['-interaction=nonstopmode', '-output-directory=public', texFilePath]);
+        const process = spawn('xelatex', ['-interaction=nonstopmode', '-output-directory', tempDir, texFilePath]);
 
         let output = '';
         process.stdout.on('data', (data) => {
@@ -94,7 +95,7 @@ export default async function handler(req, res) {
       if (fs.existsSync(pdfFilePath)) {
         console.log('PDF file exists:', pdfFilePath);
         return res.status(200).json({
-          pdfUrl: `/resume_output.pdf?${new Date().getTime()}`,
+          pdfUrl: `/api/download?filePath=${encodeURIComponent(pdfFilePath)}&${new Date().getTime()}`,
           latexSource: renderedLatex
         });
       } else {
