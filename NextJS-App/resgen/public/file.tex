@@ -1,125 +1,35 @@
-%-------------------------
-% Resume in LaTeX
-% Author : Henry Do
-% Based off of: https://www.overleaf.com/latex/templates/jakes-resume/syzfjbzwjncs
-% License : MIT
-%------------------------
-
-\documentclass[letterpaper,11pt]{article}
+\documentclass[11pt]{article}
 
 \usepackage[utf8]{inputenc}
 \usepackage{geometry}
-\usepackage{xcolor}
 \usepackage{hyperref}
-\usepackage{latexsym}
-\usepackage[empty]{fullpage}
-\usepackage{titlesec}
-\usepackage{marvosym}
-\usepackage[usenames,dvipsnames]{color}
-\usepackage{verbatim}
-\usepackage{enumitem}
-\usepackage{fancyhdr}
-\usepackage[english]{babel}
-\usepackage{tabularx}
-\usepackage{fontspec}
-\usepackage{xurl} % Ensures that URLs break correctly
-
-\pagestyle{fancy}
-\fancyhf{} % clear all header and footer fields
-\fancyfoot{}
-\renewcommand{\headrulewidth}{0pt}
-\renewcommand{\footrulewidth}{0pt}
-\setlength{\footskip}{4.08003pt}
+\usepackage{graphicx}
 
 % Adjust margins
-\addtolength{\oddsidemargin}{-0.5in}
-\addtolength{\evensidemargin}{-0.5in}
-\addtolength{\textwidth}{1in}
-\addtolength{\topmargin}{-.50in}
-\addtolength{\textheight}{1.0in}
+\geometry{letterpaper, margin=1in}
 
-\urlstyle{same}
-
-\raggedbottom
-\raggedright
-\setlength{\tabcolsep}{0in}
-
-% Sections formatting
-\titleformat{\section}{
-  \vspace{-8pt}\scshape\raggedright\large
-}{}{0em}{}[\color{black}\titlerule \vspace{-8pt}]
-
-% Custom commands
-%DOTTED
-\newcommand{\resumeDottedItem}[1]{
-  \item\small{
-    {#1 \vspace{-2pt}}
-  }
-}
-%PARAGRAPH
-\newcommand{\resumeParagraphItem}[1]{\small{
-  {#1 \vspace{-2pt}}
-}}
-
-\newcommand{\resumeSubheading}[4]{
-  \vspace{-2pt}\item
-    \begin{tabularx}{\textwidth}{Xr}
-      \textbf{#1} & #2 \\
-      \textit{\small#3} & \textit{\small #4} \\
-    \end{tabularx}\vspace{-6pt}
-}
-
-\newcommand{\resumeSubSubheading}[2]{
-  \item
-    \begin{tabularx}{\textwidth}{Xr}
-      \textit{\small#1} & \textit{\small #2} \\
-    \end{tabularx}\vspace{-6pt}
-}
-
-\newcommand{\resumeProjectHeading}[2]{
-  \item
-    \begin{tabularx}{\textwidth}{Xr}
-      \small #1 & #2 \\
-    \end{tabularx}\vspace{-6pt}
-}
-
-\newcommand{\resumeSubItem}[1]{\resumeDottedItem{#1}\vspace{-2pt}}
-
-\renewcommand\labelitemii{$\vcenter{\hbox{\tiny$\bullet$}}$}
-
-\newcommand{\resumeSubHeadingListStart}{
-  \begin{itemize}[leftmargin=0.15in, label={}, itemsep=3pt, parsep=0pt, topsep=0pt]
-}
-\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
-\newcommand{\resumeItemListStart}{
-  \begin{itemize}[itemsep=2pt, parsep=0pt, topsep=0pt]
-}
-\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-8pt}}
+\title{Simple LaTeX Document}
+\author{John Doe}
+\date{\today}
 
 \begin{document}
 
-% Heading
-\begin{center}
-    \textbf{\Huge \scshape asd} \\ \vspace{1pt}
-    \small
-            asd
-         \textbar\ 
-            asd
-         \textbar\ 
-            asd
-         \textbar\ 
-            asd
-         \textbar\ 
-\end{center}
+\maketitle
 
-      \section{Education}
-      \resumeSubHeadingListStart
-          \resumeSubheading
-            { asd }{ asd }
-            { asd  GPA: asd }{ asd }
-      \resumeSubHeadingListEnd
-      \section{Summary}
-      asd
+\begin{abstract}
+This is a simple LaTeX document used for testing a LaTeX to PDF conversion workflow using GitHub Actions.
+\end{abstract}
 
-%-------------------------------------------
+\section{Introduction}
+This is the introduction section. LaTeX is a typesetting system commonly used for technical and scientific documents.
+
+\section{Methods}
+This section describes the methods used in this document.
+
+\section{Results}
+This section presents the results.
+
+\section{Conclusion}
+This is the conclusion section. We have successfully created a simple LaTeX document and set up a GitHub Actions workflow to compile it into a PDF.
+
 \end{document}
