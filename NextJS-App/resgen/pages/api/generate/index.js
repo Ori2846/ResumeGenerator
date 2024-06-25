@@ -74,18 +74,71 @@ export default async function handler(req, res) {
           name: 'Henry',
           email: 'hdo2846@gmail.com'
         },
-        branch: 'v2' // Ensure the commit is made to the v2 branch
+        branch: 'v2'
       });
 
-      await octokit.actions.createWorkflowDispatch({
+      const workflowDispatch = await octokit.actions.createWorkflowDispatch({
         owner: 'Ori2846',
         repo: 'ResumeGenerator',
         workflow_id: 'xelatex.yml',
-        ref: 'v2' // Ensure the workflow is dispatched on the v2 branch
+        ref: 'v2'
       });
 
-      res.status(200).json({ message: 'Workflow triggered successfully' });
+      // Polling for the artifact URL
+      const pollInterval = 10000; // 10 seconds
+      const maxRetries = 30; // 5 minutes
 
+      const getArtifactUrl = async (retries = 0) => {
+        if (retries >= maxRetries) {
+          throw new Error('PDF generation timed out');
+        }
+
+        try {
+          const { data: workflowRuns } = await octokit.actions.listWorkflowRunsForRepo({
+            owner: 'Ori2846',
+            repo: 'ResumeGenerator',
+            branch: 'v2',
+            status: 'completed'
+          });
+
+          if (workflowRuns.workflow_runs.length === 0) {
+            await new Promise(resolve => setTimeout(resolve, pollInterval));
+            return await getArtifactUrl(retries + 1);
+          }
+
+          const latestRun = workflowRuns.workflow_runs[0];
+          const { data: artifacts } = await octokit.actions.listWorkflowRunArtifacts({
+            owner: 'Ori2846',
+            repo: 'ResumeGenerator',
+            run_id: latestRun.id
+          });
+
+          const artifact = artifacts.artifacts.find(a => a.name === 'compiled-pdf');
+          if (artifact) {
+            const { data: artifactData } = await octokit.actions.downloadArtifact({
+              owner: 'Ori2846',
+              repo: 'ResumeGenerator',
+              artifact_id: artifact.id,
+              archive_format: 'zip'
+            });
+
+            // Assuming the artifact contains the PDF
+            const artifactUrl = artifactData.url;
+            return artifactUrl;
+          }
+
+          await new Promise(resolve => setTimeout(resolve, pollInterval));
+          return await getArtifactUrl(retries + 1);
+        } catch (error) {
+          console.error('Error fetching artifacts:', error);
+          await new Promise(resolve => setTimeout(resolve, pollInterval));
+          return await getArtifactUrl(retries + 1);
+        }
+      };
+
+      const pdfUrl = await getArtifactUrl();
+
+      res.status(200).json({ pdfUrl });
     } catch (error) {
       console.error('Error:', error);
       res.status(500).json({ error: error.message });

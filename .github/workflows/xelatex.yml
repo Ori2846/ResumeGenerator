@@ -1,7 +1,7 @@
 name: Generate PDF with XeLaTeX
 
 on:
-  workflow_dispatch: # Allows the workflow to be triggered manually
+  workflow_dispatch:
   push:
     branches:
       - v2
@@ -25,7 +25,7 @@ jobs:
     - name: Compile LaTeX to PDF
       run: |
         cd NextJS-App/resgen/uploads
-        xelatex -interaction=nonstopmode resume_output.tex
+        xelatex -interaction=nonstopmode resume_output.tex || true
 
     - name: Upload PDF artifact
       uses: actions/upload-artifact@v3

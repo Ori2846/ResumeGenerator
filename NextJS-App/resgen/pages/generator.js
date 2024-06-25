@@ -1,4 +1,3 @@
-// pages/generator.js
 "use client";
 import { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -155,19 +154,16 @@ export default function Home() {
       projects: [...formData.projects, { title: '', tech_stack: '', dates: '', details: [''], detailDisplay: 'dotted', link: '' }],
     });
   };
-  
+
   const handleProjectFieldChange = (index, field, value) => {
     const newProjects = [...formData.projects];
     newProjects[index][field] = value;
     setFormData({ ...formData, projects: newProjects });
   };
-  
 
   const handleProjectChange = (updatedProjects) => {
     setFormData({ ...formData, projects: updatedProjects });
   };
-
-
 
   const handleProjectDetailChange = (projIndex, detIndex, value) => {
     const newProjects = [...formData.projects];
@@ -311,8 +307,8 @@ export default function Home() {
           isSidebarOpen={isSidebarOpen}
           setIsSidebarOpen={setIsSidebarOpen}
           setFormData={setFormData}
-          initialFormData={initialFormData} // Pass initialFormData as a prop
-          setSectionOrder={setSectionOrder} // Add this line
+          initialFormData={initialFormData}
+          setSectionOrder={setSectionOrder}
         />
         <main className="main-content flex-1 p-6 bg-gray-50">
           <MainForm
@@ -348,11 +344,15 @@ export default function Home() {
             handleProjectDetailChange={handleProjectDetailChange}
             handleAddProject={handleAddProject}
             handleSubmit={handleSubmit}
-            sectionOrder={sectionOrder} // Pass sectionOrder as a prop
+            sectionOrder={sectionOrder}
           />
         </main>
         <section className="pdf-container flex-1 p-6 bg-gray-100 md:flex md:justify-center">
-          <PdfBox pdfUrl={pdfUrl} formData={formData} latexSource={latexSource} />
+          {pdfUrl ? (
+            <iframe src={pdfUrl} width="100%" height="100%"></iframe>
+          ) : (
+            <p>No PDF generated yet</p>
+          )}
         </section>
       </div>
     </div>
