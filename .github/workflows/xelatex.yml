@@ -32,8 +32,8 @@ jobs:
           cd NextJS-App\resgen\uploads
           xelatex -interaction=nonstopmode resume_output.tex; if ($LastExitCode -ne 0) { exit 0 }
         } else {
-          cd NextJS-App/resgen/uploads
-          xelatex -interaction=nonstopmode resume_output.tex || true
+          cd NextJS-App\resgen\uploads
+          xelatex -interaction=nonstopmode resume_output.tex; if ($LastExitCode -ne 0) { exit 0 }
         }
 
     - name: Upload PDF artifact
