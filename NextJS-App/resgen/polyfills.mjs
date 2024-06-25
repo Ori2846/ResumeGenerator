@@ -1,5 +1,4 @@
-// polyfills.js
-import 'core-js/full/promise/with-resolvers';
+import 'core-js/full/promise/with-resolvers.js';
 
 // Polyfill for environments where window is not available (e.g., server-side rendering)
 if (typeof Promise.withResolvers === 'undefined') {
