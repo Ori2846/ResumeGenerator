@@ -8,10 +8,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-
-    container:
-      image: hdo2846/resumegenerator:latest
+    runs-on: self-hosted
 
     steps:
     - name: Checkout repository

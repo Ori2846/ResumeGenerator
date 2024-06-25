@@ -285,7 +285,7 @@ export default function Home() {
       };
 
       const response = await axios.post('/api/generate', formattedData);
-      setPdfUrl(response.data.pdfUrl);
+      setPdfUrl(`/api/get-pdf?path=${encodeURIComponent(response.data.pdfPath)}`);
       setLatexSource(response.data.latexSource);
     } catch (error) {
       console.error('Error generating PDF:', error);
