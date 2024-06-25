@@ -17,14 +17,22 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Update package list and install dependencies
+    - name: Cache LaTeX packages
+      uses: actions/cache@v2
+      with:
+        path: /usr/local/texlive
+        key: ${{ runner.os }}-texlive-${{ hashFiles('**/*.tex') }}
+        restore-keys: |
+          ${{ runner.os }}-texlive-
+
+    - name: Set up LaTeX environment
       run: |
         sudo apt-get update
         sudo apt-get install -y texlive-full --fix-missing
 
     - name: Compile LaTeX to PDF
       run: |
-        mkdir output
+        mkdir -p output
         pdflatex -interaction=nonstopmode -output-directory=output NextJS-App/resgen/public/file.tex
     
     - name: Upload PDF
