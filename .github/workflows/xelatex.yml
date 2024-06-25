@@ -30,7 +30,7 @@ jobs:
       run: |
         if ($env:RUNNER_OS -eq 'Windows') {
           cd NextJS-App\resgen\uploads
-          xelatex -interaction=nonstopmode resume_output.tex; exit 0
+          xelatex -interaction=nonstopmode resume_output.tex; if ($?) { exit 0 } else { exit 1 }
         } else {
           cd NextJS-App/resgen/uploads
           xelatex -interaction=nonstopmode resume_output.tex || true
