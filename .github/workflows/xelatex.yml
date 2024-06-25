@@ -10,14 +10,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    container:
+      image: hdo2846/resumegenerator:latest
+
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
       with:
         ref: v2
-
-    - name: Set up LaTeX environment
-      run: sudo apt-get update && sudo apt-get install -y texlive-xetex texlive-fonts-recommended texlive-plain-generic
 
     - name: Ensure upload directory exists
       run: mkdir -p NextJS-App/resgen/uploads

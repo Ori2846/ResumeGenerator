@@ -9,6 +9,11 @@ dotenv.config();
 
 const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
 
+const owner = 'hdo2846';
+const repo = 'ResumeGenerator';
+const filePath = 'NextJS-App/resgen/uploads/resume_output.tex';
+const branch = 'v2';
+
 export default async function handler(req, res) {
   if (req.method === 'POST') {
     const data = req.body;
@@ -59,13 +64,29 @@ export default async function handler(req, res) {
       fs.writeFileSync(texFilePath, renderedLatex);
 
       const texFileContent = fs.readFileSync(texFilePath, 'utf8');
+      const base64Content = Buffer.from(texFileContent).toString('base64');
+
+      let sha;
+      try {
+        const { data: fileData } = await octokit.repos.getContent({
+          owner,
+          repo,
+          path: filePath,
+          ref: branch,
+        });
+        sha = fileData.sha;
+      } catch (error) {
+        if (error.status !== 404) {
+          throw error;
+        }
+      }
 
       await octokit.repos.createOrUpdateFileContents({
-        owner: 'Ori2846',
-        repo: 'ResumeGenerator',
-        path: `NextJS-App/resgen/uploads/resume_output.tex`,
+        owner,
+        repo,
+        path: filePath,
         message: 'Add LaTeX file for PDF generation',
-        content: Buffer.from(texFileContent).toString('base64'),
+        content: base64Content,
         committer: {
           name: 'Henry',
           email: 'hdo2846@gmail.com'
@@ -74,14 +95,15 @@ export default async function handler(req, res) {
           name: 'Henry',
           email: 'hdo2846@gmail.com'
         },
-        branch: 'v2'
+        branch,
+        sha,
       });
 
-      const workflowDispatch = await octokit.actions.createWorkflowDispatch({
-        owner: 'Ori2846',
-        repo: 'ResumeGenerator',
+      await octokit.actions.createWorkflowDispatch({
+        owner,
+        repo,
         workflow_id: 'xelatex.yml',
-        ref: 'v2'
+        ref: branch
       });
 
       // Polling for the artifact URL
@@ -95,9 +117,9 @@ export default async function handler(req, res) {
 
         try {
           const { data: workflowRuns } = await octokit.actions.listWorkflowRunsForRepo({
-            owner: 'Ori2846',
-            repo: 'ResumeGenerator',
-            branch: 'v2',
+            owner,
+            repo,
+            branch,
             status: 'completed'
           });
 
@@ -108,21 +130,20 @@ export default async function handler(req, res) {
 
           const latestRun = workflowRuns.workflow_runs[0];
           const { data: artifacts } = await octokit.actions.listWorkflowRunArtifacts({
-            owner: 'Ori2846',
-            repo: 'ResumeGenerator',
+            owner,
+            repo,
             run_id: latestRun.id
           });
 
           const artifact = artifacts.artifacts.find(a => a.name === 'compiled-pdf');
           if (artifact) {
             const { data: artifactData } = await octokit.actions.downloadArtifact({
-              owner: 'Ori2846',
-              repo: 'ResumeGenerator',
+              owner,
+              repo,
               artifact_id: artifact.id,
               archive_format: 'zip'
             });
 
-            // Assuming the artifact contains the PDF
             const artifactUrl = artifactData.url;
             return artifactUrl;
           }

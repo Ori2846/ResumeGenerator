@@ -275,7 +275,7 @@ export default function Home() {
           dates: escapeLatex(proj.dates),
           details: proj.details.map(detail => escapeLatex(detail)),
           detailDisplay: proj.detailDisplay,
-          link: escapeLatex(proj.link) // Add the link here
+          link: escapeLatex(proj.link)
         })),
         skills: formData.skills.map(skill => ({
           name: escapeLatex(skill.name),
