@@ -12,6 +12,7 @@
     "@fortawesome/fontawesome-free": "^6.5.2",
     "@hello-pangea/dnd": "^16.6.0",
     "@heroicons/react": "^2.1.4",
+    "@octokit/rest": "^21.0.0",
     "axios": "^1.7.2",
     "bootstrap": "^5.3.3",
     "core-js": "^3.37.1",
