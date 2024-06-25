@@ -7,6 +7,8 @@ on:
   pull_request:
     branches:
       - '**'  # Listen to all branches
+  workflow_dispatch:  # Allow manual triggers
+
 jobs:
   build:
     runs-on: ubuntu-latest
