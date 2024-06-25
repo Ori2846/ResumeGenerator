@@ -1,0 +1,29 @@
+name: LaTeX to PDF
+
+on:
+  push:
+    branches:
+      - '**'  # Listen to all branches
+  pull_request:
+    branches:
+      - '**'  # Listen to all branches
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up LaTeX environment
+      run: sudo apt-get install -y texlive-full
+
+    - name: Compile LaTeX to PDF
+      run: |
+        pdflatex -interaction=nonstopmode -output-directory=output public/file.tex
+    
+    - name: Upload PDF
+      uses: actions/upload-artifact@v2
+      with:
+        name: compiled-pdf
+        path: output/file.pdf
