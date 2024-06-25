@@ -1,4 +1,8 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {};
+import './polyfills.mjs';
+
+const nextConfig = {
+  reactStrictMode: true,
+  // other configurations
+};
 
 export default nextConfig;
