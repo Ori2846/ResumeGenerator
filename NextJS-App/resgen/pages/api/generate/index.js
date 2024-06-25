@@ -73,14 +73,15 @@ export default async function handler(req, res) {
         author: {
           name: 'Henry',
           email: 'hdo2846@gmail.com'
-        }
+        },
+        branch: 'v2' // Ensure the commit is made to the v2 branch
       });
 
       await octokit.actions.createWorkflowDispatch({
         owner: 'Ori2846',
         repo: 'ResumeGenerator',
         workflow_id: 'xelatex.yml',
-        ref: 'main'
+        ref: 'v2' // Ensure the workflow is dispatched on the v2 branch
       });
 
       res.status(200).json({ message: 'Workflow triggered successfully' });
