@@ -26,6 +26,12 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-texlive-
 
+    - name: Install TeX Live
+      if: steps.cache-texlive.outputs.cache-hit != 'true'
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y texlive-full --fix-missing
+
     - name: Cache TeX Live Binaries
       id: cache-texlive-bin
       uses: actions/cache@v2
@@ -35,31 +41,23 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-texlive-bin-
 
-    - name: Install TeX Live
-      if: steps.cache-texlive.outputs.cache-hit != 'true' || steps.cache-texlive-bin.outputs.cache-hit != 'true'
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y texlive-full --fix-missing
-        sudo mkdir -p /usr/local/texlive
-        sudo cp -r /usr/share/texlive/* /usr/local/texlive/
-        sudo mkdir -p /usr/local/bin
-        sudo ln -s /usr/local/texlive/bin/* /usr/local/bin/
-        
     - name: Compile LaTeX to PDF (1st run)
       run: |
         mkdir -p output
-        xelatex -interaction=nonstopmode -output-directory=output public/file.tex
+        xelatex -interaction=nonstopmode -output-directory=output NextJS-App/resgen/public/file.tex
     
     - name: Compile LaTeX to PDF (2nd run)
       run: |
-        xelatex -interaction=nonstopmode -output-directory=output public/file.tex
+        xelatex -interaction=nonstopmode -output-directory=output NextJS-App/resgen/public/file.tex
 
     - name: Compile LaTeX to PDF (3rd run)
       run: |
-        xelatex -interaction=nonstopmode -output-directory=output public/file.tex
+        xelatex -interaction=nonstopmode -output-directory=output NextJS-App/resgen/public/file.tex
 
     - name: Upload PDF
       uses: actions/upload-artifact@v2
       with:
         name: compiled-pdf
-        path: output/file.pdf
+        path: NextJS-App/resgen/output/file.pdf
+        
+
