@@ -6,7 +6,7 @@ dotenv.config();
 export default async function handler(req, res) {
   if (req.method === 'POST') {
     const githubToken = process.env.GITHUB_TOKEN;
-    
+    console.log('GitHub Token:', githubToken ? 'Exists' : 'Not Found');
     if (!githubToken) {
       return res.status(500).json({ error: 'GitHub token is missing' });
     }

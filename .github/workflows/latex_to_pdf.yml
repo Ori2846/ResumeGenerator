@@ -17,11 +17,14 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Set up LaTeX environment
-      run: sudo apt-get install -y texlive-full
+    - name: Update package list and install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y texlive-full --fix-missing
 
     - name: Compile LaTeX to PDF
       run: |
+        mkdir output
         pdflatex -interaction=nonstopmode -output-directory=output public/file.tex
     
     - name: Upload PDF
