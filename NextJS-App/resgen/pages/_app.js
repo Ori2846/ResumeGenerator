@@ -1,6 +1,7 @@
 // pages/_app.js
 import '../styles/globals.css';
 import Head from 'next/head';
+import '../polyfills.mjs';
 
 function MyApp({ Component, pageProps }) {
   return (
