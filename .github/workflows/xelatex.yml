@@ -10,6 +10,9 @@ jobs:
   build:
     runs-on: self-hosted
 
+    container:
+      image: hdo2846/resumegenerator:latest
+
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
@@ -17,12 +20,22 @@ jobs:
         ref: v2
 
     - name: Ensure upload directory exists
-      run: mkdir -p NextJS-App/resgen/uploads
+      run: |
+        if ($env:RUNNER_OS -eq 'Windows') {
+          mkdir -p NextJS-App/resgen/uploads
+        } else {
+          mkdir -p NextJS-App/resgen/uploads
+        }
 
     - name: Compile LaTeX to PDF
       run: |
-        cd NextJS-App/resgen/uploads
-        xelatex -interaction=nonstopmode resume_output.tex || true
+        if ($env:RUNNER_OS -eq 'Windows') {
+          cd NextJS-App/resgen/uploads
+          xelatex -interaction=nonstopmode resume_output.tex
+        } else {
+          cd NextJS-App/resgen/uploads
+          xelatex -interaction=nonstopmode resume_output.tex || true
+        }
 
     - name: Upload PDF artifact
       uses: actions/upload-artifact@v3
