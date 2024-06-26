@@ -17,7 +17,7 @@ class MyDocument extends Document {
             href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap"
             rel="stylesheet"
           />
-          <meta name="description" content="My site description" />
+          <meta name="description" content="Need a resume?" />
         </Head>
         <body>
           <Main />
